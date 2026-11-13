@@ -1,0 +1,6 @@
+node_modules/
+db/kernelsac.db
+db/kernelsac.db-shm
+db/kernelsac.db-wal
+public/uploads/
+.env

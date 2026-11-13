@@ -1,0 +1,26 @@
+{
+  "name": "kernel-sac",
+  "version": "1.0.0",
+  "description": "Tienda online Kernel SAC (Hardware, Redes, Videovigilancia, Accesorios, Cables y Adaptadores) con backend Express, SQLite y login de Admin / Cliente / Invitado.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "seed": "node db/seed.js",
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.11.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0"
+  }
+}
