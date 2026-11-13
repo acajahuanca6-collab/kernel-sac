@@ -4049,14 +4049,9 @@ footer a:hover{ color: var(--red); }
 
     <div class="voucher-divider-cut"></div>
 
-    <!-- Liquidación Contable & Fiscal -->
+    <!-- Total a pagar -->
     <div class="voucher-total-block">
-      <div class="voucher-row"><span>OP. GRAVADA (SUBTOTAL):</span><span id="vSubtotal">S/ 0.00</span></div>
-      <div class="voucher-row"><span>I.G.V. (18.00%):</span><span id="vIgv">S/ 0.00</span></div>
-      <div class="voucher-row"><span>DESCUENTO APLICADO:</span><span>S/ 0.00</span></div>
-      <div class="voucher-row"><span>COSTO DE ENVÍO:</span><span>A COORDINAR CON VENTAS</span></div>
       <div class="voucher-row total-major"><span>TOTAL A PAGAR:</span><strong id="vTotal">S/ 0.00</strong></div>
-      <div class="voucher-amount-words" id="vTotalLetras">SON: CERO CON 00/100 SOLES</div>
     </div>
 
     <div class="voucher-divider-cut"></div>
@@ -6495,12 +6490,7 @@ function generarYMostrarBaucher(data, payload, items) {
 ${itemsTextoWa}
 ------------------------------------------
 
-*LIQUIDACIÓN CONTABLE:*
-• Op. Gravada (Subtotal): S/ ${subtotal.toFixed(2)}
-• I.G.V. (18.00%): S/ ${igv.toFixed(2)}
-• Envío / Despacho: S/ 0.00 (A coordinar con Ventas)
-• *TOTAL A PAGAR: S/ ${total.toFixed(2)}*
-• ${totalLetras}
+*TOTAL A PAGAR: S/ ${total.toFixed(2)}*
 
 *CANAL DE VENTAS OFICIAL:* +51 967 006 922
 *SOPORTE TÉCNICO:* +51 939 059 976
