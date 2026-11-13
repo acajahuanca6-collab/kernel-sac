@@ -960,6 +960,17 @@ app.get("/admin", (req, res) => {
   res.redirect("/#admin");
 });
 
+// Inicialización automática si la base de datos es nueva (ej. despliegues en la nube como Render)
+try {
+  const totalCat = db.prepare("SELECT count(*) as total FROM categorias").get()?.total || 0;
+  if (totalCat === 0) {
+    console.log("Base de datos nueva detectada. Inicializando catálogo y usuarios...");
+    await import("./db/seed.js");
+  }
+} catch (errInit) {
+  console.warn("Aviso en verificación de inicialización:", errInit.message);
+}
+
 app.listen(PORT, () => {
   console.log(`Kernel SAC corriendo en http://localhost:${PORT}`);
 });
