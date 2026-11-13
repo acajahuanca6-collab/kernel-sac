@@ -60,10 +60,10 @@
   --card-hover-border: rgba(225, 29, 72, 0.60);
   --card-shadow: 0 20px 48px rgba(0, 0, 0, 0.65), 0 0 30px rgba(225, 29, 72, 0.18);
 
-  --bento-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(246, 240, 246, 0.74) 50%, rgba(255, 230, 240, 0.82) 100%);
-  --bento-hero-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 240, 246, 0.82) 50%, rgba(255, 222, 235, 0.88) 100%);
-  --bento-border: rgba(255, 255, 255, 0.96);
-  --bento-shadow: inset 0 2px 1.5px 0 #ffffff, inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.08), 0 16px 40px rgba(0, 0, 0, 0.45);
+  --bento-bg: linear-gradient(145deg, rgba(34, 14, 25, 0.78) 0%, rgba(18, 8, 16, 0.88) 50%, rgba(46, 14, 28, 0.74) 100%);
+  --bento-hero-bg: linear-gradient(145deg, rgba(44, 16, 32, 0.84) 0%, rgba(22, 9, 19, 0.92) 50%, rgba(58, 16, 36, 0.80) 100%);
+  --bento-border: rgba(255, 255, 255, 0.20);
+  --bento-shadow: inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 3px 0 rgba(0, 0, 0, 0.6), 0 20px 48px rgba(0, 0, 0, 0.7), 0 0 30px rgba(225, 29, 72, 0.18);
 
   --input-bg: rgba(255, 255, 255, 0.05);
   --input-border: rgba(255, 255, 255, 0.14);
@@ -466,11 +466,11 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 52%;
+  height: 48%;
   background: linear-gradient(180deg,
-    rgba(255, 255, 255, 0.70) 0%,
-    rgba(255, 255, 255, 0.20) 65%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.03) 65%,
+    transparent 100%
   );
   border-radius: 24px 24px 80px 80px / 24px 24px 30px 30px;
   pointer-events: none;
@@ -479,20 +479,20 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
 
 .bento-tile:hover, .cat-card:hover {
   transform: translateY(-6px) scale(1.015);
-  border-color: rgba(255, 255, 255, 1) !important;
+  border-color: rgba(255, 45, 95, 0.65) !important;
   box-shadow:
-    inset 0 3px 2px 0 #ffffff,
-    inset 0 -2px 3px 0 rgba(225, 29, 72, 0.16),
-    0 24px 50px -10px rgba(225, 29, 72, 0.24),
-    0 0 28px rgba(255, 255, 255, 0.5) !important;
+    inset 0 2px 2px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.5),
+    0 24px 55px -10px rgba(0, 0, 0, 0.8),
+    0 0 35px rgba(225, 29, 72, 0.35) !important;
 }
 
 .bento-tile.active, .cat-card.active {
   border-color: var(--red) !important;
   box-shadow:
-    inset 0 2px 1.5px 0 #ffffff,
+    inset 0 2px 1.5px 0 rgba(255, 255, 255, 0.4),
     0 0 0 2px var(--red),
-    0 20px 45px rgba(225, 29, 72, 0.30) !important;
+    0 20px 45px rgba(225, 29, 72, 0.35) !important;
 }
 
 /* Bento Tile Layout Spans */
@@ -538,7 +538,7 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
   width: 110px;
   height: 110px;
   opacity: 0.08;
-  color: #000000;
+  color: #ffffff;
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
   z-index: 1;
@@ -554,7 +554,7 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
 }
 
 .bento-tile:hover .bento-watermark {
-  opacity: 0.18;
+  opacity: 0.20;
   color: var(--red);
   transform: rotate(0deg) scale(1.08);
 }
@@ -573,13 +573,13 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.65)) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffffff !important;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--red) !important;
+  color: var(--cyan);
   transition: all 0.25s ease;
 }
 
@@ -587,10 +587,10 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
   width: 60px;
   height: 60px;
   border-radius: 18px;
-  color: var(--red) !important;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 235, 242, 0.85)) !important;
-  border-color: rgba(255, 255, 255, 1) !important;
-  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.2), inset 0 1px 0 #ffffff !important;
+  color: #ffffff;
+  background: rgba(225, 29, 72, 0.25);
+  border-color: rgba(225, 29, 72, 0.55);
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .bento-icon-badge svg {
@@ -605,16 +605,16 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
 
 .bento-tile:hover .bento-icon-badge {
   transform: scale(1.1) rotate(-4deg);
-  background: var(--red) !important;
-  color: #ffffff !important;
-  border-color: var(--red) !important;
-  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.45) !important;
+  background: var(--red);
+  color: #ffffff;
+  border-color: var(--red);
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.55);
 }
 
 .bento-hero:hover .bento-icon-badge {
-  border-color: var(--red) !important;
-  color: #ffffff !important;
-  box-shadow: 0 0 24px rgba(225, 29, 72, 0.6) !important;
+  border-color: var(--red);
+  color: #ffffff;
+  box-shadow: 0 0 24px rgba(225, 29, 72, 0.7);
 }
 
 /* Badges / Pills */
@@ -628,41 +628,41 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
   text-transform: uppercase;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .pill-crimson {
-  background: rgba(225, 29, 72, 0.14) !important;
-  border: 1.5px solid rgba(225, 29, 72, 0.45) !important;
-  color: #be123c !important;
+  background: rgba(225, 29, 72, 0.22);
+  border: 1.5px solid rgba(225, 29, 72, 0.5);
+  color: #ff6b8b;
 }
 
 .pill-cyan {
-  background: rgba(3, 105, 161, 0.12) !important;
-  border: 1.5px solid rgba(3, 105, 161, 0.4) !important;
-  color: #0369a1 !important;
+  background: rgba(14, 165, 233, 0.2);
+  border: 1.5px solid rgba(14, 165, 233, 0.5);
+  color: #38bdf8;
 }
 
 .pill-gold {
-  background: rgba(202, 138, 4, 0.15) !important;
-  border: 1.5px solid rgba(202, 138, 4, 0.45) !important;
-  color: #854d0e !important;
+  background: rgba(234, 179, 8, 0.2);
+  border: 1.5px solid rgba(234, 179, 8, 0.5);
+  color: #fde047;
 }
 
 .pill-purple {
-  background: rgba(147, 51, 234, 0.14) !important;
-  border: 1.5px solid rgba(147, 51, 234, 0.4) !important;
-  color: #6b21a8 !important;
+  background: rgba(168, 85, 247, 0.2);
+  border: 1.5px solid rgba(168, 85, 247, 0.5);
+  color: #c084fc;
 }
 
 .count-pill {
-  background: rgba(255, 255, 255, 0.85) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
-  color: #000000 !important;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
   font-weight: 800;
 }
 
-/* Body: LETRAS NEGRAS DE ALTA DEFINICIÓN */
+/* Body */
 .bento-body {
   position: relative;
   z-index: 2;
@@ -672,39 +672,39 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
 .bento-title {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #000000 !important; /* Letras negras en categorías para máximo contraste */
+  color: #ffffff;
   margin: 0 0 4px 0;
   letter-spacing: -0.02em;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
   transition: color 0.2s ease;
 }
 
 .bento-hero .bento-title {
   font-size: 1.8rem;
   font-weight: 900;
-  color: #000000 !important;
+  color: #ffffff;
   margin-bottom: 8px;
 }
 
 .bento-tile:hover .bento-title,
 .bento-hero:hover .bento-title {
-  color: var(--red) !important;
+  color: var(--cyan);
 }
 
 .bento-desc {
   font-size: 0.85rem;
-  color: #171416 !important; /* Negro grafito intenso de total legibilidad */
-  font-weight: 550;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 500;
   line-height: 1.45;
   margin: 0;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+  text-shadow: none;
 }
 
 .bento-hero .bento-desc {
   font-size: 0.98rem;
-  color: #0c080b !important;
+  color: rgba(255, 255, 255, 0.88);
   max-width: 90%;
-  font-weight: 600;
+  font-weight: 550;
 }
 
 /* Footer */
@@ -715,18 +715,18 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
   align-items: center;
   justify-content: space-between;
   padding-top: 12px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
 }
 
 .bento-count-label {
   font-family: var(--font-mono);
   font-size: 0.74rem;
   font-weight: 700;
-  color: #000000 !important; /* Letras negras para contador */
-  background: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.08);
   padding: 3px 8px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .bento-action-arrow {
@@ -736,29 +736,29 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 800;
-  color: #be123c !important; /* Carmesí elegante que contrasta con el cristal */
-  background: rgba(255, 255, 255, 0.85);
+  color: #ffffff;
+  background: rgba(225, 29, 72, 0.35);
   padding: 5px 12px;
   border-radius: 999px;
-  border: 1.5px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1.5px solid rgba(225, 29, 72, 0.6);
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.25);
   transition: all 0.25s ease;
 }
 
 .bento-tile:hover .bento-action-arrow {
-  background: var(--red) !important;
-  color: #ffffff !important;
-  border-color: var(--red) !important;
+  background: var(--red);
+  color: #ffffff;
+  border-color: var(--red);
   transform: translateX(4px);
-  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.5);
 }
 
 .bento-hero:hover .bento-action-arrow {
-  background: var(--red) !important;
-  color: #ffffff !important;
-  border-color: var(--red) !important;
+  background: var(--red);
+  color: #ffffff;
+  border-color: var(--red);
   transform: translateX(6px);
-  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.5);
 }
 
 /* Responsiveness for Bento Grid */
@@ -3028,7 +3028,7 @@ footer a:hover{ color: var(--red); }
   box-shadow: 0 0 12px rgba(225, 29, 72, 0.4);
 }
 
-/* Bento Categories en Modo Claro (Liquid Glass Cristalino con Letras Negras Puras) */
+/* Bento Categories en Modo Claro (Liquid Glass Cristalino con Letras Negras) */
 [data-theme="light"] .bento-tile,
 [data-theme="light"] .cat-card {
   background: var(--bento-bg) !important;
@@ -3037,6 +3037,14 @@ footer a:hover{ color: var(--red); }
 }
 [data-theme="light"] .bento-tile.bento-hero {
   background: var(--bento-hero-bg) !important;
+}
+[data-theme="light"] .bento-tile::before,
+[data-theme="light"] .cat-card::before {
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.70) 0%,
+    rgba(255, 255, 255, 0.20) 65%,
+    transparent 100%
+  ) !important;
 }
 [data-theme="light"] .bento-tile:hover,
 [data-theme="light"] .cat-card:hover {
@@ -3053,12 +3061,18 @@ footer a:hover{ color: var(--red); }
   border-color: var(--red) !important;
 }
 [data-theme="light"] .bento-title {
-  color: #000000 !important; /* Letras negras en títulos */
-  font-weight: 800;
+  color: #000000 !important;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+[data-theme="light"] .bento-hero .bento-title {
+  color: #000000 !important;
 }
 [data-theme="light"] .bento-desc {
-  color: #171416 !important; /* Negro carbón nítido para descripciones */
-  font-weight: 550;
+  color: #171416 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+[data-theme="light"] .bento-hero .bento-desc {
+  color: #0c080b !important;
 }
 [data-theme="light"] .bento-watermark {
   color: #000000 !important;
@@ -3067,7 +3081,34 @@ footer a:hover{ color: var(--red); }
 [data-theme="light"] .bento-icon-badge {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.65)) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffffff !important;
   color: var(--red) !important;
+}
+[data-theme="light"] .bento-hero .bento-icon-badge {
+  color: var(--red) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 235, 242, 0.85)) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.2), inset 0 1px 0 #ffffff !important;
+}
+[data-theme="light"] .pill-crimson {
+  background: rgba(225, 29, 72, 0.14) !important;
+  border-color: rgba(225, 29, 72, 0.45) !important;
+  color: #be123c !important;
+}
+[data-theme="light"] .pill-cyan {
+  background: rgba(3, 105, 161, 0.12) !important;
+  border-color: rgba(3, 105, 161, 0.4) !important;
+  color: #0369a1 !important;
+}
+[data-theme="light"] .pill-gold {
+  background: rgba(202, 138, 4, 0.15) !important;
+  border-color: rgba(202, 138, 4, 0.45) !important;
+  color: #854d0e !important;
+}
+[data-theme="light"] .pill-purple {
+  background: rgba(147, 51, 234, 0.14) !important;
+  border-color: rgba(147, 51, 234, 0.4) !important;
+  color: #6b21a8 !important;
 }
 [data-theme="light"] .count-pill {
   background: rgba(255, 255, 255, 0.85) !important;
@@ -3075,16 +3116,19 @@ footer a:hover{ color: var(--red); }
   color: #000000 !important;
   font-weight: 800;
 }
+[data-theme="light"] .bento-foot {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
 [data-theme="light"] .bento-count-label {
   color: #000000 !important;
-  background: rgba(255, 255, 255, 0.75);
-  font-weight: 700;
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
 }
 [data-theme="light"] .bento-action-arrow {
   color: #be123c !important;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1.5px solid rgba(255, 255, 255, 0.95);
-  font-weight: 800;
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
 }
 [data-theme="light"] .mega {
   background: rgba(255, 255, 255, 0.88);
