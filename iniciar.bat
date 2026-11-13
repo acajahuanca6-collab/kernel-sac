@@ -2,6 +2,9 @@
 title Kernel SAC
 cd /d "%~dp0"
 
+if exist "C:\Program Files\nodejs\node.exe" set "PATH=C:\Program Files\nodejs;%PATH%"
+if exist "%LOCALAPPDATA%\Programs\nodejs\node.exe" set "PATH=%LOCALAPPDATA%\Programs\nodejs;%PATH%"
+
 where node >nul 2>nul
 if %errorlevel% neq 0 (
   echo.
