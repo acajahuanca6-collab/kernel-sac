@@ -50,7 +50,7 @@
   --glass-border: rgba(255, 255, 255, 0.25);
   --glass-border-accent: rgba(225, 29, 72, 0.55);
   --glass-highlight: rgba(255, 255, 255, 0.50);
-  --glass-blur: blur(32px) saturate(220%) contrast(108%);
+  --glass-blur: blur(12px);
   --glass-shadow: 0 22px 55px rgba(0, 0, 0, 0.75), 0 0 35px rgba(225, 29, 72, 0.20);
 
   --header-bg: rgba(14, 6, 9, 0.82);
@@ -97,7 +97,7 @@
   --glass-border: rgba(255, 255, 255, 0.95);
   --glass-border-accent: rgba(225, 29, 72, 0.45);
   --glass-highlight: #ffffff;
-  --glass-blur: blur(32px) saturate(220%) contrast(108%);
+  --glass-blur: blur(12px);
   --glass-shadow: 0 20px 48px rgba(160, 100, 110, 0.15), 0 4px 16px rgba(225, 29, 72, 0.08);
 
   --header-bg: rgba(248, 245, 238, 0.78);
@@ -120,13 +120,23 @@
 html{ scroll-behavior: smooth; }
 body{
   margin:0;
-  background: var(--bg-gradient);
-  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-body);
   line-height: 1.5;
   min-height: 100vh;
-  transition: background 0.3s ease, color 0.3s ease;
+  position: relative;
+  background-color: var(--bg);
+  transition: color 0.3s ease;
+}
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  background: var(--bg-gradient);
+  pointer-events: none;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* ============ LIQUID GLASS BASE ============ */
@@ -164,6 +174,8 @@ h1,h2,h3{ font-family: var(--font-head); margin:0; letter-spacing: -0.01em; }
   animation: scroll-x 26s linear infinite;
   font-family: var(--font-mono); font-size:0.72rem; font-weight:600;
   letter-spacing: 0.04em;
+  will-change: transform;
+  transform: translateZ(0);
 }
 .announce-track span{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
 .announce-track svg{ opacity: 0.9; }
@@ -173,8 +185,8 @@ h1,h2,h3{ font-family: var(--font-head); margin:0; letter-spacing: -0.01em; }
 header.site{
   position: sticky; top:0; z-index: 40;
   background: var(--header-bg);
-  backdrop-filter: blur(28px) saturate(200%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1.5px solid var(--glass-border);
   box-shadow: inset 0 1px 0 var(--glass-highlight), 0 8px 32px rgba(0,0,0,0.06);
   transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -356,8 +368,8 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
   background: rgba(255,255,255,0.07);
   border: 1px solid rgba(255,255,255,0.22);
   border-radius: 28px;
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), inset 0 0 50px rgba(255,255,255,0.04), 0 20px 60px rgba(0,0,0,0.45);
   padding: 34px 36px;
 }
@@ -374,23 +386,21 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
 .hero p.lead{ color: rgba(255,255,255,0.82); font-size:1.05rem; max-width: 46ch; margin-top:18px; }
 .hero-cta{ display:flex; gap:14px; margin-top: 30px; align-items:center; flex-wrap:wrap; }
 
-/* Botones de la portada en estilo Liquid Glass (vidrio translúcido, no el gradiente sólido normal). */
+/* Botones de la portada en estilo Liquid Glass */
 .hero-glass .btn-primary{
-  background: linear-gradient(135deg, rgba(255,45,67,0.55), rgba(255,90,66,0.4));
-  backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: linear-gradient(135deg, rgba(255,45,67,0.75), rgba(255,90,66,0.65));
   border: 1px solid rgba(255,255,255,0.4);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 30px rgba(255,45,67,0.35);
   color:#fff;
 }
 .hero-glass .btn-primary:hover{ box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 10px 36px rgba(255,45,67,0.5); transform: translateY(-1px); }
 .hero-glass .btn-outline{
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255,255,255,0.14);
   border: 1px solid rgba(255,255,255,0.35);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 8px 24px rgba(0,0,0,0.3);
   color:#fff;
 }
-.hero-glass .btn-outline:hover{ background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.5); }
+.hero-glass .btn-outline:hover{ background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); }
 
 .btn{
   font-family: var(--font-body); font-weight:700; font-size:0.9rem; border-radius: 999px;
@@ -444,8 +454,8 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
   background: var(--bento-bg) !important;
   border: 1.5px solid var(--bento-border) !important;
   border-radius: 24px;
-  backdrop-filter: blur(28px) saturate(210%) contrast(106%);
-  -webkit-backdrop-filter: blur(28px) saturate(210%) contrast(106%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: var(--bento-shadow) !important;
   padding: 24px 22px;
   display: flex;
@@ -1099,8 +1109,8 @@ header.admin-head{ border-bottom:1px solid var(--glass-border); position:sticky;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(246, 240, 246, 0.65) 50%, rgba(255, 235, 242, 0.75) 100%) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
   border-radius: 16px;
-  backdrop-filter: blur(24px) saturate(200%);
-  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: inset 0 1.5px 1px 0 #ffffff, 0 8px 24px rgba(0, 0, 0, 0.06) !important;
   padding: 14px 16px;
   display: flex;
@@ -1304,8 +1314,8 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
   right: 0;
   width: 290px;
   background: rgba(18, 9, 16, 0.94);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.35);
@@ -1622,8 +1632,8 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
   position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95);
   width: min(520px, 95vw); max-height: 92vh; overflow-y: auto;
   background: rgba(18, 9, 16, 0.94);
-  backdrop-filter: blur(32px) saturate(210%);
-  -webkit-backdrop-filter: blur(32px) saturate(210%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1.5px solid rgba(255, 255, 255, 0.28);
   border-radius: 28px;
   box-shadow: 0 35px 90px rgba(0, 0, 0, 0.85), 0 0 50px rgba(255, 45, 95, 0.25), inset 0 2px 2px rgba(255, 255, 255, 0.5);
@@ -2078,8 +2088,8 @@ footer a:hover{ color: var(--red); }
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 28px;
   padding: 28px 24px;
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 12px 32px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
@@ -2170,20 +2180,21 @@ footer a:hover{ color: var(--red); }
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
-  filter: blur(65px);
+  will-change: transform;
+  transform: translateZ(0);
   animation: liquidOrbFloat 14s infinite alternate ease-in-out;
 }
 .liquid-ambient-orb.orb-1 {
   width: 320px;
   height: 320px;
-  background: radial-gradient(circle, rgba(255, 45, 103, 0.70) 0%, rgba(255, 45, 103, 0) 70%);
+  background: radial-gradient(circle, rgba(255, 45, 103, 0.45) 0%, rgba(255, 45, 103, 0) 70%);
   top: -30px;
   left: 15%;
 }
 .liquid-ambient-orb.orb-2 {
   width: 290px;
   height: 290px;
-  background: radial-gradient(circle, rgba(0, 210, 255, 0.58) 0%, rgba(0, 210, 255, 0) 70%);
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.40) 0%, rgba(0, 210, 255, 0) 70%);
   bottom: -40px;
   right: 18%;
   animation-delay: -5s;
@@ -2191,7 +2202,7 @@ footer a:hover{ color: var(--red); }
 .liquid-ambient-orb.orb-3 {
   width: 250px;
   height: 250px;
-  background: radial-gradient(circle, rgba(255, 187, 0, 0.65) 0%, rgba(255, 187, 0, 0) 70%);
+  background: radial-gradient(circle, rgba(255, 187, 0, 0.40) 0%, rgba(255, 187, 0) 0%, rgba(255, 187, 0, 0) 70%);
   top: 35%;
   right: 42%;
   animation-delay: -8s;
@@ -2239,8 +2250,8 @@ footer a:hover{ color: var(--red); }
 .curacao-left-promo {
   position: relative;
   background: linear-gradient(145deg, rgba(32, 12, 24, 0.70) 0%, rgba(18, 7, 14, 0.82) 50%, rgba(45, 12, 28, 0.65) 100%);
-  backdrop-filter: blur(30px) saturate(220%) contrast(108%);
-  -webkit-backdrop-filter: blur(30px) saturate(220%) contrast(108%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1.5px solid rgba(255, 255, 255, 0.28);
   border-radius: 28px;
   padding: 26px 22px;
@@ -2444,8 +2455,8 @@ footer a:hover{ color: var(--red); }
   cursor: pointer;
   user-select: none;
   background: linear-gradient(145deg, rgba(32, 14, 25, 0.72) 0%, rgba(16, 7, 14, 0.84) 50%, rgba(42, 12, 26, 0.68) 100%);
-  backdrop-filter: blur(28px) saturate(210%) contrast(108%);
-  -webkit-backdrop-filter: blur(28px) saturate(210%) contrast(108%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1.5px solid rgba(255, 255, 255, 0.24);
   border-radius: 24px;
   padding: 14px;
@@ -2717,8 +2728,8 @@ footer a:hover{ color: var(--red); }
   border-radius: 50%;
   background: rgba(16, 8, 14, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -2886,8 +2897,8 @@ footer a:hover{ color: var(--red); }
 }
 [data-theme="light"] .curacao-left-promo {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.40) 50%, rgba(255, 238, 243, 0.58) 100%);
-  backdrop-filter: blur(32px) saturate(230%) contrast(108%);
-  -webkit-backdrop-filter: blur(32px) saturate(230%) contrast(108%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1.5px solid rgba(255, 255, 255, 0.98);
   box-shadow: 
     0 22px 50px rgba(180, 100, 110, 0.16),
@@ -2930,8 +2941,8 @@ footer a:hover{ color: var(--red); }
 /* Tarjetas de Producto del Carrusel en Modo Claro */
 [data-theme="light"] .curacao-stage-item {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 240, 246, 0.60) 100%);
-  backdrop-filter: blur(28px) saturate(230%) contrast(108%);
-  -webkit-backdrop-filter: blur(28px) saturate(230%) contrast(108%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1.5px solid rgba(255, 255, 255, 0.96);
   box-shadow: 
     0 18px 44px rgba(160, 90, 100, 0.14),
@@ -5078,33 +5089,36 @@ function initIosCarousel() {
   });
 
   track.addEventListener("touchstart", dragStart, {passive: true});
-  track.addEventListener("touchend", dragEnd);
-  track.addEventListener("touchmove", dragAction, {passive: true});
-
   track.addEventListener("mousedown", dragStart);
-  window.addEventListener("mouseup", dragEnd);
-  window.addEventListener("mousemove", dragAction);
 
   function dragStart(e) {
+    isDragging = true;
     if (e.type === "touchstart") {
       startX = e.touches[0].clientX;
+      window.addEventListener("touchmove", dragAction, {passive: true});
+      window.addEventListener("touchend", dragEnd);
     } else {
       startX = e.clientX;
-      isDragging = true;
+      window.addEventListener("mousemove", dragAction);
+      window.addEventListener("mouseup", dragEnd);
     }
   }
 
   function dragAction(e) {
-    if (!isDragging && e.type !== "touchmove") return;
-    const currentPosition = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+    if (!isDragging) return;
+    const currentPosition = e.type.startsWith("touch") ? e.touches[0].clientX : e.clientX;
     const diff = currentPosition - startX;
     track.style.transform = `translateX(${prevTranslate + diff}px)`;
   }
 
   function dragEnd(e) {
-    if (!isDragging && e.type !== "touchend") return;
+    if (!isDragging) return;
     isDragging = false;
-    const endPosition = e.type === "touchend" ? e.changedTouches[0].clientX : e.clientX;
+    window.removeEventListener("mousemove", dragAction);
+    window.removeEventListener("mouseup", dragEnd);
+    window.removeEventListener("touchmove", dragAction);
+    window.removeEventListener("touchend", dragEnd);
+    const endPosition = e.type.startsWith("touch") ? (e.changedTouches?.[0]?.clientX ?? startX) : e.clientX;
     const diff = endPosition - startX;
 
     if (diff < -50) currentIndex++;
@@ -5177,33 +5191,36 @@ function initSocialCarousel() {
   });
 
   track.addEventListener("touchstart", dragStart, {passive: true});
-  track.addEventListener("touchend", dragEnd);
-  track.addEventListener("touchmove", dragAction, {passive: true});
-
   track.addEventListener("mousedown", dragStart);
-  window.addEventListener("mouseup", dragEnd);
-  window.addEventListener("mousemove", dragAction);
 
   function dragStart(e) {
+    isDragging = true;
     if (e.type === "touchstart") {
       startX = e.touches[0].clientX;
+      window.addEventListener("touchmove", dragAction, {passive: true});
+      window.addEventListener("touchend", dragEnd);
     } else {
       startX = e.clientX;
-      isDragging = true;
+      window.addEventListener("mousemove", dragAction);
+      window.addEventListener("mouseup", dragEnd);
     }
   }
 
   function dragAction(e) {
-    if (!isDragging && e.type !== "touchmove") return;
-    const currentPosition = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+    if (!isDragging) return;
+    const currentPosition = e.type.startsWith("touch") ? e.touches[0].clientX : e.clientX;
     const diff = currentPosition - startX;
     track.style.transform = `translateX(${prevTranslate + diff}px)`;
   }
 
   function dragEnd(e) {
-    if (!isDragging && e.type !== "touchend") return;
+    if (!isDragging) return;
     isDragging = false;
-    const endPosition = e.type === "touchend" ? e.changedTouches[0].clientX : e.clientX;
+    window.removeEventListener("mousemove", dragAction);
+    window.removeEventListener("mouseup", dragEnd);
+    window.removeEventListener("touchmove", dragAction);
+    window.removeEventListener("touchend", dragEnd);
+    const endPosition = e.type.startsWith("touch") ? (e.changedTouches?.[0]?.clientX ?? startX) : e.clientX;
     const diff = endPosition - startX;
 
     if (diff < -50) currentIndex++;
