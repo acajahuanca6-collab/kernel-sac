@@ -1,0 +1,150 @@
+/* ============ TOKENS BASE ============ */
+:root {
+  --font-head: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+/* ============ TEMA OSCURO (Por defecto): ROJO CARMESÍ DE ALTA CALIDAD & OBSIDIANA ============ */
+:root, [data-theme="dark"] {
+  --bg: #0c0608;
+  --bg-gradient:
+    radial-gradient(ellipse 950px 650px at 15% -10%, rgba(225, 29, 72, 0.35), transparent 60%),
+    radial-gradient(ellipse 850px 750px at 90% 15%, rgba(244, 63, 94, 0.26), transparent 55%),
+    radial-gradient(circle 900px at 10% 45%, rgba(225, 29, 72, 0.18), transparent 60%),
+    radial-gradient(ellipse 1000px 800px at 50% 110%, rgba(159, 18, 57, 0.40), transparent 60%),
+    #0c0608;
+  --panel: rgba(30, 12, 18, 0.75);
+  --panel-2: rgba(45, 16, 25, 0.85);
+  --line: rgba(225, 29, 72, 0.22);
+  --line-soft: rgba(255, 255, 255, 0.08);
+  --text: #f8f4f4;
+  --text-dim: #b89fa4;
+  --red: #e11d48;
+  --red-dim: #4c0519;
+  --red-2: #be123c;
+  --cyan: #fb7185;
+  --danger: #ff4d6d;
+
+  /* Liquid Glass Carmesí Tecnológico y Elegante */
+  --glass-bg: linear-gradient(145deg, rgba(32, 14, 25, 0.70) 0%, rgba(18, 8, 15, 0.82) 50%, rgba(42, 12, 26, 0.65) 100%);
+  --glass-bg-strong: rgba(38, 14, 22, 0.90);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --glass-border-accent: rgba(225, 29, 72, 0.55);
+  --glass-highlight: rgba(255, 255, 255, 0.50);
+  --glass-blur: blur(12px);
+  --glass-shadow: 0 22px 55px rgba(0, 0, 0, 0.75), 0 0 35px rgba(225, 29, 72, 0.20);
+
+  --header-bg: rgba(14, 6, 9, 0.82);
+  --card-bg: linear-gradient(145deg, rgba(32, 14, 25, 0.72) 0%, rgba(16, 7, 14, 0.84) 50%, rgba(42, 12, 26, 0.68) 100%);
+  --card-hover-bg: linear-gradient(145deg, rgba(38, 16, 30, 0.82) 0%, rgba(20, 8, 18, 0.92) 50%, rgba(52, 14, 32, 0.78) 100%);
+  --card-border: rgba(255, 255, 255, 0.24);
+  --card-hover-border: rgba(225, 29, 72, 0.60);
+  --card-shadow: 0 20px 48px rgba(0, 0, 0, 0.65), 0 0 30px rgba(225, 29, 72, 0.18);
+
+  --bento-bg: linear-gradient(145deg, rgba(34, 14, 25, 0.78) 0%, rgba(18, 8, 16, 0.88) 50%, rgba(46, 14, 28, 0.74) 100%);
+  --bento-hero-bg: linear-gradient(145deg, rgba(44, 16, 32, 0.84) 0%, rgba(22, 9, 19, 0.92) 50%, rgba(58, 16, 36, 0.80) 100%);
+  --bento-border: rgba(255, 255, 255, 0.20);
+  --bento-shadow: inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 3px 0 rgba(0, 0, 0, 0.6), 0 20px 48px rgba(0, 0, 0, 0.7), 0 0 30px rgba(225, 29, 72, 0.18);
+
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.14);
+}
+
+/* ============ TEMA CLARO: TONO BEIGE CLARO / BLANCO ROTO & LIQUID GLASS PURO ============ */
+[data-theme="light"] {
+  --bg: #f8f5ee;
+  --bg-gradient:
+    radial-gradient(ellipse 1000px 600px at 20% -8%, rgba(225, 29, 72, 0.18), transparent 65%),
+    radial-gradient(ellipse 850px 750px at 85% 15%, rgba(255, 175, 150, 0.32), transparent 60%),
+    radial-gradient(circle 900px at 10% 45%, rgba(254, 205, 211, 0.38), transparent 65%),
+    radial-gradient(ellipse 950px 800px at 90% 65%, rgba(225, 29, 72, 0.15), transparent 60%),
+    radial-gradient(ellipse 1100px 800px at 50% 110%, rgba(225, 29, 72, 0.10), transparent 65%),
+    #f8f5ee;
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-2: rgba(246, 242, 235, 0.82);
+  --line: rgba(0, 0, 0, 0.08);
+  --line-soft: rgba(0, 0, 0, 0.04);
+  --text: #0c080b;
+  --text-dim: #383034;
+  --red: #e11d48;
+  --red-dim: #ffe4e6;
+  --red-2: #be123c;
+  --cyan: #9f1239;
+  --danger: #dc2626;
+
+  /* Liquid Glass Blanco Puro Translúcido con Desenfoque & Especularidad */
+  --glass-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 240, 245, 0.62) 100%);
+  --glass-bg-strong: rgba(255, 255, 255, 0.86);
+  --glass-border: rgba(255, 255, 255, 0.95);
+  --glass-border-accent: rgba(225, 29, 72, 0.45);
+  --glass-highlight: #ffffff;
+  --glass-blur: blur(12px);
+  --glass-shadow: 0 20px 48px rgba(160, 100, 110, 0.15), 0 4px 16px rgba(225, 29, 72, 0.08);
+
+  --header-bg: rgba(248, 245, 238, 0.78);
+  --card-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.48) 50%, rgba(255, 240, 246, 0.65) 100%);
+  --card-hover-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.58) 50%, rgba(255, 245, 248, 0.78) 100%);
+  --card-border: rgba(255, 255, 255, 0.96);
+  --card-hover-border: rgba(225, 29, 72, 0.50);
+  --card-shadow: 0 18px 44px rgba(160, 90, 100, 0.14), 0 4px 16px rgba(225, 29, 72, 0.08);
+
+  --bento-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0.40) 50%, rgba(245, 240, 248, 0.58) 100%);
+  --bento-hero-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.84) 0%, rgba(255, 255, 255, 0.48) 50%, rgba(255, 235, 242, 0.68) 100%);
+  --bento-border: rgba(255, 255, 255, 0.95);
+  --bento-shadow: inset 0 2px 1.5px 0 #ffffff, inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.05), 0 16px 36px -6px rgba(120, 80, 70, 0.12), 0 4px 16px -2px rgba(225, 29, 72, 0.06);
+
+  --input-bg: rgba(255, 255, 255, 0.80);
+  --input-border: rgba(0, 0, 0, 0.12);
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--bg);
+  transition: color 0.3s ease;
+}
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  background: var(--bg-gradient);
+  pointer-events: none;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* ============ LIQUID GLASS BASE ============ */
+.glass{
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 0 40px rgba(255,255,255,0.03),
+    var(--glass-shadow);
+  position: relative;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glass::before{
+  content:"";
+  position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 30%);
+}
+img{ max-width:100%; display:block; }
+a{ color: inherit; text-decoration:none; }
+button{ font-family: inherit; cursor:pointer; }
+h1,h2,h3{ font-family: var(--font-head); margin:0; letter-spacing: -0.01em; }
+.wrap{ max-width: 1220px; margin:0 auto; padding: 0 24px; }
+.mono{ font-family: var(--font-mono); }
+.uppercase{ text-transform: uppercase; letter-spacing: .04em; }

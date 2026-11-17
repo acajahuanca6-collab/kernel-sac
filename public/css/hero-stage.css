@@ -1,0 +1,893 @@
+/* ============ HERO CAROUSEL: ESTILO CURACAO EN LIQUID GLASS CYBER STAGE ============ */
+.curacao-hero-section {
+  position: relative;
+  width: 100%;
+  margin-top: 74px;
+  padding: 16px 0 24px;
+}
+
+/* Master Stage: Escenario tecnológico Liquid Glass sin fotos de casa */
+.curacao-master-stage {
+  --hero-accent: #ff2d67;
+  --hero-accent-sub: #ff5c8a;
+  --hero-accent-light: #ff9ebb;
+  --hero-glow: rgba(255, 45, 103, 0.45);
+  --hero-orb-1: rgba(255, 45, 103, 0.45);
+  --hero-orb-2: rgba(0, 210, 255, 0.40);
+  --hero-tag-bg: rgba(255, 45, 106, 0.18);
+  --hero-tag-border: rgba(255, 45, 106, 0.4);
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  border-radius: 36px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 14% 18%, var(--hero-orb-1) 0%, transparent 45%),
+    radial-gradient(circle at 86% 22%, var(--hero-orb-2) 0%, transparent 45%),
+    radial-gradient(ellipse 1100px 500px at 50% 95%, rgba(138, 43, 226, 0.24) 0%, transparent 65%),
+    linear-gradient(180deg, #130a17 0%, #0c050e 45%, #060207 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.26);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.85), inset 0 2px 2px rgba(255, 255, 255, 0.5), 0 0 50px var(--hero-glow);
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Temas Cromáticos Seleccionables por el Administrador */
+.curacao-master-stage[data-hero-theme="cyan"] {
+  --hero-accent: #00d2ff;
+  --hero-accent-sub: #00f5d4;
+  --hero-accent-light: #a7f3d0;
+  --hero-glow: rgba(0, 210, 255, 0.45);
+  --hero-orb-1: rgba(0, 210, 255, 0.45);
+  --hero-orb-2: rgba(59, 130, 246, 0.40);
+  --hero-tag-bg: rgba(0, 210, 255, 0.18);
+  --hero-tag-border: rgba(0, 210, 255, 0.4);
+}
+
+.curacao-master-stage[data-hero-theme="gold"] {
+  --hero-accent: #ffb703;
+  --hero-accent-sub: #fb8500;
+  --hero-accent-light: #ffe494;
+  --hero-glow: rgba(255, 183, 3, 0.45);
+  --hero-orb-1: rgba(255, 183, 3, 0.45);
+  --hero-orb-2: rgba(239, 68, 68, 0.35);
+  --hero-tag-bg: rgba(255, 183, 3, 0.18);
+  --hero-tag-border: rgba(255, 183, 3, 0.4);
+}
+
+.curacao-master-stage[data-hero-theme="green"] {
+  --hero-accent: #10b981;
+  --hero-accent-sub: #06b6d4;
+  --hero-accent-light: #6ee7b7;
+  --hero-glow: rgba(16, 185, 129, 0.45);
+  --hero-orb-1: rgba(16, 185, 129, 0.45);
+  --hero-orb-2: rgba(6, 182, 212, 0.35);
+  --hero-tag-bg: rgba(16, 185, 129, 0.18);
+  --hero-tag-border: rgba(16, 185, 129, 0.4);
+}
+
+.curacao-master-stage[data-hero-theme="purple"] {
+  --hero-accent: #a855f7;
+  --hero-accent-sub: #ec4899;
+  --hero-accent-light: #f472b6;
+  --hero-glow: rgba(168, 85, 247, 0.45);
+  --hero-orb-1: rgba(168, 85, 247, 0.45);
+  --hero-orb-2: rgba(236, 72, 153, 0.35);
+  --hero-tag-bg: rgba(168, 85, 247, 0.18);
+  --hero-tag-border: rgba(168, 85, 247, 0.4);
+}
+
+/* Orbes Ambientales Fluidos para que el Liquid Glass se note al 100% en vivo */
+.liquid-ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform;
+  transform: translateZ(0);
+  animation: liquidOrbFloat 14s infinite alternate ease-in-out;
+}
+
+.liquid-ambient-orb.orb-1 {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(255, 45, 103, 0.45) 0%, rgba(255, 45, 103, 0) 70%);
+  top: -30px;
+  left: 15%;
+}
+
+.liquid-ambient-orb.orb-2 {
+  width: 290px;
+  height: 290px;
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.40) 0%, rgba(0, 210, 255, 0) 70%);
+  bottom: -40px;
+  right: 18%;
+  animation-delay: -5s;
+}
+
+.liquid-ambient-orb.orb-3 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 187, 0, 0.40) 0%, rgba(255, 187, 0) 0%, rgba(255, 187, 0, 0) 70%);
+  top: 35%;
+  right: 42%;
+  animation-delay: -8s;
+}
+
+@keyframes liquidOrbFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(25px, -20px) scale(1.12);
+  }
+
+  100% {
+    transform: translate(-20px, 22px) scale(0.94);
+  }
+}
+
+/* Rejilla cyber sutil y viñeta ambiental Liquid Glass */
+.curacao-stage-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 40%, transparent 95%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 40%, transparent 95%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Grid del Stage: Columna izquierda promocional + Área de exhibición de productos */
+.curacao-stage-grid {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: 20px;
+  padding: 28px 28px 16px;
+  align-items: stretch;
+  min-height: 480px;
+}
+
+@media (max-width: 980px) {
+  .curacao-stage-grid {
+    grid-template-columns: 1fr;
+    padding: 20px 16px;
+    gap: 20px;
+  }
+}
+
+/* Columna Izquierda: Tarjeta Flotante Liquid Glass */
+.curacao-left-promo {
+  position: relative;
+  background: linear-gradient(145deg, rgba(32, 12, 24, 0.70) 0%, rgba(18, 7, 14, 0.82) 50%, rgba(45, 12, 28, 0.65) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border-radius: 28px;
+  padding: 26px 22px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.75),
+    0 0 40px rgba(225, 29, 72, 0.22),
+    inset 0 2px 2px rgba(255, 255, 255, 0.5),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 4;
+  overflow: hidden;
+}
+
+.curacao-left-promo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.04) 75%, transparent 100%);
+  border-radius: 28px 28px 80px 80px / 28px 28px 30px 30px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.curacao-left-promo>* {
+  position: relative;
+  z-index: 6;
+}
+
+.curacao-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--hero-tag-bg, rgba(255, 45, 106, 0.18));
+  border: 1px solid var(--hero-tag-border, rgba(255, 45, 106, 0.4));
+  color: var(--hero-accent, #ff3366);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  backdrop-filter: blur(8px);
+}
+
+.curacao-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--hero-accent, #ff3366);
+  box-shadow: 0 0 10px var(--hero-accent, #ff3366);
+  animation: curacaoPulse 1.8s infinite;
+}
+
+@keyframes curacaoPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+
+.curacao-brand-title {
+  margin-bottom: 6px;
+}
+
+.curacao-cyber-title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 0.95;
+}
+
+.cyber-highlight {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-family: var(--font-head);
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.3);
+}
+
+.wow-balloon {
+  font-size: 3.8rem;
+  font-weight: 900;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--hero-accent, #ff2d67);
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, var(--hero-accent, #ff2d67) 0%, var(--hero-accent-sub, #ff5c8a) 50%, var(--hero-accent-light, #ff9ebb) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px var(--hero-glow, rgba(255, 45, 103, 0.45)));
+  line-height: 0.9;
+  margin-top: 2px;
+}
+
+.curacao-promo-sub {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.88rem;
+  margin: 8px 0 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+.curacao-coupon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px dashed rgba(255, 222, 0, 0.7);
+  color: #ffde00;
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  margin-bottom: 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.curacao-coupon-badge:hover {
+  background: rgba(255, 222, 0, 0.14);
+  border-color: #ffde00;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(255, 222, 0, 0.3);
+}
+
+.curacao-coupon-badge.copied {
+  background: rgba(34, 197, 94, 0.2) !important;
+  border-color: #22c55e !important;
+  color: #4ade80 !important;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4) !important;
+}
+
+.curacao-coupon-badge strong {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.curacao-cta-row {
+  margin-bottom: 16px;
+}
+
+.curacao-btn-comprar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #0b0708;
+  font-weight: 800;
+  font-size: 0.96rem;
+  text-decoration: none;
+  border: 2px solid var(--hero-accent, #ff2d67);
+  box-shadow: 0 4px 18px var(--hero-glow, rgba(255, 45, 103, 0.35));
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.curacao-btn-comprar::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  transform: rotate(30deg);
+  transition: none;
+}
+
+.curacao-btn-comprar:hover {
+  background: var(--hero-accent, #ff2d67);
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 26px var(--hero-glow, rgba(255, 45, 103, 0.6));
+}
+
+.curacao-btn-comprar:hover::after {
+  left: 120%;
+  transition: all 0.65s ease;
+}
+
+.curacao-cta-arrow {
+  transition: transform 0.2s ease;
+}
+
+.curacao-btn-comprar:hover .curacao-cta-arrow {
+  transform: translateX(3px);
+}
+
+.curacao-mini-stats {
+  display: flex;
+  gap: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 12px;
+}
+
+.curacao-stat-item strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: #ffde00;
+}
+
+.curacao-stat-item span {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Columna Derecha / Viewport de Productos */
+.curacao-carousel-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.curacao-slider-viewport {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 0;
+}
+
+.curacao-slider-track {
+  display: flex;
+  gap: 16px;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+/* Cada producto exhibido en su Pedestal Pod Liquid Glass */
+.curacao-stage-item {
+  position: relative;
+  z-index: 4;
+  height: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  background: linear-gradient(145deg, rgba(32, 14, 25, 0.72) 0%, rgba(16, 7, 14, 0.84) 50%, rgba(42, 12, 26, 0.68) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.24);
+  border-radius: 24px;
+  padding: 14px;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.65),
+    0 0 30px rgba(225, 29, 72, 0.18),
+    inset 0 2px 1.5px rgba(255, 255, 255, 0.45),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.curacao-stage-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 25%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+  border-radius: 24px 24px 0 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.curacao-stage-item:hover {
+  transform: translateY(-8px) scale(1.015);
+  border-color: rgba(255, 45, 95, 0.65);
+  background: linear-gradient(145deg, rgba(38, 16, 30, 0.80) 0%, rgba(20, 8, 18, 0.90) 50%, rgba(52, 14, 32, 0.75) 100%);
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.8),
+    0 0 45px rgba(255, 45, 95, 0.35),
+    inset 0 2px 2px rgba(255, 255, 255, 0.65);
+}
+
+/* Encabezado del producto: Píldoras de specs a la izquierda y REGALO a la derecha */
+.stage-item-top {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 4;
+  padding: 2px 2px 0;
+  gap: 8px;
+}
+
+.stage-specs-column {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 62%;
+}
+
+.stage-spec-pill {
+  background: #ffde00;
+  color: #0c0812;
+  font-weight: 800;
+  font-size: 0.65rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.stage-gift-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  max-width: 44%;
+}
+
+.stage-gift-tag {
+  background: var(--hero-accent, #ff2d67);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.66rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  box-shadow: 0 2px 10px var(--hero-glow, rgba(255, 45, 103, 0.45));
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stage-gift-name {
+  background: rgba(18, 12, 14, 0.95);
+  color: #ffde00;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 222, 0, 0.4);
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Área donde el producto se exhibe enmarcado dentro del pedestal de cristal */
+.stage-product-center {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  min-height: 180px;
+  margin: 6px 0;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.curacao-stage-item:hover .stage-product-center {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--hero-accent, rgba(255, 45, 95, 0.3));
+}
+
+.stage-product-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s ease;
+}
+
+.curacao-stage-item:hover .stage-product-img-wrap {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.stage-product-img {
+  max-width: 92%;
+  max-height: 165px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  z-index: 2;
+  border-radius: 12px;
+  display: block;
+}
+
+.stage-contact-shadow {
+  display: none;
+}
+
+/* Barra Flotante Liquid Glass con Datos y Precios */
+.stage-product-glass-bar {
+  position: relative;
+  z-index: 4;
+  background: rgba(16, 8, 15, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  padding: 10px 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.curacao-stage-item:hover .stage-product-glass-bar {
+  border-color: rgba(255, 222, 0, 0.5);
+  background: rgba(22, 11, 20, 0.96);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.stage-product-title {
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.32;
+  margin: 0 0 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.64em;
+  font-family: var(--font-head);
+}
+
+.stage-product-cat {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.66rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+.stage-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.stage-price-main {
+  display: flex;
+  align-items: baseline;
+  color: #ffffff;
+}
+
+.stage-price-cur {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-right: 3px;
+  opacity: 0.9;
+}
+
+.stage-price-amount {
+  font-size: 1.7rem;
+  font-weight: 900;
+  font-family: var(--font-head);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.stage-price-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.stage-old-price {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.7rem;
+  text-decoration: line-through;
+  font-family: var(--font-mono);
+}
+
+.stage-discount-tag {
+  background: var(--hero-accent, #ff2d67);
+  color: #ffffff;
+  font-size: 0.64rem;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+.stage-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.stage-btn-buy {
+  flex: 1;
+  background: var(--hero-accent, #ff2d67);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--hero-glow, rgba(255, 45, 103, 0.35));
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  letter-spacing: 0.02em;
+}
+
+.stage-btn-buy:hover {
+  background: var(--hero-accent-sub, #ff477e);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px var(--hero-glow, rgba(255, 45, 103, 0.55));
+}
+
+.stage-btn-cart {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.stage-btn-cart:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: var(--hero-accent, #ff2d67);
+  color: var(--hero-accent, #ff2d67);
+  transform: translateY(-2px) scale(1.06);
+}
+
+/* Flechas de Navegación Liquid Glass */
+.curacao-arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(16, 8, 14, 0.88);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.curacao-arrow-btn:hover {
+  background: var(--hero-accent, #ff2d67);
+  border-color: var(--hero-accent, #ff2d67);
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 10px 28px var(--hero-glow, rgba(255, 45, 103, 0.6));
+}
+
+.curacao-arrow-btn.prev {
+  left: 4px;
+}
+
+.curacao-arrow-btn.next {
+  right: 4px;
+}
+
+/* Dots estilo Curacao */
+.curacao-dots-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 16px;
+  position: relative;
+  z-index: 10;
+}
+
+.curacao-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.curacao-dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.curacao-dot.active {
+  width: 30px;
+  height: 9px;
+  border-radius: 5px;
+  background: var(--hero-accent, #ff2d67);
+  box-shadow: 0 0 12px var(--hero-glow, rgba(255, 45, 103, 0.65));
+}
+
+/* ================= ADAPTACIONES MODO CLARO PARA EL HERO STAGE ================= */
+[data-theme="light"] .curacao-master-stage {
+  background:
+    radial-gradient(circle at 14% 18%, var(--hero-orb-1, rgba(225, 29, 72, 0.16)) 0%, transparent 45%),
+    radial-gradient(circle at 86% 22%, var(--hero-orb-2, rgba(251, 146, 60, 0.18)) 0%, transparent 45%),
+    radial-gradient(ellipse 1100px 500px at 50% 95%, rgba(236, 72, 153, 0.14) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(248, 245, 240, 0.88) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.98);
+  box-shadow: 0 28px 70px rgba(160, 100, 110, 0.16), 0 0 40px var(--hero-glow, rgba(225, 29, 72, 0.08)), inset 0 2px 2px #ffffff;
+}
+
+[data-theme="light"] .curacao-left-promo {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 238, 243, 0.60) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.98);
+}
+
+[data-theme="light"] .cyber-highlight {
+  color: #171416;
+  text-shadow: none;
+}
+
+[data-theme="light"] .curacao-promo-sub {
+  color: #5d5357;
+}
+
+[data-theme="light"] .curacao-arrow-btn {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1.5px solid #ffffff;
+  color: #171416;
+  box-shadow: 0 8px 24px rgba(120, 80, 70, 0.16), inset 0 1px 0 #ffffff;
+}
+
+[data-theme="light"] .curacao-arrow-btn:hover {
+  background: var(--hero-accent, #ff2d67);
+  border-color: var(--hero-accent, #ff2d67);
+  color: #ffffff;
+  box-shadow: 0 10px 28px var(--hero-glow, rgba(255, 45, 103, 0.5));
+}
+
+[data-theme="light"] .curacao-dot {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+[data-theme="light"] .curacao-dot.active {
+  background: var(--hero-accent, #ff2d67);
+  box-shadow: 0 0 10px var(--hero-glow, rgba(255, 45, 103, 0.5));
+}
+
+[data-theme="light"] .stage-product-title {
+  color: #171416;
+}
+
+[data-theme="light"] .stage-product-cat {
+  color: #7a6e72;
+}
+
+[data-theme="light"] .stage-price-main {
+  color: #171416;
+}
+
+[data-theme="light"] .stage-old-price {
+  color: #948589;
+}
+
+[data-theme="light"] .stage-btn-cart {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #171416;
+}
+
+[data-theme="light"] .curacao-btn-comprar {
+  background: #ffffff;
+  color: #171416;
+  border-color: var(--hero-accent, #ff2d67);
+}
+
+[data-theme="light"] .curacao-btn-comprar:hover {
+  background: var(--hero-accent, #ff2d67);
+  color: #ffffff;
+}

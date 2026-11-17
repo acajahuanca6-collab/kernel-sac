@@ -176,8 +176,9 @@ if (!configGeneral) {
 }
 
 // Producto Honor Magic 8 Lite (ejemplo de la imagen 2 del usuario)
+const catExiste = db.prepare("SELECT id FROM categorias WHERE id = 4").get();
 const existeHonor = db.prepare("SELECT id FROM productos WHERE nombre LIKE '%HONOR Magic 8 Lite%'").get();
-if (!existeHonor) {
+if (catExiste && !existeHonor) {
   db.prepare(`
     INSERT INTO productos (nombre, categoria_id, precio, stock, descripcion, caracteristicas, destacado, icono, imagen_url, en_carrusel, precio_anterior, etiqueta_promo, regalo_nombre)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
