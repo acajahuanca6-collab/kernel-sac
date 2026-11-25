@@ -2840,29 +2840,51 @@ document.addEventListener("keydown", (e) => {
 // ================= TAB 9: REDES SOCIALES ====================
 // ============================================================
 
-const REDES_DEFECTO = [
-  { id: "instagram", nombre: "Instagram", url: "https://instagram.com", descripcion: "Fotos de setups increíbles, unboxings y detrás de cámaras.", color: "#E1306C", activo: true },
-  { id: "tiktok", nombre: "TikTok", url: "https://tiktok.com", descripcion: "Videos rápidos, tips de tecnología y memes de ensamble.", color: "#00f2fe", activo: true },
-  { id: "youtube", nombre: "YouTube", url: "https://youtube.com", descripcion: "Reviews a fondo, tutoriales y guías de armado paso a paso.", color: "#FF0000", activo: true },
-  { id: "facebook", nombre: "Facebook", url: "https://facebook.com", descripcion: "Únete a nuestra comunidad, mira transmisiones en vivo y sorteos.", color: "#1877F2", activo: true },
-  { id: "whatsapp", nombre: "Canal de WhatsApp", url: "https://wa.me/51967006922", descripcion: "Ofertas relámpago, alertas de stock y lanzamientos exclusivos.", color: "#25D366", activo: false },
-  { id: "x", nombre: "X (Twitter)", url: "https://x.com", descripcion: "Noticias de tecnología y lanzamientos de hardware en tiempo real.", color: "#ffffff", activo: false }
+const REDES_KEYS = [
+  { id: "instagram", suffix: "Instagram", nombre: "Instagram", color: "#E1306C", url: "https://instagram.com", descripcion: "Fotos de setups increíbles, unboxings y detrás de cámaras." },
+  { id: "tiktok", suffix: "TikTok", nombre: "TikTok", color: "#00f2fe", url: "https://tiktok.com", descripcion: "Videos rápidos, tips de tecnología y memes de ensamble." },
+  { id: "youtube", suffix: "YouTube", nombre: "YouTube", color: "#FF0000", url: "https://youtube.com", descripcion: "Reviews a fondo, tutoriales y guías de armado paso a paso." },
+  { id: "facebook", suffix: "Facebook", nombre: "Facebook", color: "#1877F2", url: "https://facebook.com", descripcion: "Únete a nuestra comunidad, mira transmisiones en vivo y sorteos." },
+  { id: "whatsapp", suffix: "WhatsApp", nombre: "Canal WhatsApp", color: "#25D366", url: "https://wa.me/51967006922", descripcion: "Ofertas relámpago, alertas de stock y lanzamientos exclusivos." },
+  { id: "x", suffix: "X", nombre: "X (Twitter)", color: "#ffffff", url: "https://x.com", descripcion: "Noticias de tecnología y lanzamientos de hardware en tiempo real." }
 ];
 
+function getSocialSvgIcon(id, size = 24) {
+  switch (id) {
+    case "instagram":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>`;
+    case "tiktok":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>`;
+    case "youtube":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.501 5.814a3.016 3.016 0 0 0 2.122 2.136c1.872.55 9.377.55 9.377.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`;
+    case "facebook":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
+    case "whatsapp":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.1c-.24.68-1.4 1.32-1.93 1.36-.5.05-1.03.24-3.45-.72-2.9-1.15-4.76-4.07-4.9-4.26-.14-.19-1.17-1.56-1.17-2.97 0-1.41.74-2.1 1-2.39.26-.28.57-.35.76-.35h.55c.18 0 .42-.07.65.5.24.6.82 2.07.9 2.22.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.29.29-.13.57.17.28.74 1.22 1.59 1.98 1.1.98 2.02 1.28 2.31 1.43.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.28.38-.24.63-.14.26.1 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>`;
+    case "x":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
+    default:
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>`;
+  }
+}
+window.getSocialSvgIcon = getSocialSvgIcon;
+
 async function renderRedesAdmin() {
-  const container = document.getElementById("socialCardsGrid");
   const preview = document.getElementById("socialPreviewTrack");
   const tituloInput = document.getElementById("cfgRedesTitulo");
   const subtituloInput = document.getElementById("cfgRedesSubtitulo");
-  if (!container) return;
 
-  // Si no se ha cargado la configuración, obtenerla de la API
+  // Cargar configuración de redes desde backend si aún no está en adminState
   if (!adminState.redesConfig) {
     try {
       const data = await fetchJSON("/api/configuraciones/redes");
-      adminState.redesConfig = data || { titulo_seccion: "Síguenos en nuestras redes", redes: REDES_DEFECTO };
+      adminState.redesConfig = data;
     } catch {
-      adminState.redesConfig = state.configRedes || { titulo_seccion: "Síguenos en nuestras redes", redes: REDES_DEFECTO };
+      adminState.redesConfig = state.configRedes || {
+        titulo_seccion: "Síguenos en nuestras redes",
+        subtitulo: "Conéctate con nosotros en todas nuestras plataformas oficiales",
+        redes: REDES_KEYS
+      };
     }
   }
 
@@ -2874,66 +2896,65 @@ async function renderRedesAdmin() {
     subtituloInput.value = cfg.subtitulo || "Conéctate con nosotros en todas nuestras plataformas oficiales";
   }
 
-  const redesList = Array.isArray(cfg.redes) && cfg.redes.length > 0 ? cfg.redes : REDES_DEFECTO;
+  const redesList = Array.isArray(cfg.redes) && cfg.redes.length > 0 ? cfg.redes : REDES_KEYS;
 
-  // Renderizar tarjetas de edición individuales
-  container.innerHTML = redesList.map((r) => {
-    const isActivo = r.activo !== false;
-    return `
-      <div class="social-admin-card ${isActivo ? '' : 'inactivo'}" id="socialCard_${r.id}">
-        <div class="social-card-head">
-          <div class="social-badge-info">
-            <div class="social-badge-icon" style="background:${r.color || '#fff'}18; border:1px solid ${r.color || '#fff'}40; color:${r.color || '#fff'};">
-              ${typeof getSocialSvgIcon === 'function' ? getSocialSvgIcon(r.id, 22) : ''}
-            </div>
-            <strong class="social-badge-title">${escapeHtml(r.nombre)}</strong>
-          </div>
-          <div class="social-toggle-wrap">
-            <span>Mostrar</span>
-            <label class="switch-wrap">
-              <input type="checkbox" id="switchRed_${r.id}" ${isActivo ? 'checked' : ''} onchange="window.actualizarSwitchRed('${r.id}', this.checked)" />
-              <span class="switch-slider"></span>
-            </label>
-          </div>
-        </div>
+  // Llenar cada apartado individual con sus datos y enlazar eventos en vivo
+  REDES_KEYS.forEach(def => {
+    const item = redesList.find(r => r.id === def.id) || def;
+    const urlInput = document.getElementById("cfgUrl" + def.suffix);
+    const descInput = document.getElementById("cfgDesc" + def.suffix);
+    const activeInput = document.getElementById("cfgActive" + def.suffix);
+    const testLink = document.getElementById("testLink" + def.suffix);
+    const card = document.getElementById("cardAdmin" + def.suffix);
 
-        <div class="field">
-          <label style="display:flex; justify-content:space-between; align-items:center;">
-            <span>Enlace Directo (URL Oficial)</span>
-            <a href="${escapeHtml(r.url || '#')}" target="_blank" rel="noopener noreferrer" class="btn-test-link" id="testLink_${r.id}">
-              🔗 Probar Enlace
-            </a>
-          </label>
-          <input type="url" id="urlRed_${r.id}" value="${escapeHtml(r.url || '')}" placeholder="https://..." oninput="window.actualizarInputRed('${r.id}', 'url', this.value)" />
-        </div>
+    if (urlInput && !urlInput.dataset.userEdited) {
+      urlInput.value = item.url || "";
+    }
+    if (descInput && !descInput.dataset.userEdited) {
+      descInput.value = item.descripcion || "";
+    }
+    if (activeInput && !activeInput.dataset.userEdited) {
+      activeInput.checked = item.activo !== false;
+    }
+    if (testLink) {
+      testLink.href = item.url || "#";
+    }
+    if (card) {
+      card.classList.toggle("inactivo", item.activo === false);
+    }
 
-        <div class="field">
-          <label>Nombre a Mostrar</label>
-          <input type="text" id="nombreRed_${r.id}" value="${escapeHtml(r.nombre || '')}" oninput="window.actualizarInputRed('${r.id}', 'nombre', this.value)" />
-        </div>
+    if (urlInput && !urlInput._boundPreview) {
+      urlInput._boundPreview = true;
+      urlInput.addEventListener("input", (e) => {
+        urlInput.dataset.userEdited = "1";
+        if (testLink) testLink.href = e.target.value.trim() || "#";
+        renderSocialPreviewAdmin();
+      });
+    }
 
-        <div class="field">
-          <label>Descripción / Mensaje Promocional</label>
-          <input type="text" id="descRed_${r.id}" value="${escapeHtml(r.descripcion || '')}" oninput="window.actualizarInputRed('${r.id}', 'descripcion', this.value)" />
-        </div>
-      </div>
-    `;
-  }).join("");
+    if (descInput && !descInput._boundPreview) {
+      descInput._boundPreview = true;
+      descInput.addEventListener("input", () => {
+        descInput.dataset.userEdited = "1";
+        renderSocialPreviewAdmin();
+      });
+    }
 
-  // Escuchar inputs de título y subtítulo
-  if (tituloInput && !tituloInput._boundInput) {
-    tituloInput._boundInput = true;
-    tituloInput.addEventListener("input", (e) => {
+    if (activeInput && !activeInput._boundPreview) {
+      activeInput._boundPreview = true;
+      activeInput.addEventListener("change", (e) => {
+        activeInput.dataset.userEdited = "1";
+        if (card) card.classList.toggle("inactivo", !e.target.checked);
+        renderSocialPreviewAdmin();
+      });
+    }
+  });
+
+  if (tituloInput && !tituloInput._boundLive) {
+    tituloInput._boundLive = true;
+    tituloInput.addEventListener("input", () => {
       tituloInput.dataset.userEdited = "1";
-      if (adminState.redesConfig) adminState.redesConfig.titulo_seccion = e.target.value.trim();
       renderSocialPreviewAdmin();
-    });
-  }
-  if (subtituloInput && !subtituloInput._boundInput) {
-    subtituloInput._boundInput = true;
-    subtituloInput.addEventListener("input", (e) => {
-      subtituloInput.dataset.userEdited = "1";
-      if (adminState.redesConfig) adminState.redesConfig.subtitulo = e.target.value.trim();
     });
   }
 
@@ -2943,79 +2964,78 @@ window.renderRedesAdmin = renderRedesAdmin;
 
 function renderSocialPreviewAdmin() {
   const preview = document.getElementById("socialPreviewTrack");
-  if (!preview || !adminState.redesConfig) return;
+  if (!preview) return;
 
-  const activas = (adminState.redesConfig.redes || []).filter(r => r.activo !== false);
-  if (activas.length === 0) {
+  const cardsHtml = REDES_KEYS.map(def => {
+    const urlInput = document.getElementById("cfgUrl" + def.suffix);
+    const descInput = document.getElementById("cfgDesc" + def.suffix);
+    const activeInput = document.getElementById("cfgActive" + def.suffix);
+    const isActivo = activeInput ? activeInput.checked : true;
+    if (!isActivo) return "";
+
+    const url = (urlInput ? urlInput.value.trim() : "") || def.url;
+    const desc = (descInput ? descInput.value.trim() : "") || def.descripcion;
+
+    return `
+      <div class="social-preview-card">
+        <div class="social-preview-icon" style="color:${def.color};">
+          ${getSocialSvgIcon(def.id, 24)}
+        </div>
+        <div>
+          <h4 class="social-preview-title">${escapeHtml(def.nombre)}</h4>
+          <p class="social-preview-desc">${escapeHtml(desc)}</p>
+        </div>
+        <div style="font-size:0.72rem; color:var(--cyan); word-break:break-all; font-family:var(--font-mono); margin-top:4px;">
+          ${escapeHtml(url)}
+        </div>
+      </div>
+    `;
+  }).filter(Boolean).join("");
+
+  if (!cardsHtml) {
     preview.innerHTML = `<div class="empty-state" style="width:100%; padding:20px; text-align:center;">Todas las redes están desactivadas. Activa al menos una para que se muestre en el carrusel de la tienda.</div>`;
-    return;
+  } else {
+    preview.innerHTML = cardsHtml;
   }
-
-  preview.innerHTML = activas.map(r => `
-    <div class="social-preview-card">
-      <div class="social-preview-icon" style="color:${r.color || '#fff'};">
-        ${typeof getSocialSvgIcon === 'function' ? getSocialSvgIcon(r.id, 24) : ''}
-      </div>
-      <div>
-        <h4 class="social-preview-title">${escapeHtml(r.nombre)}</h4>
-        <p class="social-preview-desc">${escapeHtml(r.descripcion)}</p>
-      </div>
-      <div style="font-size:0.72rem; color:var(--cyan); word-break:break-all; font-family:var(--font-mono);">
-        ${escapeHtml(r.url || '#')}
-      </div>
-    </div>
-  `).join("");
 }
-
-window.actualizarSwitchRed = function(id, checked) {
-  if (!adminState.redesConfig || !adminState.redesConfig.redes) return;
-  const item = adminState.redesConfig.redes.find(r => r.id === id);
-  if (item) {
-    item.activo = checked;
-    const cardEl = document.getElementById(`socialCard_${id}`);
-    if (cardEl) cardEl.classList.toggle("inactivo", !checked);
-    renderSocialPreviewAdmin();
-  }
-};
-
-window.actualizarInputRed = function(id, field, value) {
-  if (!adminState.redesConfig || !adminState.redesConfig.redes) return;
-  const item = adminState.redesConfig.redes.find(r => r.id === id);
-  if (item) {
-    item[field] = value;
-    if (field === "url") {
-      const testBtn = document.getElementById(`testLink_${id}`);
-      if (testBtn) testBtn.href = value || "#";
-    }
-    renderSocialPreviewAdmin();
-  }
-};
-
-window.copiarEnlaceRed = function(id) {
-  const input = document.getElementById(`urlRed_${id}`);
-  if (input && input.value) {
-    navigator.clipboard?.writeText(input.value);
-    mostrarToast("Enlace copiado al portapapeles", "ok");
-  }
-};
 
 window.guardarRedesAdmin = async function() {
   const msg = document.getElementById("cfgRedesMsg");
+  const btn = document.getElementById("btnGuardarRedes");
   const titulo = document.getElementById("cfgRedesTitulo")?.value.trim() || "Síguenos en nuestras redes";
   const subtitulo = document.getElementById("cfgRedesSubtitulo")?.value.trim() || "";
 
-  if (!adminState.redesConfig || !adminState.redesConfig.redes) {
-    adminState.redesConfig = { titulo_seccion: titulo, subtitulo, redes: REDES_DEFECTO };
-  } else {
-    adminState.redesConfig.titulo_seccion = titulo;
-    adminState.redesConfig.subtitulo = subtitulo;
+  if (btn) btn.disabled = true;
+  if (msg) {
+    msg.textContent = "Guardando configuración de redes...";
+    msg.className = "form-msg";
   }
+
+  const redes = REDES_KEYS.map(def => {
+    const urlInput = document.getElementById("cfgUrl" + def.suffix);
+    const descInput = document.getElementById("cfgDesc" + def.suffix);
+    const activeInput = document.getElementById("cfgActive" + def.suffix);
+    return {
+      id: def.id,
+      nombre: def.nombre,
+      url: (urlInput ? urlInput.value.trim() : "") || def.url,
+      descripcion: (descInput ? descInput.value.trim() : "") || def.descripcion,
+      color: def.color,
+      activo: activeInput ? activeInput.checked : true
+    };
+  });
+
+  const payload = {
+    titulo_seccion: titulo,
+    subtitulo: subtitulo,
+    redes: redes
+  };
 
   try {
     const res = await fetchJSON("/api/configuraciones/redes", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(adminState.redesConfig),
+      body: JSON.stringify(payload),
     });
 
     adminState.redesConfig = res.config;
@@ -3023,21 +3043,23 @@ window.guardarRedesAdmin = async function() {
 
     // Actualizar carrusel en la tienda en vivo inmediatamente
     if (typeof renderSocialCarousel === "function") {
-      renderSocialCarousel();
+      renderSocialCarousel(res.config);
     }
 
     if (msg) {
-      msg.textContent = "¡Redes sociales guardadas y sincronizadas exitosamente con la tienda!";
+      msg.textContent = "✅ ¡Redes sociales guardadas y sincronizadas exitosamente con la tienda!";
       msg.className = "form-msg ok";
       setTimeout(() => { if (msg) msg.textContent = ""; }, 4000);
     }
     mostrarToast("Redes sociales actualizadas en vivo en la tienda", "ok");
   } catch (err) {
     if (msg) {
-      msg.textContent = "Error al guardar redes: " + err.message;
+      msg.textContent = "❌ Error al guardar redes: " + err.message;
       msg.className = "form-msg err";
     }
     mostrarToast("Error: " + err.message, "err");
+  } finally {
+    if (btn) btn.disabled = false;
   }
 };
 

@@ -101,48 +101,54 @@ function initIosCarousel() {
   }, 4500);
 }
 
-function renderSocialCarousel() {
-  const track = document.getElementById("socialCarouselTrack");
+// ================= CARRUSEL DE REDES SOCIALES (TIENDA) =================
+const SOCIAL_SLIDE_MAP = {
+  instagram: { slide: "slideInstagram", link: "socialLinkInstagram", desc: "socialDescInstagram" },
+  tiktok:    { slide: "slideTikTok", link: "socialLinkTikTok", desc: "socialDescTikTok" },
+  youtube:   { slide: "slideYouTube", link: "socialLinkYouTube", desc: "socialDescYouTube" },
+  facebook:  { slide: "slideFacebook", link: "socialLinkFacebook", desc: "socialDescFacebook" },
+  whatsapp:  { slide: "slideWhatsApp", link: "socialLinkWhatsApp", desc: "socialDescWhatsApp" },
+  x:         { slide: "slideX", link: "socialLinkX", desc: "socialDescX" }
+};
+
+function renderSocialCarousel(customConfig) {
+  const cfg = customConfig || state.configRedes;
   const sectionTitle = document.querySelector("#socialCarouselSection .section-head h2");
-  if (!track) return;
-
-  const cfg = state.configRedes || {
-    titulo_seccion: "Síguenos en nuestras redes",
-    redes: [
-      { id: "instagram", nombre: "Instagram", url: "https://instagram.com", descripcion: "Fotos de setups increíbles, unboxings y detrás de cámaras.", color: "#E1306C", activo: true },
-      { id: "tiktok", nombre: "TikTok", url: "https://tiktok.com", descripcion: "Videos rápidos, tips de tecnología y memes de ensamble.", color: "#00f2fe", activo: true },
-      { id: "youtube", nombre: "YouTube", url: "https://youtube.com", descripcion: "Reviews a fondo, tutoriales y guías de armado paso a paso.", color: "#FF0000", activo: true },
-      { id: "facebook", nombre: "Facebook", url: "https://facebook.com", descripcion: "Únete a nuestra comunidad, mira transmisiones en vivo y sorteos.", color: "#1877F2", activo: true }
-    ]
-  };
-
-  if (sectionTitle && cfg.titulo_seccion) {
+  if (sectionTitle && cfg?.titulo_seccion) {
     sectionTitle.textContent = cfg.titulo_seccion;
   }
 
-  const activas = (cfg.redes || []).filter(r => r.activo !== false);
-  if (activas.length === 0) {
-    track.innerHTML = `<div class="empty-state" style="width:100%; padding:20px; text-align:center;">Próximamente nuevas redes sociales oficiales.</div>`;
-    return;
-  }
+  const redes = cfg?.redes || [
+    { id: "instagram", url: "https://instagram.com", descripcion: "Fotos de setups increíbles, unboxings y detrás de cámaras.", activo: true },
+    { id: "tiktok", url: "https://tiktok.com", descripcion: "Videos rápidos, tips de tecnología y memes de ensamble.", activo: true },
+    { id: "youtube", url: "https://youtube.com", descripcion: "Reviews a fondo, tutoriales y guías de armado paso a paso.", activo: true },
+    { id: "facebook", url: "https://facebook.com", descripcion: "Únete a nuestra comunidad, mira transmisiones en vivo y sorteos.", activo: true },
+    { id: "whatsapp", url: "https://wa.me/51967006922", descripcion: "Ofertas relámpago, alertas de stock y lanzamientos exclusivos.", activo: true },
+    { id: "x", url: "https://x.com", descripcion: "Noticias de tecnología y lanzamientos de hardware en tiempo real.", activo: true }
+  ];
 
-  track.innerHTML = activas.map(r => `
-    <div class="ios-slide">
-      <a href="${escapeHtml(r.url || '#')}" target="_blank" rel="noopener noreferrer" class="ios-glass-card" style="text-decoration:none; display:flex;">
-        <div class="slide-icon" style="color:${r.color || '#fff'};">
-          ${typeof getSocialSvgIcon === 'function' ? getSocialSvgIcon(r.id) : ''}
-        </div>
-        <div class="slide-content">
-          <h3>${escapeHtml(r.nombre || '')}</h3>
-          <p>${escapeHtml(r.descripcion || '')}</p>
-        </div>
-      </a>
-    </div>
-  `).join("");
+  redes.forEach(item => {
+    const map = SOCIAL_SLIDE_MAP[item.id];
+    if (!map) return;
+    const slide = document.getElementById(map.slide);
+    const link = document.getElementById(map.link);
+    const desc = document.getElementById(map.desc);
+
+    if (slide) {
+      slide.style.display = item.activo !== false ? "" : "none";
+    }
+    if (link && item.url) {
+      link.href = item.url;
+    }
+    if (desc && item.descripcion) {
+      desc.textContent = item.descripcion;
+    }
+  });
 
   initSocialCarousel();
 }
 window.renderSocialCarousel = renderSocialCarousel;
+window.aplicarRedesEnTienda = renderSocialCarousel;
 
 function initSocialCarousel() {
   const track = document.getElementById("socialCarouselTrack");
@@ -151,99 +157,75 @@ function initSocialCarousel() {
   const dotsContainer = document.getElementById("socialCarouselDots");
   if (!track) return;
 
-  const slides = track.querySelectorAll(".ios-slide");
-  const totalSlides = slides.length;
-  if (!totalSlides) return;
-  let currentIndex = 0;
-  let startX = 0;
-  let isDragging = false;
-  let currentTranslate = 0;
-  let prevTranslate = 0;
+  function getVisibleSlides() {
+    return Array.from(track.querySelectorAll(".ios-slide")).filter(s => s.style.display !== "none");
+  }
 
-  dotsContainer.innerHTML = Array.from({length: totalSlides}).map((_, i) => `<div class="ios-dot ${i===0?'active':''}" data-index="${i}"></div>`).join("");
-  const dots = dotsContainer.querySelectorAll(".ios-dot");
+  function applyTranslate() {
+    const visibleSlides = getVisibleSlides();
+    const totalVisible = visibleSlides.length;
+    if (!totalVisible || !visibleSlides[0]) return;
+    const slideWidth = visibleSlides[0].getBoundingClientRect().width + 20;
+    const trackWidth = track.parentElement ? track.parentElement.getBoundingClientRect().width : 800;
+    const visibleInView = Math.floor(trackWidth / slideWidth) || 1;
+    const maxIndex = Math.max(0, totalVisible - visibleInView);
 
-  function updateCarousel() {
-    const slideWidth = slides[0].getBoundingClientRect().width + 20;
-    const trackWidth = track.parentElement.getBoundingClientRect().width;
-    const visibleSlides = Math.floor(trackWidth / slideWidth) || 1;
-    const maxIndex = Math.max(0, totalSlides - visibleSlides);
-    
-    if (currentIndex > maxIndex) currentIndex = maxIndex;
-    if (currentIndex < 0) currentIndex = 0;
+    if (window._socialCurrentIndex > maxIndex) window._socialCurrentIndex = maxIndex;
+    if (window._socialCurrentIndex < 0) window._socialCurrentIndex = 0;
 
-    currentTranslate = currentIndex * -slideWidth;
-    prevTranslate = currentTranslate;
+    const currentTranslate = window._socialCurrentIndex * -slideWidth;
     track.style.transform = `translateX(${currentTranslate}px)`;
 
+    const dots = dotsContainer ? dotsContainer.querySelectorAll(".ios-dot") : [];
     dots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === currentIndex);
+      dot.classList.toggle("active", i === window._socialCurrentIndex);
     });
   }
 
-  nextBtn.addEventListener("click", () => { currentIndex++; updateCarousel(); });
-  prevBtn.addEventListener("click", () => { currentIndex--; updateCarousel(); });
-
-  dots.forEach(dot => {
-    dot.addEventListener("click", (e) => {
-      currentIndex = parseInt(e.target.dataset.index);
-      updateCarousel();
-    });
-  });
-
-  track.addEventListener("touchstart", dragStart, {passive: true});
-  track.addEventListener("mousedown", dragStart);
-
-  function dragStart(e) {
-    isDragging = true;
-    if (e.type === "touchstart") {
-      startX = e.touches[0].clientX;
-      window.addEventListener("touchmove", dragAction, {passive: true});
-      window.addEventListener("touchend", dragEnd);
-    } else {
-      startX = e.clientX;
-      window.addEventListener("mousemove", dragAction);
-      window.addEventListener("mouseup", dragEnd);
+  function updateCarousel() {
+    const visibleSlides = getVisibleSlides();
+    const totalVisible = visibleSlides.length;
+    if (dotsContainer) {
+      dotsContainer.innerHTML = Array.from({length: totalVisible}).map((_, i) => `<div class="ios-dot ${i===(window._socialCurrentIndex||0)?'active':''}" data-index="${i}"></div>`).join("");
+      const dots = dotsContainer.querySelectorAll(".ios-dot");
+      dots.forEach(dot => {
+        dot.addEventListener("click", (e) => {
+          window._socialCurrentIndex = parseInt(e.target.dataset.index) || 0;
+          applyTranslate();
+        });
+      });
     }
+    applyTranslate();
   }
 
-  function dragAction(e) {
-    if (!isDragging) return;
-    const currentPosition = e.type.startsWith("touch") ? e.touches[0].clientX : e.clientX;
-    const diff = currentPosition - startX;
-    track.style.transform = `translateX(${prevTranslate + diff}px)`;
-  }
+  window._socialCurrentIndex = window._socialCurrentIndex || 0;
 
-  function dragEnd(e) {
-    if (!isDragging) return;
-    isDragging = false;
-    window.removeEventListener("mousemove", dragAction);
-    window.removeEventListener("mouseup", dragEnd);
-    window.removeEventListener("touchmove", dragAction);
-    window.removeEventListener("touchend", dragEnd);
-    const endPosition = e.type.startsWith("touch") ? (e.changedTouches?.[0]?.clientX ?? startX) : e.clientX;
-    const diff = endPosition - startX;
-
-    if (diff < -50) currentIndex++;
-    if (diff > 50) currentIndex--;
-    
+  if (track._boundCarousel) {
     updateCarousel();
+    return;
   }
+  track._boundCarousel = true;
 
-  window.addEventListener("resize", updateCarousel);
-  
+  nextBtn?.addEventListener("click", () => { window._socialCurrentIndex++; applyTranslate(); });
+  prevBtn?.addEventListener("click", () => { window._socialCurrentIndex--; applyTranslate(); });
+
+  window.addEventListener("resize", applyTranslate);
+
   setInterval(() => {
-    if(!isDragging){
-      const slideWidth = slides[0].getBoundingClientRect().width + 20;
-      const trackWidth = track.parentElement.getBoundingClientRect().width;
-      const visibleSlides = Math.floor(trackWidth / slideWidth) || 1;
-      const maxIndex = Math.max(0, totalSlides - visibleSlides);
-      
-      currentIndex++;
-      if(currentIndex > maxIndex) currentIndex = 0;
-      updateCarousel();
-    }
-  }, 5500); // ligeramente diferente para asincronía
+    const visibleSlides = getVisibleSlides();
+    const totalVisible = visibleSlides.length;
+    if (totalVisible <= 1) return;
+    const slideWidth = (visibleSlides[0]?.getBoundingClientRect().width || 300) + 20;
+    const trackWidth = track.parentElement?.getBoundingClientRect().width || 800;
+    const visibleInView = Math.floor(trackWidth / slideWidth) || 1;
+    const maxIndex = Math.max(0, totalVisible - visibleInView);
+
+    window._socialCurrentIndex++;
+    if (window._socialCurrentIndex > maxIndex) window._socialCurrentIndex = 0;
+    applyTranslate();
+  }, 5500);
+
+  updateCarousel();
 }
 
 // ================= CARRUSEL HERO (ESTILO CURACAO & LIQUID GLASS) =================
