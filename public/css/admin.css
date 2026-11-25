@@ -1333,3 +1333,93 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
     font-weight: bold !important;
   }
 }
+
+/* ============ ADMIN RESPONSIVE PARA TABLETS Y CELULARES ============ */
+@media (max-width: 960px) {
+  .admin-body { padding: 16px 0 40px; }
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4px;
+    margin: 12px 0 20px;
+    max-width: 100%;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs button {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .stat-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-head-row {
+    height: auto;
+    padding: 12px 0;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .admin-head-row .logo small { display: none; }
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .toolbar .search-box, .toolbar input, .toolbar select {
+    width: 100%;
+  }
+  .toolbar > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+  }
+  .row-2 {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+  .stat-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .stat-card {
+    padding: 12px 10px;
+  }
+  .stat-card strong {
+    font-size: 1.25rem;
+  }
+  .stat-card span {
+    font-size: 0.68rem;
+  }
+  .stat-card .stat-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+    top: 10px;
+    right: 10px;
+  }
+  .admin-card-box {
+    padding: 14px 12px;
+  }
+  .filter-pills-row {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .filter-pill {
+    flex-shrink: 0;
+  }
+  .table-scroll {
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+  }
+}

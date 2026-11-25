@@ -891,3 +891,131 @@
   background: var(--hero-accent, #ff2d67);
   color: #ffffff;
 }
+
+/* ============ OPTIMIZACIÓN RESPONSIVA CELULARES & TABLETS ============ */
+@media (max-width: 980px) {
+  .curacao-master-stage {
+    border-radius: 26px;
+    padding: 18px 16px 14px;
+    margin: 10px 0 16px;
+  }
+  .curacao-stage-grid {
+    grid-template-columns: 1fr;
+    padding: 0;
+    gap: 16px;
+    min-height: auto;
+  }
+  .curacao-left-promo {
+    border-radius: 22px;
+    padding: 20px 18px;
+  }
+  .curacao-arrow-btn.prev {
+    left: -4px;
+  }
+  .curacao-arrow-btn.next {
+    right: -4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .curacao-master-stage {
+    border-radius: 20px;
+    padding: 14px 10px 10px;
+    margin: 8px 0 14px;
+  }
+  .curacao-stage-grid {
+    gap: 12px;
+  }
+  .curacao-left-promo {
+    border-radius: 18px;
+    padding: 16px 14px;
+  }
+  .curacao-tag-pill {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    margin-bottom: 4px;
+  }
+  .cyber-highlight {
+    font-size: 1.45rem;
+  }
+  .wow-balloon {
+    font-size: 2.5rem;
+    line-height: 0.95;
+    margin-top: 0;
+  }
+  .curacao-promo-sub {
+    font-size: 0.82rem;
+    margin: 6px 0 10px;
+  }
+  .curacao-coupon-badge {
+    padding: 5px 10px;
+    font-size: 0.74rem;
+    margin-bottom: 12px;
+  }
+  .curacao-btn-comprar {
+    padding: 9px 18px;
+    font-size: 0.86rem;
+  }
+  .curacao-mini-stats {
+    gap: 10px;
+    padding-top: 8px;
+  }
+  .curacao-stat-item strong {
+    font-size: 0.95rem;
+  }
+  .curacao-stat-item span {
+    font-size: 0.62rem;
+  }
+  .curacao-stage-item {
+    height: 400px;
+    border-radius: 18px;
+    padding: 12px;
+  }
+  .stage-product-center {
+    min-height: 145px;
+  }
+  .stage-product-img {
+    max-height: 130px;
+  }
+  .stage-product-title {
+    font-size: 0.8rem;
+  }
+  .stage-price-amount {
+    font-size: 1.35rem;
+  }
+  .stage-price-cur {
+    font-size: 0.85rem;
+  }
+  .curacao-arrow-btn {
+    width: 36px;
+    height: 36px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  }
+  .curacao-arrow-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  .curacao-slider-viewport {
+    touch-action: pan-y;
+  }
+}
+
+@media (max-width: 390px) {
+  .curacao-master-stage {
+    padding: 10px 8px 8px;
+    border-radius: 16px;
+  }
+  .cyber-highlight {
+    font-size: 1.25rem;
+  }
+  .wow-balloon {
+    font-size: 2.1rem;
+  }
+  .curacao-coupon-badge {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+  .curacao-stage-item {
+    height: 385px;
+  }
+}

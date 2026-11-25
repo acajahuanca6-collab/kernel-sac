@@ -379,6 +379,30 @@
 }
 
 @media (max-width: 480px){
+  .voucher-modal {
+    width: 96vw;
+    padding: 16px 12px;
+    border-radius: 20px;
+  }
+  .voucher-ticket {
+    padding: 14px 10px;
+    border-radius: 14px;
+  }
+  .voucher-brand-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .voucher-order-id {
+    font-size: 0.95rem;
+  }
+  .voucher-meta-grid {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .voucher-row strong {
+    max-width: 60%;
+  }
   .chat-panel{ right:12px; left:12px; width:auto; bottom:88px; }
   .chat-fab{ right:16px; bottom:16px; }
   .wa-float-container{ right:16px; bottom:86px; }
