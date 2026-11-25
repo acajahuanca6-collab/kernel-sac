@@ -1685,14 +1685,14 @@
         </div>
       </div>
 
-      <!-- Vista Previa en Vivo del Encabezado -->
-      <div class="admin-card-box" style="margin-bottom:24px; padding:16px 20px; background:radial-gradient(circle at 10% 20%, rgba(225,29,72,0.18) 0%, transparent 40%), linear-gradient(145deg, rgba(20,8,18,0.85) 0%, rgba(10,5,10,0.95) 100%);">
+      <!-- Vista Previa en Vivo del Encabezado (Sticky) -->
+      <div class="admin-card-box sticky-preview-card" style="margin-bottom:24px; padding:16px 20px; background:radial-gradient(circle at 10% 20%, rgba(225,29,72,0.18) 0%, transparent 40%), linear-gradient(145deg, rgba(20,8,18,0.92) 0%, rgba(10,5,10,0.98) 100%); position:sticky; top:12px; z-index:25; backdrop-filter:blur(10px); box-shadow:0 10px 30px rgba(0,0,0,0.6); border:1px solid rgba(225,29,72,0.3);">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
           <h3 style="margin:0; font-size:0.95rem; color:#ffde00; display:flex; align-items:center; gap:6px;">
             <span>👀 Vista Previa en Vivo (Encabezado de la Tienda)</span>
           </h3>
           <span class="badge-featured" style="background:rgba(37,211,102,0.18); color:#25d366; border:1px solid rgba(37,211,102,0.4);">
-            Actualización en Tiempo Real
+            🟢 Sincronizado en Tiempo Real
           </span>
         </div>
         <p style="font-size:0.78rem; color:var(--text-dim); margin:0 0 14px;">
@@ -1963,7 +1963,23 @@
         </div>
       </div>
 
-      <div id="cfgAnunciosMsg" class="form-msg" style="margin-top:18px;"></div>
+      <!-- Barra Inferior Fija de Sincronización y Acciones -->
+      <div class="admin-sticky-bar" style="margin-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:14px 20px; background:rgba(20,10,20,0.95); border:1.5px solid var(--glass-border); border-radius:12px; position:sticky; bottom:12px; z-index:30; box-shadow:0 8px 32px rgba(0,0,0,0.6); backdrop-filter:blur(10px);">
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <span id="cfgAnunciosAutoSaveStatus" class="auto-sync-indicator synced" style="font-size:0.85rem; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+            🟢 Sincronizado en tiempo real
+          </span>
+          <span id="cfgAnunciosMsg" class="form-msg" style="margin:0; font-size:0.82rem;"></span>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button type="button" class="btn btn-outline" onclick="showStoreView()" style="display:inline-flex; align-items:center; gap:6px;">
+            <span>👀 Ver en Tienda</span>
+          </button>
+          <button type="button" class="btn btn-primary" id="btnGuardarAnunciosBottom" style="display:inline-flex; align-items:center; gap:6px;">
+            <span>💾 Guardar Cambios</span>
+          </button>
+        </div>
+      </div>
     </div>
     </div>
 </div>

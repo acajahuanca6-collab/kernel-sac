@@ -1846,3 +1846,46 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
   background: #ffffff;
   border-color: rgba(0, 0, 0, 0.1);
 }
+
+/* ============ BARRAS Y ANUNCIOS: STICKY BAR Y ESTADOS ============ */
+.admin-sticky-bar {
+  transition: all 0.25s ease;
+}
+
+.auto-sync-indicator {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(37, 211, 102, 0.12);
+  color: #25d366;
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  transition: all 0.2s ease;
+}
+
+.auto-sync-indicator.syncing {
+  background: rgba(255, 222, 0, 0.15);
+  color: #ffde00;
+  border-color: rgba(255, 222, 0, 0.4);
+}
+
+.auto-sync-indicator.synced {
+  background: rgba(37, 211, 102, 0.15);
+  color: #25d366;
+  border-color: rgba(37, 211, 102, 0.4);
+}
+
+.auto-sync-indicator.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+[data-theme="light"] .admin-sticky-bar {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+}

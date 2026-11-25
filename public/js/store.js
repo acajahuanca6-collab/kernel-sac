@@ -1244,8 +1244,13 @@ function aplicarBarrasAnuncios(customConfig) {
   if (topBar && cfg.cinta_superior) {
     const cinta = cfg.cinta_superior;
     topBar.style.display = cinta.activo !== false ? "" : "none";
-    if (cinta.color_fondo) topBar.style.backgroundColor = cinta.color_fondo;
-    if (cinta.color_texto) topBar.style.color = cinta.color_texto;
+    if (cinta.color_fondo) {
+      topBar.style.setProperty("background", cinta.color_fondo, "important");
+      topBar.style.setProperty("background-color", cinta.color_fondo, "important");
+    }
+    if (cinta.color_texto) {
+      topBar.style.setProperty("color", cinta.color_texto, "important");
+    }
 
     const t1 = document.getElementById("topAnnounceText1");
     const t2 = document.getElementById("topAnnounceText2");
@@ -1256,14 +1261,14 @@ function aplicarBarrasAnuncios(customConfig) {
     const t3d = document.getElementById("topAnnounceText3_dup");
     const t4d = document.getElementById("topAnnounceText4_dup");
 
-    if (t1 && cinta.item1) t1.textContent = cinta.item1;
-    if (t2 && cinta.item2) t2.textContent = cinta.item2;
-    if (t3 && cinta.item3) t3.textContent = cinta.item3;
-    if (t4 && cinta.item4) t4.textContent = cinta.item4;
-    if (t1d && cinta.item1) t1d.textContent = cinta.item1;
-    if (t2d && cinta.item2) t2d.textContent = cinta.item2;
-    if (t3d && cinta.item3) t3d.textContent = cinta.item3;
-    if (t4d && cinta.item4) t4d.textContent = cinta.item4;
+    if (t1 && cinta.item1 !== undefined) t1.textContent = cinta.item1;
+    if (t2 && cinta.item2 !== undefined) t2.textContent = cinta.item2;
+    if (t3 && cinta.item3 !== undefined) t3.textContent = cinta.item3;
+    if (t4 && cinta.item4 !== undefined) t4.textContent = cinta.item4;
+    if (t1d && cinta.item1 !== undefined) t1d.textContent = cinta.item1;
+    if (t2d && cinta.item2 !== undefined) t2d.textContent = cinta.item2;
+    if (t3d && cinta.item3 !== undefined) t3d.textContent = cinta.item3;
+    if (t4d && cinta.item4 !== undefined) t4d.textContent = cinta.item4;
   }
 
   // 2. BARRA PROMOCIONAL CYBER BOOM
@@ -1275,43 +1280,43 @@ function aplicarBarrasAnuncios(customConfig) {
     const c1 = boom.color_fondo_inicio || "#be123c";
     const c2 = boom.color_fondo_medio || "#e11d48";
     const c3 = boom.color_fondo_fin || "#be123c";
-    boomBar.style.background = `linear-gradient(90deg, ${c1} 0%, ${c2} 50%, ${c3} 100%)`;
-    if (boom.color_texto) boomBar.style.color = boom.color_texto;
+    boomBar.style.setProperty("background", `linear-gradient(90deg, ${c1} 0%, ${c2} 50%, ${c3} 100%)`, "important");
+    if (boom.color_texto) boomBar.style.setProperty("color", boom.color_texto, "important");
 
     // Badge
     const tagEl = document.getElementById("boomTagText");
     if (tagEl) {
-      if (boom.badge_texto) tagEl.textContent = boom.badge_texto;
-      if (boom.badge_color_fondo) tagEl.style.backgroundColor = boom.badge_color_fondo;
-      if (boom.badge_color_texto) tagEl.style.color = boom.badge_color_texto;
+      if (boom.badge_texto !== undefined) tagEl.textContent = boom.badge_texto;
+      if (boom.badge_color_fondo) tagEl.style.setProperty("background-color", boom.badge_color_fondo, "important");
+      if (boom.badge_color_texto) tagEl.style.setProperty("color", boom.badge_color_texto, "important");
     }
 
     // Título principal
     const titleEl = document.getElementById("boomTitleText");
-    if (titleEl && boom.titulo) titleEl.textContent = boom.titulo;
+    if (titleEl && boom.titulo !== undefined) titleEl.textContent = boom.titulo;
 
     // Descuento resaltado
     const discEl = document.getElementById("boomHighlightText");
     if (discEl) {
-      if (boom.descuento_texto) discEl.textContent = boom.descuento_texto;
-      if (boom.descuento_color) discEl.style.color = boom.descuento_color;
+      if (boom.descuento_texto !== undefined) discEl.textContent = boom.descuento_texto;
+      if (boom.descuento_color) discEl.style.setProperty("color", boom.descuento_color, "important");
     }
 
     // Texto extra
     const extraEl = document.getElementById("boomExtraText");
-    if (extraEl && boom.subtitulo) extraEl.textContent = boom.subtitulo;
+    if (extraEl && boom.subtitulo !== undefined) extraEl.textContent = boom.subtitulo;
 
     // Timer label
     const timerLabelEl = document.getElementById("boomTimerLabel");
-    if (timerLabelEl && boom.timer_label) timerLabelEl.textContent = boom.timer_label;
+    if (timerLabelEl && boom.timer_label !== undefined) timerLabelEl.textContent = boom.timer_label;
 
     // Botón CTA
     const btnEl = document.getElementById("boomCtaBtn");
     if (btnEl) {
-      if (boom.boton_texto) btnEl.textContent = boom.boton_texto;
-      if (boom.boton_link) btnEl.href = boom.boton_link;
-      if (boom.boton_color_fondo) btnEl.style.backgroundColor = boom.boton_color_fondo;
-      if (boom.boton_color_texto) btnEl.style.color = boom.boton_color_texto;
+      if (boom.boton_texto !== undefined) btnEl.textContent = boom.boton_texto;
+      if (boom.boton_link !== undefined) btnEl.href = boom.boton_link;
+      if (boom.boton_color_fondo) btnEl.style.setProperty("background-color", boom.boton_color_fondo, "important");
+      if (boom.boton_color_texto) btnEl.style.setProperty("color", boom.boton_color_texto, "important");
     }
   }
 }

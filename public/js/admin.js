@@ -85,7 +85,11 @@ function showStoreView() {
     history.pushState("", document.title, window.location.pathname + window.location.search);
   }
   window.scrollTo(0, 0);
+  if (typeof aplicarBarrasAnuncios === "function" && state.configAnuncios) {
+    aplicarBarrasAnuncios(state.configAnuncios);
+  }
 }
+window.showStoreView = showStoreView;
 
 document.getElementById("verTiendaBtn").addEventListener("click", showStoreView);
 document.getElementById("adminLogoutBtn").addEventListener("click", async () => {
@@ -3161,6 +3165,40 @@ function setupColorPair(colorId, hexId, onChange) {
   }
 }
 
+function recolectarConfigAnunciosForm() {
+  return {
+    cinta_superior: {
+      activo: document.getElementById("cfgCintaActivo")?.checked !== false,
+      color_fondo: document.getElementById("cfgCintaBgHex")?.value.trim() || "#e11d48",
+      color_texto: document.getElementById("cfgCintaTextHex")?.value.trim() || "#ffffff",
+      item1: document.getElementById("cfgCintaItem1")?.value ?? "ENVÍOS A TODO EL PERÚ",
+      item2: document.getElementById("cfgCintaItem2")?.value ?? "SOPORTE TÉCNICO ESPECIALIZADO",
+      item3: document.getElementById("cfgCintaItem3")?.value ?? "PRODUCTOS CON GARANTÍA",
+      item4: document.getElementById("cfgCintaItem4")?.value ?? "MÁS DE 25 000 PRODUCTOS"
+    },
+    barra_promocional: {
+      activo: document.getElementById("cfgBoomActivo")?.checked !== false,
+      color_fondo_inicio: document.getElementById("cfgBoomBg1Hex")?.value.trim() || "#be123c",
+      color_fondo_medio: document.getElementById("cfgBoomBg2Hex")?.value.trim() || "#e11d48",
+      color_fondo_fin: document.getElementById("cfgBoomBg3Hex")?.value.trim() || "#be123c",
+      color_texto: document.getElementById("cfgBoomTextHex")?.value.trim() || "#ffffff",
+      badge_texto: document.getElementById("cfgBoomTagText")?.value ?? "🔥 CYBER BOOM",
+      badge_color_fondo: document.getElementById("cfgBoomTagBgHex")?.value.trim() || "#ffde00",
+      badge_color_texto: document.getElementById("cfgBoomTagTextHex")?.value.trim() || "#0b0608",
+      titulo: document.getElementById("cfgBoomTitleText")?.value ?? "¡OFERTAS EXPLOSIVAS KERNEL SAC!",
+      descuento_texto: document.getElementById("cfgBoomDiscountText")?.value ?? "50% DSCTO",
+      descuento_color: document.getElementById("cfgBoomDiscountHex")?.value.trim() || "#ffde00",
+      subtitulo: document.getElementById("cfgBoomExtraText")?.value ?? "+ Regalos Gratis 🎁",
+      timer_label: document.getElementById("cfgBoomTimerLabel")?.value ?? "⏰ Termina en:",
+      boton_texto: document.getElementById("cfgBoomBtnText")?.value ?? "Ver Ofertas ⚡",
+      boton_link: document.getElementById("cfgBoomBtnLink")?.value.trim() || "#destacados",
+      boton_color_fondo: document.getElementById("cfgBoomBtnBgHex")?.value.trim() || "#ffffff",
+      boton_color_texto: document.getElementById("cfgBoomBtnTextHex")?.value.trim() || "#e11d48"
+    }
+  };
+}
+window.recolectarConfigAnunciosForm = recolectarConfigAnunciosForm;
+
 async function renderAnunciosAdmin() {
   if (!adminState.anunciosConfig) {
     try {
@@ -3192,10 +3230,10 @@ async function renderAnunciosAdmin() {
       const i2 = document.getElementById("cfgCintaItem2");
       const i3 = document.getElementById("cfgCintaItem3");
       const i4 = document.getElementById("cfgCintaItem4");
-      if (i1 && !i1.dataset.userEdited && c.item1) i1.value = c.item1;
-      if (i2 && !i2.dataset.userEdited && c.item2) i2.value = c.item2;
-      if (i3 && !i3.dataset.userEdited && c.item3) i3.value = c.item3;
-      if (i4 && !i4.dataset.userEdited && c.item4) i4.value = c.item4;
+      if (i1 && !i1.dataset.userEdited && c.item1 !== undefined) i1.value = c.item1;
+      if (i2 && !i2.dataset.userEdited && c.item2 !== undefined) i2.value = c.item2;
+      if (i3 && !i3.dataset.userEdited && c.item3 !== undefined) i3.value = c.item3;
+      if (i4 && !i4.dataset.userEdited && c.item4 !== undefined) i4.value = c.item4;
     }
 
     // Barra Promocional Boom
@@ -3224,7 +3262,7 @@ async function renderAnunciosAdmin() {
 
       // Badge
       const tagText = document.getElementById("cfgBoomTagText");
-      if (tagText && !tagText.dataset.userEdited && b.badge_texto) tagText.value = b.badge_texto;
+      if (tagText && !tagText.dataset.userEdited && b.badge_texto !== undefined) tagText.value = b.badge_texto;
       if (b.badge_color_fondo) {
         document.getElementById("cfgBoomTagBgColor").value = b.badge_color_fondo;
         document.getElementById("cfgBoomTagBgHex").value = b.badge_color_fondo;
@@ -3236,26 +3274,26 @@ async function renderAnunciosAdmin() {
 
       // Textos
       const title = document.getElementById("cfgBoomTitleText");
-      if (title && !title.dataset.userEdited && b.titulo) title.value = b.titulo;
+      if (title && !title.dataset.userEdited && b.titulo !== undefined) title.value = b.titulo;
 
       const discount = document.getElementById("cfgBoomDiscountText");
-      if (discount && !discount.dataset.userEdited && b.descuento_texto) discount.value = b.descuento_texto;
+      if (discount && !discount.dataset.userEdited && b.descuento_texto !== undefined) discount.value = b.descuento_texto;
       if (b.descuento_color) {
         document.getElementById("cfgBoomDiscountColor").value = b.descuento_color;
         document.getElementById("cfgBoomDiscountHex").value = b.descuento_color;
       }
 
       const extra = document.getElementById("cfgBoomExtraText");
-      if (extra && !extra.dataset.userEdited && b.subtitulo) extra.value = b.subtitulo;
+      if (extra && !extra.dataset.userEdited && b.subtitulo !== undefined) extra.value = b.subtitulo;
 
       const timerLabel = document.getElementById("cfgBoomTimerLabel");
-      if (timerLabel && !timerLabel.dataset.userEdited && b.timer_label) timerLabel.value = b.timer_label;
+      if (timerLabel && !timerLabel.dataset.userEdited && b.timer_label !== undefined) timerLabel.value = b.timer_label;
 
       const btnText = document.getElementById("cfgBoomBtnText");
-      if (btnText && !btnText.dataset.userEdited && b.boton_texto) btnText.value = b.boton_texto;
+      if (btnText && !btnText.dataset.userEdited && b.boton_texto !== undefined) btnText.value = b.boton_texto;
 
       const btnLink = document.getElementById("cfgBoomBtnLink");
-      if (btnLink && !btnLink.dataset.userEdited && b.boton_link) btnLink.value = b.boton_link;
+      if (btnLink && !btnLink.dataset.userEdited && b.boton_link !== undefined) btnLink.value = b.boton_link;
 
       if (b.boton_color_fondo) {
         document.getElementById("cfgBoomBtnBgColor").value = b.boton_color_fondo;
@@ -3281,7 +3319,7 @@ async function renderAnunciosAdmin() {
   setupColorPair("cfgBoomBtnBgColor", "cfgBoomBtnBgHex", renderAnunciosLivePreview);
   setupColorPair("cfgBoomBtnTextColor", "cfgBoomBtnTextHex", renderAnunciosLivePreview);
 
-  // Setup text change listeners for live preview
+  // Setup text change listeners for live preview & auto-sync
   [
     "cfgCintaActivo", "cfgBoomActivo",
     "cfgCintaItem1", "cfgCintaItem2", "cfgCintaItem3", "cfgCintaItem4",
@@ -3302,128 +3340,130 @@ async function renderAnunciosAdmin() {
     }
   });
 
-  renderAnunciosLivePreview();
+  renderAnunciosLivePreview(false);
 }
 window.renderAnunciosAdmin = renderAnunciosAdmin;
 
-function renderAnunciosLivePreview() {
+let _anunciosDebounceTimer = null;
+
+function renderAnunciosLivePreview(triggerAutoSave = true) {
+  const currentCfg = recolectarConfigAnunciosForm();
   const pAnnounce = document.getElementById("prevTopAnnounceBar");
   const pBoom = document.getElementById("prevBoomPromoBar");
 
-  // 1. Cinta Superior
-  const cintaActivo = document.getElementById("cfgCintaActivo")?.checked !== false;
+  // 1. Vista Previa Mockup (dentro del panel admin)
   if (pAnnounce) {
-    pAnnounce.style.display = cintaActivo ? "block" : "none";
-    const bg = document.getElementById("cfgCintaBgHex")?.value || "#e11d48";
-    const color = document.getElementById("cfgCintaTextHex")?.value || "#ffffff";
-    pAnnounce.style.backgroundColor = bg;
-    pAnnounce.style.color = color;
-
-    const i1 = document.getElementById("cfgCintaItem1")?.value || "ENVÍOS A TODO EL PERÚ";
-    const i2 = document.getElementById("cfgCintaItem2")?.value || "SOPORTE TÉCNICO ESPECIALIZADO";
-    const i3 = document.getElementById("cfgCintaItem3")?.value || "PRODUCTOS CON GARANTÍA";
-    const i4 = document.getElementById("cfgCintaItem4")?.value || "MÁS DE 25 000 PRODUCTOS";
+    pAnnounce.style.display = currentCfg.cinta_superior.activo ? "block" : "none";
+    pAnnounce.style.setProperty("background", currentCfg.cinta_superior.color_fondo, "important");
+    pAnnounce.style.setProperty("color", currentCfg.cinta_superior.color_texto, "important");
 
     const pi1 = document.getElementById("prevTopItem1");
     const pi2 = document.getElementById("prevTopItem2");
     const pi3 = document.getElementById("prevTopItem3");
     const pi4 = document.getElementById("prevTopItem4");
-    if (pi1) pi1.textContent = "🚚 " + i1;
-    if (pi2) pi2.textContent = "🔧 " + i2;
-    if (pi3) pi3.textContent = "🛡️ " + i3;
-    if (pi4) pi4.textContent = "📦 " + i4;
+    if (pi1) pi1.textContent = "🚚 " + (currentCfg.cinta_superior.item1 || "");
+    if (pi2) pi2.textContent = "🔧 " + (currentCfg.cinta_superior.item2 || "");
+    if (pi3) pi3.textContent = "🛡️ " + (currentCfg.cinta_superior.item3 || "");
+    if (pi4) pi4.textContent = "📦 " + (currentCfg.cinta_superior.item4 || "");
   }
 
-  // 2. Barra Promocional Cyber Boom
-  const boomActivo = document.getElementById("cfgBoomActivo")?.checked !== false;
   if (pBoom) {
-    pBoom.style.display = boomActivo ? "block" : "none";
+    pBoom.style.display = currentCfg.barra_promocional.activo ? "block" : "none";
+    const c1 = currentCfg.barra_promocional.color_fondo_inicio;
+    const c2 = currentCfg.barra_promocional.color_fondo_medio;
+    const c3 = currentCfg.barra_promocional.color_fondo_fin;
+    pBoom.style.setProperty("background", `linear-gradient(90deg, ${c1} 0%, ${c2} 50%, ${c3} 100%)`, "important");
+    pBoom.style.setProperty("color", currentCfg.barra_promocional.color_texto, "important");
 
-    const c1 = document.getElementById("cfgBoomBg1Hex")?.value || "#be123c";
-    const c2 = document.getElementById("cfgBoomBg2Hex")?.value || "#e11d48";
-    const c3 = document.getElementById("cfgBoomBg3Hex")?.value || "#be123c";
-    pBoom.style.background = `linear-gradient(90deg, ${c1} 0%, ${c2} 50%, ${c3} 100%)`;
-
-    const textColor = document.getElementById("cfgBoomTextHex")?.value || "#ffffff";
-    pBoom.style.color = textColor;
-
-    // Badge
     const tagEl = document.getElementById("prevBoomTag");
     if (tagEl) {
-      tagEl.textContent = document.getElementById("cfgBoomTagText")?.value || "🔥 CYBER BOOM";
-      tagEl.style.backgroundColor = document.getElementById("cfgBoomTagBgHex")?.value || "#ffde00";
-      tagEl.style.color = document.getElementById("cfgBoomTagTextHex")?.value || "#0b0608";
+      tagEl.textContent = currentCfg.barra_promocional.badge_texto;
+      tagEl.style.setProperty("background-color", currentCfg.barra_promocional.badge_color_fondo, "important");
+      tagEl.style.setProperty("color", currentCfg.barra_promocional.badge_color_texto, "important");
     }
 
-    // Title
     const titleEl = document.getElementById("prevBoomTitle");
-    if (titleEl) titleEl.textContent = document.getElementById("cfgBoomTitleText")?.value || "¡OFERTAS EXPLOSIVAS KERNEL SAC!";
+    if (titleEl) titleEl.textContent = currentCfg.barra_promocional.titulo;
 
-    // Discount
     const discEl = document.getElementById("prevBoomDiscount");
     if (discEl) {
-      discEl.textContent = document.getElementById("cfgBoomDiscountText")?.value || "50% DSCTO";
-      discEl.style.color = document.getElementById("cfgBoomDiscountHex")?.value || "#ffde00";
+      discEl.textContent = currentCfg.barra_promocional.descuento_texto;
+      discEl.style.setProperty("color", currentCfg.barra_promocional.descuento_color, "important");
     }
 
-    // Extra
     const extraEl = document.getElementById("prevBoomExtra");
-    if (extraEl) extraEl.textContent = document.getElementById("cfgBoomExtraText")?.value || "+ Regalos Gratis 🎁";
+    if (extraEl) extraEl.textContent = currentCfg.barra_promocional.subtitulo;
 
-    // Timer label
     const timerLabelEl = document.getElementById("prevBoomTimerLabel");
-    if (timerLabelEl) timerLabelEl.textContent = document.getElementById("cfgBoomTimerLabel")?.value || "⏰ Termina en:";
+    if (timerLabelEl) timerLabelEl.textContent = currentCfg.barra_promocional.timer_label;
 
-    // Button
     const btnEl = document.getElementById("prevBoomCta");
     if (btnEl) {
-      btnEl.textContent = document.getElementById("cfgBoomBtnText")?.value || "Ver Ofertas ⚡";
-      btnEl.style.backgroundColor = document.getElementById("cfgBoomBtnBgHex")?.value || "#ffffff";
-      btnEl.style.color = document.getElementById("cfgBoomBtnTextHex")?.value || "#e11d48";
+      btnEl.textContent = currentCfg.barra_promocional.boton_texto;
+      btnEl.style.setProperty("background-color", currentCfg.barra_promocional.boton_color_fondo, "important");
+      btnEl.style.setProperty("color", currentCfg.barra_promocional.boton_color_texto, "important");
     }
+  }
+
+  // 2. SINCRONIZACIÓN EN TIEMPO REAL CON LA TIENDA REAL (DOM DE STOREVIEW)
+  state.configAnuncios = currentCfg;
+  adminState.anunciosConfig = currentCfg;
+  if (typeof aplicarBarrasAnuncios === "function") {
+    aplicarBarrasAnuncios(currentCfg);
+  }
+
+  // 3. AUTO-GUARDADO DEBOUNCED AUTOMÁTICO (a la base de datos SQLite)
+  if (triggerAutoSave !== false) {
+    const autoBadge = document.getElementById("cfgAnunciosAutoSaveStatus");
+    if (autoBadge) {
+      autoBadge.innerHTML = "🟡 Sincronizando en vivo...";
+      autoBadge.className = "auto-sync-indicator syncing";
+    }
+    clearTimeout(_anunciosDebounceTimer);
+    _anunciosDebounceTimer = setTimeout(async () => {
+      try {
+        const payload = recolectarConfigAnunciosForm();
+        const res = await fetchJSON("/api/configuraciones/anuncios", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        adminState.anunciosConfig = res.config;
+        state.configAnuncios = res.config;
+        if (autoBadge) {
+          autoBadge.innerHTML = "🟢 Sincronizado en tiempo real";
+          autoBadge.className = "auto-sync-indicator synced";
+        }
+      } catch (err) {
+        console.warn("Auto-guardado anuncios background:", err);
+        if (autoBadge) {
+          autoBadge.innerHTML = "⚠️ Guardar manual requerido";
+          autoBadge.className = "auto-sync-indicator error";
+        }
+      }
+    }, 600);
   }
 }
 window.renderAnunciosLivePreview = renderAnunciosLivePreview;
 
 window.guardarAnunciosAdmin = async function() {
-  const btn = document.getElementById("btnGuardarAnuncios");
+  const btnTop = document.getElementById("btnGuardarAnuncios");
+  const btnBottom = document.getElementById("btnGuardarAnunciosBottom");
   const msg = document.getElementById("cfgAnunciosMsg");
-  if (btn) btn.disabled = true;
+  const autoBadge = document.getElementById("cfgAnunciosAutoSaveStatus");
+
+  if (btnTop) btnTop.disabled = true;
+  if (btnBottom) btnBottom.disabled = true;
+  if (autoBadge) {
+    autoBadge.innerHTML = "🟡 Guardando...";
+    autoBadge.className = "auto-sync-indicator syncing";
+  }
   if (msg) {
-    msg.textContent = "Guardando configuración de barras y anuncios...";
+    msg.textContent = "Guardando y sincronizando con la tienda...";
     msg.className = "form-msg";
   }
 
-  const payload = {
-    cinta_superior: {
-      activo: document.getElementById("cfgCintaActivo")?.checked !== false,
-      color_fondo: document.getElementById("cfgCintaBgHex")?.value.trim() || "#e11d48",
-      color_texto: document.getElementById("cfgCintaTextHex")?.value.trim() || "#ffffff",
-      item1: document.getElementById("cfgCintaItem1")?.value.trim() || "ENVÍOS A TODO EL PERÚ",
-      item2: document.getElementById("cfgCintaItem2")?.value.trim() || "SOPORTE TÉCNICO ESPECIALIZADO",
-      item3: document.getElementById("cfgCintaItem3")?.value.trim() || "PRODUCTOS CON GARANTÍA",
-      item4: document.getElementById("cfgCintaItem4")?.value.trim() || "MÁS DE 25 000 PRODUCTOS"
-    },
-    barra_promocional: {
-      activo: document.getElementById("cfgBoomActivo")?.checked !== false,
-      color_fondo_inicio: document.getElementById("cfgBoomBg1Hex")?.value.trim() || "#be123c",
-      color_fondo_medio: document.getElementById("cfgBoomBg2Hex")?.value.trim() || "#e11d48",
-      color_fondo_fin: document.getElementById("cfgBoomBg3Hex")?.value.trim() || "#be123c",
-      color_texto: document.getElementById("cfgBoomTextHex")?.value.trim() || "#ffffff",
-      badge_texto: document.getElementById("cfgBoomTagText")?.value.trim() || "🔥 CYBER BOOM",
-      badge_color_fondo: document.getElementById("cfgBoomTagBgHex")?.value.trim() || "#ffde00",
-      badge_color_texto: document.getElementById("cfgBoomTagTextHex")?.value.trim() || "#0b0608",
-      titulo: document.getElementById("cfgBoomTitleText")?.value.trim() || "¡OFERTAS EXPLOSIVAS KERNEL SAC!",
-      descuento_texto: document.getElementById("cfgBoomDiscountText")?.value.trim() || "50% DSCTO",
-      descuento_color: document.getElementById("cfgBoomDiscountHex")?.value.trim() || "#ffde00",
-      subtitulo: document.getElementById("cfgBoomExtraText")?.value.trim() || "+ Regalos Gratis 🎁",
-      timer_label: document.getElementById("cfgBoomTimerLabel")?.value.trim() || "⏰ Termina en:",
-      boton_texto: document.getElementById("cfgBoomBtnText")?.value.trim() || "Ver Ofertas ⚡",
-      boton_link: document.getElementById("cfgBoomBtnLink")?.value.trim() || "#destacados",
-      boton_color_fondo: document.getElementById("cfgBoomBtnBgHex")?.value.trim() || "#ffffff",
-      boton_color_texto: document.getElementById("cfgBoomBtnTextHex")?.value.trim() || "#e11d48"
-    }
-  };
+  const payload = recolectarConfigAnunciosForm();
 
   try {
     const res = await fetchJSON("/api/configuraciones/anuncios", {
@@ -3440,23 +3480,34 @@ window.guardarAnunciosAdmin = async function() {
       aplicarBarrasAnuncios(res.config);
     }
 
-    if (msg) {
-      msg.textContent = "✅ ¡Configuración de barras y anuncios guardada y sincronizada en vivo con la tienda!";
-      msg.className = "form-msg ok";
-      setTimeout(() => { if (msg) msg.textContent = ""; }, 4500);
+    if (autoBadge) {
+      autoBadge.innerHTML = "🟢 Sincronizado en tiempo real";
+      autoBadge.className = "auto-sync-indicator synced";
     }
-    mostrarToast("Barra superior y anuncios actualizados exitosamente", "ok");
-  } catch (err) {
+
     if (msg) {
-      msg.textContent = "❌ Error al guardar anuncios: " + err.message;
+      msg.textContent = "✅ ¡Configuración guardada y sincronizada al instante con la tienda!";
+      msg.className = "form-msg ok";
+      setTimeout(() => { if (msg) msg.textContent = ""; }, 4000);
+    }
+    mostrarToast("¡Barra superior y anuncios sincronizados con éxito!", "ok");
+  } catch (err) {
+    if (autoBadge) {
+      autoBadge.innerHTML = "❌ Error al guardar";
+      autoBadge.className = "auto-sync-indicator error";
+    }
+    if (msg) {
+      msg.textContent = "❌ Error: " + err.message;
       msg.className = "form-msg err";
     }
     mostrarToast("Error: " + err.message, "err");
   } finally {
-    if (btn) btn.disabled = false;
+    if (btnTop) btnTop.disabled = false;
+    if (btnBottom) btnBottom.disabled = false;
   }
 };
 
 document.getElementById("btnGuardarAnuncios")?.addEventListener("click", () => window.guardarAnunciosAdmin());
+document.getElementById("btnGuardarAnunciosBottom")?.addEventListener("click", () => window.guardarAnunciosAdmin());
 
 

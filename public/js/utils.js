@@ -178,6 +178,9 @@ async function loadCatalogo() {
       if (typeof renderRedesAdmin === "function") {
         renderRedesAdmin();
       }
+      if (typeof renderAnunciosAdmin === "function") {
+        renderAnunciosAdmin();
+      }
     }
   } catch (adminErr) {
     console.warn("Actualización admin en segundo plano:", adminErr);
