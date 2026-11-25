@@ -1652,14 +1652,18 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
   padding: 4px 8px;
   border-radius: 8px;
   border: 1px solid var(--glass-border);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .color-box-input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   padding: 0;
   border: none;
   border-radius: 6px;
@@ -1681,10 +1685,13 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
 
 .color-hex-input {
   flex: 1;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
   font-family: var(--font-mono);
   font-size: 0.82rem;
-  letter-spacing: 0.05em;
-  padding: 6px 8px;
+  letter-spacing: 0.04em;
+  padding: 6px 4px;
   background: transparent;
   border: none;
   color: var(--text);
@@ -1847,8 +1854,19 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
   border-color: rgba(0, 0, 0, 0.1);
 }
 
-/* ============ BARRAS Y ANUNCIOS: STICKY BAR Y ESTADOS ============ */
-.admin-sticky-bar {
+/* ============ BARRAS Y ANUNCIOS: BARRA ALINEADA Y ESTADOS ============ */
+.admin-actions-bar {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 16px 20px;
+  background: rgba(20, 10, 20, 0.95);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   transition: all 0.25s ease;
 }
 
@@ -1884,8 +1902,8 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
   border-color: rgba(239, 68, 68, 0.4);
 }
 
-[data-theme="light"] .admin-sticky-bar {
-  background: rgba(255, 255, 255, 0.95) !important;
+[data-theme="light"] .admin-actions-bar {
+  background: #ffffff !important;
   border-color: rgba(0, 0, 0, 0.12) !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
 }

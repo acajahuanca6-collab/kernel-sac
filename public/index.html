@@ -1685,8 +1685,8 @@
         </div>
       </div>
 
-      <!-- Vista Previa en Vivo del Encabezado (Sticky) -->
-      <div class="admin-card-box sticky-preview-card" style="margin-bottom:24px; padding:16px 20px; background:radial-gradient(circle at 10% 20%, rgba(225,29,72,0.18) 0%, transparent 40%), linear-gradient(145deg, rgba(20,8,18,0.92) 0%, rgba(10,5,10,0.98) 100%); position:sticky; top:12px; z-index:25; backdrop-filter:blur(10px); box-shadow:0 10px 30px rgba(0,0,0,0.6); border:1px solid rgba(225,29,72,0.3);">
+      <!-- Vista Previa en Vivo del Encabezado (Alineada en flujo normal) -->
+      <div class="admin-card-box" style="margin-bottom:20px; padding:16px 20px; background:radial-gradient(circle at 10% 20%, rgba(225,29,72,0.18) 0%, transparent 40%), linear-gradient(145deg, rgba(20,8,18,0.85) 0%, rgba(10,5,10,0.95) 100%);">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
           <h3 style="margin:0; font-size:0.95rem; color:#ffde00; display:flex; align-items:center; gap:6px;">
             <span>👀 Vista Previa en Vivo (Encabezado de la Tienda)</span>
@@ -1848,22 +1848,22 @@
 
           <!-- Colores del Degradado de Fondo -->
           <h4 style="font-size:0.85rem; margin:0 0 8px; color:var(--cyan);">Colores del Degradado de Fondo:</h4>
-          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:14px;">
-            <div class="field">
+          <div style="display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:8px; margin-bottom:14px;">
+            <div class="field" style="min-width:0;">
               <label style="font-size:0.75rem;">Color Izquierda</label>
               <div class="color-picker-wrap">
                 <input type="color" id="cfgBoomBg1Color" value="#be123c" class="color-box-input" />
                 <input type="text" id="cfgBoomBg1Hex" value="#be123c" class="color-hex-input" />
               </div>
             </div>
-            <div class="field">
+            <div class="field" style="min-width:0;">
               <label style="font-size:0.75rem;">Color Centro</label>
               <div class="color-picker-wrap">
                 <input type="color" id="cfgBoomBg2Color" value="#e11d48" class="color-box-input" />
                 <input type="text" id="cfgBoomBg2Hex" value="#e11d48" class="color-hex-input" />
               </div>
             </div>
-            <div class="field">
+            <div class="field" style="min-width:0;">
               <label style="font-size:0.75rem;">Color Derecha</label>
               <div class="color-picker-wrap">
                 <input type="color" id="cfgBoomBg3Color" value="#be123c" class="color-box-input" />
@@ -1873,7 +1873,7 @@
           </div>
 
           <!-- Color de Letras General -->
-          <div class="field" style="margin-bottom:14px;">
+          <div class="field" style="margin-bottom:14px; min-width:0;">
             <label>Color de Letras / Texto Principal de la Barra</label>
             <div class="color-picker-wrap">
               <input type="color" id="cfgBoomTextColor" value="#ffffff" class="color-box-input" />
@@ -1883,20 +1883,20 @@
 
           <!-- Badge Destacado -->
           <h4 style="font-size:0.85rem; margin:14px 0 8px; color:var(--cyan);">Etiqueta / Badge Promocional:</h4>
-          <div style="display:grid; grid-template-columns: 1.5fr 1fr 1fr; gap:8px; margin-bottom:12px;">
-            <div class="field">
-              <label style="font-size:0.75rem;">Texto Badge</label>
-              <input type="text" id="cfgBoomTagText" value="🔥 CYBER BOOM" />
-            </div>
-            <div class="field">
-              <label style="font-size:0.75rem;">Fondo Badge</label>
+          <div class="field" style="margin-bottom:8px; min-width:0;">
+            <label style="font-size:0.75rem;">Texto del Badge Promocional</label>
+            <input type="text" id="cfgBoomTagText" value="🔥 CYBER BOOM" />
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:10px; margin-bottom:12px;">
+            <div class="field" style="min-width:0;">
+              <label style="font-size:0.75rem;">Color Fondo Badge</label>
               <div class="color-picker-wrap">
                 <input type="color" id="cfgBoomTagBgColor" value="#ffde00" class="color-box-input" />
                 <input type="text" id="cfgBoomTagBgHex" value="#ffde00" class="color-hex-input" />
               </div>
             </div>
-            <div class="field">
-              <label style="font-size:0.75rem;">Letra Badge</label>
+            <div class="field" style="min-width:0;">
+              <label style="font-size:0.75rem;">Color Letra Badge</label>
               <div class="color-picker-wrap">
                 <input type="color" id="cfgBoomTagTextColor" value="#0b0608" class="color-box-input" />
                 <input type="text" id="cfgBoomTagTextHex" value="#0b0608" class="color-hex-input" />
@@ -1906,16 +1906,16 @@
 
           <!-- Textos de la Oferta -->
           <h4 style="font-size:0.85rem; margin:14px 0 8px; color:var(--cyan);">Textos de la Promoción:</h4>
-          <div class="field" style="margin-bottom:8px;">
+          <div class="field" style="margin-bottom:8px; min-width:0;">
             <label>Título / Mensaje Principal</label>
             <input type="text" id="cfgBoomTitleText" value="¡OFERTAS EXPLOSIVAS KERNEL SAC!" />
           </div>
           <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:8px; margin-bottom:8px;">
-            <div class="field">
+            <div class="field" style="min-width:0;">
               <label>Texto Resaltado (Descuento)</label>
               <input type="text" id="cfgBoomDiscountText" value="50% DSCTO" />
             </div>
-            <div class="field">
+            <div class="field" style="min-width:0;">
               <label>Color Resaltado</label>
               <div class="color-picker-wrap">
                 <input type="color" id="cfgBoomDiscountColor" value="#ffde00" class="color-box-input" />
@@ -1923,57 +1923,58 @@
               </div>
             </div>
           </div>
-          <div class="field" style="margin-bottom:12px;">
+          <div class="field" style="margin-bottom:12px; min-width:0;">
             <label>Texto Secundario / Regalos</label>
             <input type="text" id="cfgBoomExtraText" value="+ Regalos Gratis 🎁" />
           </div>
 
           <!-- Temporizador y Botón CTA -->
           <h4 style="font-size:0.85rem; margin:14px 0 8px; color:var(--cyan);">Temporizador y Botón de Acción:</h4>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:8px;">
-            <div class="field">
+          <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:8px; margin-bottom:8px;">
+            <div class="field" style="min-width:0;">
               <label>Etiqueta Temporizador</label>
               <input type="text" id="cfgBoomTimerLabel" value="⏰ Termina en:" />
             </div>
-            <div class="field">
+            <div class="field" style="min-width:0;">
               <label>Texto del Botón</label>
               <input type="text" id="cfgBoomBtnText" value="Ver Ofertas ⚡" />
             </div>
           </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:8px;">
-            <div class="field">
-              <label>Enlace del Botón (URL o Ancla)</label>
-              <input type="text" id="cfgBoomBtnLink" value="#destacados" />
-            </div>
-            <div class="field">
+          <div class="field" style="margin-bottom:8px; min-width:0;">
+            <label>Enlace del Botón (URL o Ancla)</label>
+            <input type="text" id="cfgBoomBtnLink" value="#destacados" />
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:8px; margin-bottom:8px;">
+            <div class="field" style="min-width:0;">
               <label>Color Fondo Botón</label>
               <div class="color-picker-wrap">
                 <input type="color" id="cfgBoomBtnBgColor" value="#ffffff" class="color-box-input" />
                 <input type="text" id="cfgBoomBtnBgHex" value="#ffffff" class="color-hex-input" />
               </div>
             </div>
-          </div>
-          <div class="field">
-            <label>Color Letra Botón</label>
-            <div class="color-picker-wrap">
-              <input type="color" id="cfgBoomBtnTextColor" value="#e11d48" class="color-box-input" />
-              <input type="text" id="cfgBoomBtnTextHex" value="#e11d48" class="color-hex-input" />
+            <div class="field" style="min-width:0;">
+              <label>Color Letra Botón</label>
+              <div class="color-picker-wrap">
+                <input type="color" id="cfgBoomBtnTextColor" value="#e11d48" class="color-box-input" />
+                <input type="text" id="cfgBoomBtnTextHex" value="#e11d48" class="color-hex-input" />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Barra Inferior Fija de Sincronización y Acciones -->
-      <div class="admin-sticky-bar" style="margin-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:14px 20px; background:rgba(20,10,20,0.95); border:1.5px solid var(--glass-border); border-radius:12px; position:sticky; bottom:12px; z-index:30; box-shadow:0 8px 32px rgba(0,0,0,0.6); backdrop-filter:blur(10px);">
+      <!-- Barra Inferior Alineada de Sincronización y Acciones (En el flujo normal, no flotante) -->
+      <div class="admin-actions-bar">
         <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-          <span id="cfgAnunciosAutoSaveStatus" class="auto-sync-indicator synced" style="font-size:0.85rem; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+          <span id="cfgAnunciosAutoSaveStatus" class="auto-sync-indicator synced">
             🟢 Sincronizado en tiempo real
           </span>
           <span id="cfgAnunciosMsg" class="form-msg" style="margin:0; font-size:0.82rem;"></span>
         </div>
         <div style="display:flex; gap:10px; align-items:center;">
           <button type="button" class="btn btn-outline" onclick="showStoreView()" style="display:inline-flex; align-items:center; gap:6px;">
-            <span>👀 Ver en Tienda</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>Ver en Tienda</span>
           </button>
           <button type="button" class="btn btn-primary" id="btnGuardarAnunciosBottom" style="display:inline-flex; align-items:center; gap:6px;">
             <span>💾 Guardar Cambios</span>
