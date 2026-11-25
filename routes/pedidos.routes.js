@@ -89,6 +89,72 @@ router.get("/mis-pedidos", requireAuth, (req, res) => {
   res.json(pedidos);
 });
 
+// Helper para obtener la configuración de redes sociales
+export function obtenerConfigRedes() {
+  try {
+    const row = db.prepare("SELECT valor FROM configuraciones WHERE clave = 'redes_sociales'").get();
+    if (row && row.valor) {
+      return JSON.parse(row.valor);
+    }
+  } catch (err) {
+    console.error("Error al obtener configuraciones de redes sociales:", err);
+  }
+  return {
+    titulo_seccion: "Síguenos en nuestras redes",
+    subtitulo: "Conéctate con nosotros en todas nuestras plataformas oficiales",
+    redes: [
+      {
+        id: "instagram",
+        nombre: "Instagram",
+        url: "https://instagram.com",
+        descripcion: "Fotos de setups increíbles, unboxings y detrás de cámaras.",
+        color: "#E1306C",
+        activo: true
+      },
+      {
+        id: "tiktok",
+        nombre: "TikTok",
+        url: "https://tiktok.com",
+        descripcion: "Videos rápidos, tips de tecnología y memes de ensamble.",
+        color: "#00f2fe",
+        activo: true
+      },
+      {
+        id: "youtube",
+        nombre: "YouTube",
+        url: "https://youtube.com",
+        descripcion: "Reviews a fondo, tutoriales y guías de armado paso a paso.",
+        color: "#FF0000",
+        activo: true
+      },
+      {
+        id: "facebook",
+        nombre: "Facebook",
+        url: "https://facebook.com",
+        descripcion: "Únete a nuestra comunidad, mira transmisiones en vivo y sorteos.",
+        color: "#1877F2",
+        activo: true
+      },
+      {
+        id: "whatsapp",
+        nombre: "Canal de WhatsApp",
+        url: "https://wa.me/51967006922",
+        descripcion: "Ofertas relámpago, alertas de stock y lanzamientos exclusivos.",
+        color: "#25D366",
+        activo: false
+      },
+      {
+        id: "x",
+        nombre: "X (Twitter)",
+        url: "https://x.com",
+        descripcion: "Noticias de tecnología y lanzamientos de hardware en tiempo real.",
+        color: "#ffffff",
+        activo: false
+      }
+    ]
+  };
+}
+
 // GET /api/configuraciones/general
 router.get("/configuraciones/general", (req, res) => {
   res.json(obtenerConfigGeneral());
@@ -107,6 +173,28 @@ router.put("/configuraciones/general", requireAdmin, (req, res) => {
   db.prepare(`
     INSERT INTO configuraciones (clave, valor)
     VALUES ('general', ?)
+    ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor
+  `).run(JSON.stringify(actualizado));
+  res.json({ ok: true, config: actualizado });
+});
+
+// GET /api/configuraciones/redes
+router.get("/configuraciones/redes", (req, res) => {
+  res.json(obtenerConfigRedes());
+});
+
+// PUT /api/configuraciones/redes
+router.put("/configuraciones/redes", requireAdmin, (req, res) => {
+  const { titulo_seccion, subtitulo, redes } = req.body;
+  const actual = obtenerConfigRedes();
+  const actualizado = {
+    titulo_seccion: titulo_seccion ? String(titulo_seccion).trim() : actual.titulo_seccion,
+    subtitulo: subtitulo !== undefined ? String(subtitulo).trim() : (actual.subtitulo || ""),
+    redes: Array.isArray(redes) ? redes : actual.redes,
+  };
+  db.prepare(`
+    INSERT INTO configuraciones (clave, valor)
+    VALUES ('redes_sociales', ?)
     ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor
   `).run(JSON.stringify(actualizado));
   res.json({ ok: true, config: actualizado });

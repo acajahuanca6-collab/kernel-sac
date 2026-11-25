@@ -1423,3 +1423,219 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
     border-radius: var(--radius);
   }
 }
+
+/* ============ ADMIN TAB: REDES SOCIALES ============ */
+.social-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.social-admin-card {
+  background: var(--glass-bg);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 10px 24px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.social-admin-card:hover {
+  border-color: rgba(255, 45, 95, 0.4);
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 14px 30px rgba(0,0,0,0.25);
+}
+
+.social-admin-card.inactivo {
+  opacity: 0.55;
+  filter: grayscale(40%);
+}
+
+.social-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 12px;
+}
+
+.social-badge-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-badge-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.social-badge-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.social-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+/* Switch Toggle UI */
+.switch-wrap {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch-wrap input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.16);
+  transition: .25s ease;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .25s ease;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.switch-wrap input:checked + .switch-slider {
+  background-color: var(--red);
+  border-color: var(--red);
+}
+
+.switch-wrap input:checked + .switch-slider:before {
+  transform: translateX(18px);
+}
+
+/* Botón Probar Enlace */
+.btn-test-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  color: var(--cyan);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.btn-test-link:hover {
+  background: rgba(0, 210, 255, 0.16);
+  border-color: var(--cyan);
+  transform: translateY(-1px);
+}
+
+/* Carrusel de Previsualización en Vivo de Redes */
+.social-preview-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 8px 4px 14px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.social-preview-card {
+  min-width: 260px;
+  max-width: 300px;
+  flex: 0 0 auto;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 18px 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.social-preview-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 45, 95, 0.5);
+}
+
+.social-preview-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+.social-preview-title {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.social-preview-desc {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+[data-theme="light"] .social-admin-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .social-badge-title {
+  color: #111111;
+}
+
+[data-theme="light"] .social-card-head {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}

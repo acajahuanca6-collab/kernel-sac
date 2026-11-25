@@ -68,6 +68,7 @@ async function showAdminView() {
   renderProductosAdmin();
   renderCarruselAdmin();
   await renderCategoriasAdmin();
+  renderRedesAdmin();
   loadAdminPedidos();
   loadAdminChatLogs();
   cargarAlertasStock();
@@ -112,6 +113,7 @@ document.querySelectorAll(".tabs button").forEach((btn) => {
     else if (tabName === "carrusel") renderCarruselAdmin();
     else if (tabName === "chatbot") loadAdminChatLogs();
     else if (tabName === "categorias") renderCategoriasAdmin();
+    else if (tabName === "redes") renderRedesAdmin();
   });
 });
 
@@ -2833,4 +2835,211 @@ document.addEventListener("keydown", (e) => {
     }
   }
 });
+
+// ============================================================
+// ================= TAB 9: REDES SOCIALES ====================
+// ============================================================
+
+const REDES_DEFECTO = [
+  { id: "instagram", nombre: "Instagram", url: "https://instagram.com", descripcion: "Fotos de setups increíbles, unboxings y detrás de cámaras.", color: "#E1306C", activo: true },
+  { id: "tiktok", nombre: "TikTok", url: "https://tiktok.com", descripcion: "Videos rápidos, tips de tecnología y memes de ensamble.", color: "#00f2fe", activo: true },
+  { id: "youtube", nombre: "YouTube", url: "https://youtube.com", descripcion: "Reviews a fondo, tutoriales y guías de armado paso a paso.", color: "#FF0000", activo: true },
+  { id: "facebook", nombre: "Facebook", url: "https://facebook.com", descripcion: "Únete a nuestra comunidad, mira transmisiones en vivo y sorteos.", color: "#1877F2", activo: true },
+  { id: "whatsapp", nombre: "Canal de WhatsApp", url: "https://wa.me/51967006922", descripcion: "Ofertas relámpago, alertas de stock y lanzamientos exclusivos.", color: "#25D366", activo: false },
+  { id: "x", nombre: "X (Twitter)", url: "https://x.com", descripcion: "Noticias de tecnología y lanzamientos de hardware en tiempo real.", color: "#ffffff", activo: false }
+];
+
+async function renderRedesAdmin() {
+  const container = document.getElementById("socialCardsGrid");
+  const preview = document.getElementById("socialPreviewTrack");
+  const tituloInput = document.getElementById("cfgRedesTitulo");
+  const subtituloInput = document.getElementById("cfgRedesSubtitulo");
+  if (!container) return;
+
+  // Si no se ha cargado la configuración, obtenerla de la API
+  if (!adminState.redesConfig) {
+    try {
+      const data = await fetchJSON("/api/configuraciones/redes");
+      adminState.redesConfig = data || { titulo_seccion: "Síguenos en nuestras redes", redes: REDES_DEFECTO };
+    } catch {
+      adminState.redesConfig = state.configRedes || { titulo_seccion: "Síguenos en nuestras redes", redes: REDES_DEFECTO };
+    }
+  }
+
+  const cfg = adminState.redesConfig;
+  if (tituloInput && !tituloInput.dataset.userEdited) {
+    tituloInput.value = cfg.titulo_seccion || "Síguenos en nuestras redes";
+  }
+  if (subtituloInput && !subtituloInput.dataset.userEdited) {
+    subtituloInput.value = cfg.subtitulo || "Conéctate con nosotros en todas nuestras plataformas oficiales";
+  }
+
+  const redesList = Array.isArray(cfg.redes) && cfg.redes.length > 0 ? cfg.redes : REDES_DEFECTO;
+
+  // Renderizar tarjetas de edición individuales
+  container.innerHTML = redesList.map((r) => {
+    const isActivo = r.activo !== false;
+    return `
+      <div class="social-admin-card ${isActivo ? '' : 'inactivo'}" id="socialCard_${r.id}">
+        <div class="social-card-head">
+          <div class="social-badge-info">
+            <div class="social-badge-icon" style="background:${r.color || '#fff'}18; border:1px solid ${r.color || '#fff'}40; color:${r.color || '#fff'};">
+              ${typeof getSocialSvgIcon === 'function' ? getSocialSvgIcon(r.id, 22) : ''}
+            </div>
+            <strong class="social-badge-title">${escapeHtml(r.nombre)}</strong>
+          </div>
+          <div class="social-toggle-wrap">
+            <span>Mostrar</span>
+            <label class="switch-wrap">
+              <input type="checkbox" id="switchRed_${r.id}" ${isActivo ? 'checked' : ''} onchange="window.actualizarSwitchRed('${r.id}', this.checked)" />
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Enlace Directo (URL Oficial)</span>
+            <a href="${escapeHtml(r.url || '#')}" target="_blank" rel="noopener noreferrer" class="btn-test-link" id="testLink_${r.id}">
+              🔗 Probar Enlace
+            </a>
+          </label>
+          <input type="url" id="urlRed_${r.id}" value="${escapeHtml(r.url || '')}" placeholder="https://..." oninput="window.actualizarInputRed('${r.id}', 'url', this.value)" />
+        </div>
+
+        <div class="field">
+          <label>Nombre a Mostrar</label>
+          <input type="text" id="nombreRed_${r.id}" value="${escapeHtml(r.nombre || '')}" oninput="window.actualizarInputRed('${r.id}', 'nombre', this.value)" />
+        </div>
+
+        <div class="field">
+          <label>Descripción / Mensaje Promocional</label>
+          <input type="text" id="descRed_${r.id}" value="${escapeHtml(r.descripcion || '')}" oninput="window.actualizarInputRed('${r.id}', 'descripcion', this.value)" />
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  // Escuchar inputs de título y subtítulo
+  if (tituloInput && !tituloInput._boundInput) {
+    tituloInput._boundInput = true;
+    tituloInput.addEventListener("input", (e) => {
+      tituloInput.dataset.userEdited = "1";
+      if (adminState.redesConfig) adminState.redesConfig.titulo_seccion = e.target.value.trim();
+      renderSocialPreviewAdmin();
+    });
+  }
+  if (subtituloInput && !subtituloInput._boundInput) {
+    subtituloInput._boundInput = true;
+    subtituloInput.addEventListener("input", (e) => {
+      subtituloInput.dataset.userEdited = "1";
+      if (adminState.redesConfig) adminState.redesConfig.subtitulo = e.target.value.trim();
+    });
+  }
+
+  renderSocialPreviewAdmin();
+}
+window.renderRedesAdmin = renderRedesAdmin;
+
+function renderSocialPreviewAdmin() {
+  const preview = document.getElementById("socialPreviewTrack");
+  if (!preview || !adminState.redesConfig) return;
+
+  const activas = (adminState.redesConfig.redes || []).filter(r => r.activo !== false);
+  if (activas.length === 0) {
+    preview.innerHTML = `<div class="empty-state" style="width:100%; padding:20px; text-align:center;">Todas las redes están desactivadas. Activa al menos una para que se muestre en el carrusel de la tienda.</div>`;
+    return;
+  }
+
+  preview.innerHTML = activas.map(r => `
+    <div class="social-preview-card">
+      <div class="social-preview-icon" style="color:${r.color || '#fff'};">
+        ${typeof getSocialSvgIcon === 'function' ? getSocialSvgIcon(r.id, 24) : ''}
+      </div>
+      <div>
+        <h4 class="social-preview-title">${escapeHtml(r.nombre)}</h4>
+        <p class="social-preview-desc">${escapeHtml(r.descripcion)}</p>
+      </div>
+      <div style="font-size:0.72rem; color:var(--cyan); word-break:break-all; font-family:var(--font-mono);">
+        ${escapeHtml(r.url || '#')}
+      </div>
+    </div>
+  `).join("");
+}
+
+window.actualizarSwitchRed = function(id, checked) {
+  if (!adminState.redesConfig || !adminState.redesConfig.redes) return;
+  const item = adminState.redesConfig.redes.find(r => r.id === id);
+  if (item) {
+    item.activo = checked;
+    const cardEl = document.getElementById(`socialCard_${id}`);
+    if (cardEl) cardEl.classList.toggle("inactivo", !checked);
+    renderSocialPreviewAdmin();
+  }
+};
+
+window.actualizarInputRed = function(id, field, value) {
+  if (!adminState.redesConfig || !adminState.redesConfig.redes) return;
+  const item = adminState.redesConfig.redes.find(r => r.id === id);
+  if (item) {
+    item[field] = value;
+    if (field === "url") {
+      const testBtn = document.getElementById(`testLink_${id}`);
+      if (testBtn) testBtn.href = value || "#";
+    }
+    renderSocialPreviewAdmin();
+  }
+};
+
+window.copiarEnlaceRed = function(id) {
+  const input = document.getElementById(`urlRed_${id}`);
+  if (input && input.value) {
+    navigator.clipboard?.writeText(input.value);
+    mostrarToast("Enlace copiado al portapapeles", "ok");
+  }
+};
+
+window.guardarRedesAdmin = async function() {
+  const msg = document.getElementById("cfgRedesMsg");
+  const titulo = document.getElementById("cfgRedesTitulo")?.value.trim() || "Síguenos en nuestras redes";
+  const subtitulo = document.getElementById("cfgRedesSubtitulo")?.value.trim() || "";
+
+  if (!adminState.redesConfig || !adminState.redesConfig.redes) {
+    adminState.redesConfig = { titulo_seccion: titulo, subtitulo, redes: REDES_DEFECTO };
+  } else {
+    adminState.redesConfig.titulo_seccion = titulo;
+    adminState.redesConfig.subtitulo = subtitulo;
+  }
+
+  try {
+    const res = await fetchJSON("/api/configuraciones/redes", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(adminState.redesConfig),
+    });
+
+    adminState.redesConfig = res.config;
+    state.configRedes = res.config;
+
+    // Actualizar carrusel en la tienda en vivo inmediatamente
+    if (typeof renderSocialCarousel === "function") {
+      renderSocialCarousel();
+    }
+
+    if (msg) {
+      msg.textContent = "¡Redes sociales guardadas y sincronizadas exitosamente con la tienda!";
+      msg.className = "form-msg ok";
+      setTimeout(() => { if (msg) msg.textContent = ""; }, 4000);
+    }
+    mostrarToast("Redes sociales actualizadas en vivo en la tienda", "ok");
+  } catch (err) {
+    if (msg) {
+      msg.textContent = "Error al guardar redes: " + err.message;
+      msg.className = "form-msg err";
+    }
+    mostrarToast("Error: " + err.message, "err");
+  }
+};
+
+document.getElementById("btnGuardarRedes")?.addEventListener("click", () => window.guardarRedesAdmin());
 

@@ -806,6 +806,7 @@
       <button data-tab="carrusel">⚡ Carrusel Home</button>
       <button data-tab="categorias">🏷️ Categorías</button>
       <button data-tab="chatbot">🤖 Consultas Chatbot</button>
+      <button data-tab="redes">🌐 Redes Sociales</button>
     </div>
 
     <!-- TAB DASHBOARD -->
@@ -1402,6 +1403,66 @@
           <tbody id="chatLogsBody"></tbody>
         </table>
       </div>
+    </div>
+
+    <!-- TAB REDES SOCIALES -->
+    <div class="tab-panel" id="tabRedes">
+      <div class="toolbar" style="margin-bottom:18px;">
+        <div>
+          <h2 style="font-size:1.25rem; margin:0; display:flex; align-items:center; gap:8px;">
+            <span>🌐 Personalización de Redes Sociales</span>
+          </h2>
+          <span style="font-size:0.82rem; color:var(--text-dim);">Configura los enlaces directos, mensajes y visibilidad de cada red social en el carrusel de la tienda:</span>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button class="btn btn-primary" id="btnGuardarRedes" style="display:inline-flex; align-items:center; gap:6px;">
+            <span>💾 Guardar Redes Sociales</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Configuración General del Título -->
+      <div class="admin-card-box" style="margin-bottom:20px;">
+        <h3 style="margin:0 0 12px; font-size:1rem; color:#fff;">🏷️ Título de la Sección en la Tienda</h3>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
+          <div class="field">
+            <label>Título Principal de la Sección</label>
+            <input type="text" id="cfgRedesTitulo" placeholder="ej: Síguenos en nuestras redes" />
+          </div>
+          <div class="field">
+            <label>Subtítulo o Frase de Llamado a la Acción</label>
+            <input type="text" id="cfgRedesSubtitulo" placeholder="ej: Conéctate con nosotros en todas nuestras plataformas oficiales" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Vista Previa en Vivo Liquid Glass -->
+      <div class="admin-card-box" style="margin-bottom:24px; background:radial-gradient(circle at 10% 20%, rgba(225,29,72,0.18) 0%, transparent 40%), linear-gradient(145deg, rgba(20,8,18,0.85) 0%, rgba(10,5,10,0.95) 100%);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+          <h3 style="margin:0; font-size:0.95rem; color:#ffde00; display:flex; align-items:center; gap:6px;">
+            <span>👀 Vista Previa en Vivo (Carrusel en la Tienda)</span>
+          </h3>
+          <span class="badge-featured" style="background:rgba(37,211,102,0.18); color:#25d366; border:1px solid rgba(37,211,102,0.4);">
+            Sincronizado en Tiempo Real
+          </span>
+        </div>
+        <p style="font-size:0.78rem; color:var(--text-dim); margin:0 0 14px;">
+          Así verán e interactuarán tus clientes con las tarjetas en la página web:
+        </p>
+        <div class="social-preview-track" id="socialPreviewTrack">
+          <!-- Tarjetas renderizadas en tiempo real -->
+        </div>
+      </div>
+
+      <!-- Cuadrícula de Edición de Redes Sociales -->
+      <h3 style="font-size:1rem; margin:0 0 14px; color:#fff; display:flex; align-items:center; gap:8px;">
+        <span>📱 Configuración Individual de Cada Red Social</span>
+      </h3>
+      <div class="social-cards-grid" id="socialCardsGrid">
+        <!-- Renderizado dinámicamente con Instagram, TikTok, YouTube, Facebook, WhatsApp, X -->
+      </div>
+
+      <div id="cfgRedesMsg" class="form-msg" style="margin-top:16px;"></div>
     </div>
   </div>
 </div>

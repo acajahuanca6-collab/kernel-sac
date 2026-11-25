@@ -101,6 +101,49 @@ function initIosCarousel() {
   }, 4500);
 }
 
+function renderSocialCarousel() {
+  const track = document.getElementById("socialCarouselTrack");
+  const sectionTitle = document.querySelector("#socialCarouselSection .section-head h2");
+  if (!track) return;
+
+  const cfg = state.configRedes || {
+    titulo_seccion: "Síguenos en nuestras redes",
+    redes: [
+      { id: "instagram", nombre: "Instagram", url: "https://instagram.com", descripcion: "Fotos de setups increíbles, unboxings y detrás de cámaras.", color: "#E1306C", activo: true },
+      { id: "tiktok", nombre: "TikTok", url: "https://tiktok.com", descripcion: "Videos rápidos, tips de tecnología y memes de ensamble.", color: "#00f2fe", activo: true },
+      { id: "youtube", nombre: "YouTube", url: "https://youtube.com", descripcion: "Reviews a fondo, tutoriales y guías de armado paso a paso.", color: "#FF0000", activo: true },
+      { id: "facebook", nombre: "Facebook", url: "https://facebook.com", descripcion: "Únete a nuestra comunidad, mira transmisiones en vivo y sorteos.", color: "#1877F2", activo: true }
+    ]
+  };
+
+  if (sectionTitle && cfg.titulo_seccion) {
+    sectionTitle.textContent = cfg.titulo_seccion;
+  }
+
+  const activas = (cfg.redes || []).filter(r => r.activo !== false);
+  if (activas.length === 0) {
+    track.innerHTML = `<div class="empty-state" style="width:100%; padding:20px; text-align:center;">Próximamente nuevas redes sociales oficiales.</div>`;
+    return;
+  }
+
+  track.innerHTML = activas.map(r => `
+    <div class="ios-slide">
+      <a href="${escapeHtml(r.url || '#')}" target="_blank" rel="noopener noreferrer" class="ios-glass-card" style="text-decoration:none; display:flex;">
+        <div class="slide-icon" style="color:${r.color || '#fff'};">
+          ${typeof getSocialSvgIcon === 'function' ? getSocialSvgIcon(r.id) : ''}
+        </div>
+        <div class="slide-content">
+          <h3>${escapeHtml(r.nombre || '')}</h3>
+          <p>${escapeHtml(r.descripcion || '')}</p>
+        </div>
+      </a>
+    </div>
+  `).join("");
+
+  initSocialCarousel();
+}
+window.renderSocialCarousel = renderSocialCarousel;
+
 function initSocialCarousel() {
   const track = document.getElementById("socialCarouselTrack");
   const prevBtn = document.getElementById("socialCarouselPrev");
@@ -110,6 +153,7 @@ function initSocialCarousel() {
 
   const slides = track.querySelectorAll(".ios-slide");
   const totalSlides = slides.length;
+  if (!totalSlides) return;
   let currentIndex = 0;
   let startX = 0;
   let isDragging = false;
