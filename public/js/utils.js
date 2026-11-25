@@ -41,6 +41,7 @@ const state = {
   carruselProductos: [],
   configGeneral: null,
   configRedes: null,
+  configAnuncios: null,
   cart: JSON.parse(sessionStorage.getItem("kernel_cart") || "[]"),
   categoriaActiva: "",
   usuario: null,
@@ -116,12 +117,13 @@ async function fetchJSON(url, opts = {}) {
 // Carga categorías, métricas y ofertas desde la base de datos SQL y
 // refresca la tienda con paginación de alto rendimiento.
 async function loadCatalogo() {
-  const [categorias, stats, carruselData, generalConfig, redesConfig, destacados] = await Promise.all([
+  const [categorias, stats, carruselData, generalConfig, redesConfig, anunciosConfig, destacados] = await Promise.all([
     fetchJSON("/api/categorias"),
     fetchJSON("/api/stats").catch(() => null),
     fetchJSON("/api/carrusel").catch(() => null),
     fetchJSON("/api/configuraciones/general").catch(() => null),
     fetchJSON("/api/configuraciones/redes").catch(() => null),
+    fetchJSON("/api/configuraciones/anuncios").catch(() => null),
     fetchJSON("/api/productos?destacado=1&limit=8").catch(() => []),
   ]);
   state.categorias = categorias || [];
@@ -144,6 +146,9 @@ async function loadCatalogo() {
   if (redesConfig) {
     state.configRedes = redesConfig;
   }
+  if (anunciosConfig) {
+    state.configAnuncios = anunciosConfig;
+  }
 
   renderStats();
   renderCategorias();
@@ -154,6 +159,9 @@ async function loadCatalogo() {
   renderCarruselHero();
   if (typeof renderSocialCarousel === "function") {
     renderSocialCarousel();
+  }
+  if (typeof aplicarBarrasAnuncios === "function") {
+    aplicarBarrasAnuncios(state.configAnuncios);
   }
 
   await fetchCatalogoPaginado(1);

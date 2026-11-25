@@ -178,6 +178,48 @@ router.put("/configuraciones/general", requireAdmin, (req, res) => {
   res.json({ ok: true, config: actualizado });
 });
 
+// Helper para obtener la configuración de barras de anuncios (cinta superior y barra promocional)
+export function obtenerConfigAnuncios() {
+  try {
+    const row = db.prepare("SELECT valor FROM configuraciones WHERE clave = 'barras_anuncios'").get();
+    if (row && row.valor) {
+      return JSON.parse(row.valor);
+    }
+  } catch (err) {
+    console.error("Error al obtener configuraciones de barras de anuncios:", err);
+  }
+  return {
+    cinta_superior: {
+      activo: true,
+      color_fondo: "#e11d48",
+      color_texto: "#ffffff",
+      item1: "ENVÍOS A TODO EL PERÚ",
+      item2: "SOPORTE TÉCNICO ESPECIALIZADO",
+      item3: "PRODUCTOS CON GARANTÍA",
+      item4: "MÁS DE 25 000 PRODUCTOS"
+    },
+    barra_promocional: {
+      activo: true,
+      color_fondo_inicio: "#be123c",
+      color_fondo_medio: "#e11d48",
+      color_fondo_fin: "#be123c",
+      color_texto: "#ffffff",
+      badge_texto: "🔥 CYBER BOOM",
+      badge_color_fondo: "#ffde00",
+      badge_color_texto: "#0b0608",
+      titulo: "¡OFERTAS EXPLOSIVAS KERNEL SAC!",
+      descuento_texto: "50% DSCTO",
+      descuento_color: "#ffde00",
+      subtitulo: "+ Regalos Gratis 🎁",
+      timer_label: "⏰ Termina en:",
+      boton_texto: "Ver Ofertas ⚡",
+      boton_link: "#destacados",
+      boton_color_fondo: "#ffffff",
+      boton_color_texto: "#e11d48"
+    }
+  };
+}
+
 // GET /api/configuraciones/redes
 router.get("/configuraciones/redes", (req, res) => {
   res.json(obtenerConfigRedes());
@@ -195,6 +237,33 @@ router.put("/configuraciones/redes", requireAdmin, (req, res) => {
   db.prepare(`
     INSERT INTO configuraciones (clave, valor)
     VALUES ('redes_sociales', ?)
+    ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor
+  `).run(JSON.stringify(actualizado));
+  res.json({ ok: true, config: actualizado });
+});
+
+// GET /api/configuraciones/anuncios
+router.get("/configuraciones/anuncios", (req, res) => {
+  res.json(obtenerConfigAnuncios());
+});
+
+// PUT /api/configuraciones/anuncios
+router.put("/configuraciones/anuncios", requireAdmin, (req, res) => {
+  const actual = obtenerConfigAnuncios();
+  const nuevo = req.body || {};
+  const actualizado = {
+    cinta_superior: {
+      ...actual.cinta_superior,
+      ...(nuevo.cinta_superior || {})
+    },
+    barra_promocional: {
+      ...actual.barra_promocional,
+      ...(nuevo.barra_promocional || {})
+    }
+  };
+  db.prepare(`
+    INSERT INTO configuraciones (clave, valor)
+    VALUES ('barras_anuncios', ?)
     ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor
   `).run(JSON.stringify(actualizado));
   res.json({ ok: true, config: actualizado });

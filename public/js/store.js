@@ -1233,3 +1233,86 @@ async function openDetalleModal(id) {
 
   detalleOverlay.classList.add("open");
 }
+
+// ================= BARRAS DE ANUNCIOS Y OFERTAS =================
+function aplicarBarrasAnuncios(customConfig) {
+  const cfg = customConfig || state.configAnuncios;
+  if (!cfg) return;
+
+  // 1. CINTA SUPERIOR DE BENEFICIOS (MARQUEE)
+  const topBar = document.getElementById("topAnnounceBar");
+  if (topBar && cfg.cinta_superior) {
+    const cinta = cfg.cinta_superior;
+    topBar.style.display = cinta.activo !== false ? "" : "none";
+    if (cinta.color_fondo) topBar.style.backgroundColor = cinta.color_fondo;
+    if (cinta.color_texto) topBar.style.color = cinta.color_texto;
+
+    const t1 = document.getElementById("topAnnounceText1");
+    const t2 = document.getElementById("topAnnounceText2");
+    const t3 = document.getElementById("topAnnounceText3");
+    const t4 = document.getElementById("topAnnounceText4");
+    const t1d = document.getElementById("topAnnounceText1_dup");
+    const t2d = document.getElementById("topAnnounceText2_dup");
+    const t3d = document.getElementById("topAnnounceText3_dup");
+    const t4d = document.getElementById("topAnnounceText4_dup");
+
+    if (t1 && cinta.item1) t1.textContent = cinta.item1;
+    if (t2 && cinta.item2) t2.textContent = cinta.item2;
+    if (t3 && cinta.item3) t3.textContent = cinta.item3;
+    if (t4 && cinta.item4) t4.textContent = cinta.item4;
+    if (t1d && cinta.item1) t1d.textContent = cinta.item1;
+    if (t2d && cinta.item2) t2d.textContent = cinta.item2;
+    if (t3d && cinta.item3) t3d.textContent = cinta.item3;
+    if (t4d && cinta.item4) t4d.textContent = cinta.item4;
+  }
+
+  // 2. BARRA PROMOCIONAL CYBER BOOM
+  const boomBar = document.getElementById("boomPromoBar");
+  if (boomBar && cfg.barra_promocional) {
+    const boom = cfg.barra_promocional;
+    boomBar.style.display = boom.activo !== false ? "" : "none";
+
+    const c1 = boom.color_fondo_inicio || "#be123c";
+    const c2 = boom.color_fondo_medio || "#e11d48";
+    const c3 = boom.color_fondo_fin || "#be123c";
+    boomBar.style.background = `linear-gradient(90deg, ${c1} 0%, ${c2} 50%, ${c3} 100%)`;
+    if (boom.color_texto) boomBar.style.color = boom.color_texto;
+
+    // Badge
+    const tagEl = document.getElementById("boomTagText");
+    if (tagEl) {
+      if (boom.badge_texto) tagEl.textContent = boom.badge_texto;
+      if (boom.badge_color_fondo) tagEl.style.backgroundColor = boom.badge_color_fondo;
+      if (boom.badge_color_texto) tagEl.style.color = boom.badge_color_texto;
+    }
+
+    // Título principal
+    const titleEl = document.getElementById("boomTitleText");
+    if (titleEl && boom.titulo) titleEl.textContent = boom.titulo;
+
+    // Descuento resaltado
+    const discEl = document.getElementById("boomHighlightText");
+    if (discEl) {
+      if (boom.descuento_texto) discEl.textContent = boom.descuento_texto;
+      if (boom.descuento_color) discEl.style.color = boom.descuento_color;
+    }
+
+    // Texto extra
+    const extraEl = document.getElementById("boomExtraText");
+    if (extraEl && boom.subtitulo) extraEl.textContent = boom.subtitulo;
+
+    // Timer label
+    const timerLabelEl = document.getElementById("boomTimerLabel");
+    if (timerLabelEl && boom.timer_label) timerLabelEl.textContent = boom.timer_label;
+
+    // Botón CTA
+    const btnEl = document.getElementById("boomCtaBtn");
+    if (btnEl) {
+      if (boom.boton_texto) btnEl.textContent = boom.boton_texto;
+      if (boom.boton_link) btnEl.href = boom.boton_link;
+      if (boom.boton_color_fondo) btnEl.style.backgroundColor = boom.boton_color_fondo;
+      if (boom.boton_color_texto) btnEl.style.color = boom.boton_color_texto;
+    }
+  }
+}
+window.aplicarBarrasAnuncios = aplicarBarrasAnuncios;
