@@ -56,6 +56,9 @@ fi
 echo "Creando base de datos con productos de ejemplo..."
 npm run seed
 
+echo "Descargando imágenes de productos..."
+node db/download_all_images.js
+
 echo ""
 echo "============================================================"
 echo "  Listo. Ahora puedes usar iniciar.command para abrir la tienda."

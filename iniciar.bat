@@ -48,6 +48,11 @@ if not exist "db\kernelsac.db" (
   call npm run seed
 )
 
+if not exist "public\uploads\productos\prod_1.jpg" (
+  echo Descargando imagenes de productos...
+  call node db\download_all_images.js
+)
+
 echo.
 echo ============================================================
 echo   Kernel SAC se esta iniciando...

@@ -73,6 +73,7 @@ async function showAdminView() {
   loadAdminPedidos();
   loadAdminChatLogs();
   cargarAlertasStock();
+  if (typeof actualizarCanalesWhatsApp === "function") actualizarCanalesWhatsApp();
 }
 
 document.getElementById("btnGuardarConfigCarrusel")?.addEventListener("click", () => window.guardarConfigCarrusel(true));
@@ -1182,6 +1183,7 @@ function renderPedidosAdmin() {
   if (busqueda) {
     filtrados = filtrados.filter(p =>
       (p.cliente_nombre || "").toLowerCase().includes(busqueda) ||
+      (p.cliente_dni || "").toLowerCase().includes(busqueda) ||
       (p.cliente_telefono || "").toLowerCase().includes(busqueda) ||
       String(p.id).includes(busqueda) ||
       (p.estado || "").toLowerCase().includes(busqueda)
@@ -1196,6 +1198,7 @@ function renderPedidosAdmin() {
         <td><strong>#KS-${p.id}</strong></td>
         <td>
           <div style="font-weight:600;">${p.cliente_nombre}</div>
+          ${p.cliente_dni ? `<div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--text-dim);">DNI/RUC: ${p.cliente_dni}</div>` : ""}
           <a href="${waUrl}" target="_blank" rel="noopener" style="color:var(--text-dim); font-size:0.76rem; display:inline-flex; align-items:center; gap:4px; text-decoration:none;">
             <span style="color:#25d366;">💬</span> ${p.cliente_telefono || 'Sin teléfono'}
           </a>
@@ -1268,6 +1271,8 @@ function openPedidoDetalleModal(id) {
   document.getElementById("modalPedFecha").textContent = pedido.creado_en || "";
   document.getElementById("modalPedEstadoBadge").innerHTML = `<span class="badge-status ${pedido.estado}">${pedido.estado}</span>`;
   document.getElementById("modalPedCliente").textContent = pedido.cliente_nombre || "-";
+  const pedDniEl = document.getElementById("modalPedDni");
+  if (pedDniEl) pedDniEl.textContent = pedido.cliente_dni || "-";
   document.getElementById("modalPedTelefono").innerHTML = `<a href="tel:${pedido.cliente_telefono}" style="color:inherit;">${pedido.cliente_telefono || '-'}</a>`;
   document.getElementById("modalPedDireccion").textContent = pedido.cliente_direccion || "Recojo en tienda (Wilson CyberPlaza)";
 

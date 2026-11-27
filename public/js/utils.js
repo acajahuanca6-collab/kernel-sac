@@ -187,20 +187,36 @@ async function loadCatalogo() {
   }
 }
 
+function normalizarNumeroWa(raw) {
+  const digits = String(raw || "").replace(/\D/g, "");
+  if (/^9\d{8}$/.test(digits)) return "51" + digits;
+  return digits;
+}
+
+function formatWhatsappDisplay(num) {
+  const digits = normalizarNumeroWa(num);
+  if (/^519\d{8}$/.test(digits)) {
+    return `+51 ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}`;
+  }
+  return digits ? `+${digits}` : "";
+}
+
 function actualizarCanalesWhatsApp() {
   const cfg = state.configGeneral || { whatsapp_ventas: "51967006922", whatsapp_soporte: "51939059976" };
-  const vNum = cfg.whatsapp_ventas || "51967006922";
-  const sNum = cfg.whatsapp_soporte || "51939059976";
+  const vNum = normalizarNumeroWa(cfg.whatsapp_ventas || "51967006922") || "51967006922";
+  const sNum = normalizarNumeroWa(cfg.whatsapp_soporte || "51939059976") || "51939059976";
+  const vDisplayTxt = formatWhatsappDisplay(vNum);
+  const sDisplayTxt = formatWhatsappDisplay(sNum);
 
   const vLink = document.getElementById("waVentasLink");
   if (vLink) vLink.href = `https://wa.me/${vNum}?text=${encodeURIComponent("Hola Área de Ventas Kernel SAC, deseo consultar sobre un producto")}`;
   const vDisplay = document.getElementById("waVentasNumDisplay");
-  if (vDisplay) vDisplay.textContent = `+51 967 006 922`;
+  if (vDisplay) vDisplay.textContent = vDisplayTxt;
 
   const sLink = document.getElementById("waSoporteLink");
   if (sLink) sLink.href = `https://wa.me/${sNum}?text=${encodeURIComponent("Hola Soporte Técnico Kernel SAC, requiero asistencia técnica con un equipo")}`;
   const sDisplay = document.getElementById("waSoporteNumDisplay");
-  if (sDisplay) sDisplay.textContent = `+51 939 059 976`;
+  if (sDisplay) sDisplay.textContent = sDisplayTxt;
 
   const hSupp = document.getElementById("headerSupportBtn");
   if (hSupp) hSupp.href = `https://wa.me/${sNum}?text=${encodeURIComponent("Hola Soporte Técnico Kernel SAC, requiero asistencia técnica con mi equipo")}`;
@@ -210,9 +226,29 @@ function actualizarCanalesWhatsApp() {
   const cWS = document.getElementById("chatWaSoporteBtn");
   if (cWS) cWS.href = `https://wa.me/${sNum}?text=${encodeURIComponent("Hola Soporte Técnico Kernel SAC, requiero asistencia técnica")}`;
 
-  // Inputs en el panel admin
+  const vPhones = document.getElementById("vCompanyPhones");
+  if (vPhones) vPhones.textContent = `Ventas: ${vDisplayTxt} · Soporte Técnico: ${sDisplayTxt}`;
+
+  const fWaV = document.getElementById("footerWaVentasLink");
+  if (fWaV) fWaV.href = `https://wa.me/${vNum}?text=${encodeURIComponent("Hola Área de Ventas Kernel SAC, deseo hacer una consulta")}`;
+  const fWaVLabel = document.getElementById("footerWaVentasLabel");
+  if (fWaVLabel) fWaVLabel.textContent = `Ventas: ${vDisplayTxt}`;
+  const fWaS = document.getElementById("footerWaSoporteLink");
+  if (fWaS) fWaS.href = `https://wa.me/${sNum}?text=${encodeURIComponent("Hola Soporte Técnico Kernel SAC, requiero asistencia técnica")}`;
+
+  const socialWa = document.getElementById("socialLinkWhatsApp");
+  if (socialWa && (!socialWa.href || socialWa.href.includes("wa.me/"))) {
+    socialWa.href = `https://wa.me/${vNum}`;
+  }
+
+  // Inputs y vista previa en el panel admin
   const inV = document.getElementById("cfgWaVentas");
   if (inV && document.activeElement !== inV) inV.value = vNum;
   const inS = document.getElementById("cfgWaSoporte");
   if (inS && document.activeElement !== inS) inS.value = sNum;
+
+  const prevV = document.getElementById("previewWaVentasLink");
+  if (prevV) prevV.href = `https://wa.me/${vNum}`;
+  const prevS = document.getElementById("previewWaSoporteLink");
+  if (prevS) prevS.href = `https://wa.me/${sNum}`;
 }

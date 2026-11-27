@@ -80,6 +80,64 @@ document.getElementById("registroForm").addEventListener("submit", async (e) => 
 
 const accountBtn = document.getElementById("accountBtn");
 const accountPanel = document.getElementById("accountPanel");
+
+function goToMainHome() {
+  // Si está en el panel admin, volver a la vista principal de tienda
+  const adminView = document.getElementById("adminView");
+  if (adminView && adminView.style.display !== "none" && typeof showStoreView === "function") {
+    showStoreView();
+  }
+
+  // Cerrar modales, carrito y menús abiertos
+  document.querySelectorAll(".modal-overlay.open").forEach((m) => m.classList.remove("open"));
+  if (typeof closeCart === "function") closeCart();
+  if (typeof closeMobileNav === "function") closeMobileNav();
+  accountPanel?.classList.remove("open");
+
+  // Restablecer filtros si había alguno activo
+  const searchEl = document.getElementById("searchInput");
+  const mobSearchEl = document.getElementById("mobileSearchInput");
+  const minPriceEl = document.getElementById("minPrice");
+  const maxPriceEl = document.getElementById("maxPrice");
+  const clearPriceBtn = document.getElementById("clearPriceFilterBtn");
+  const hadFilters = Boolean(
+    state.categoriaActiva ||
+    (state.paginaActual && state.paginaActual > 1) ||
+    (searchEl && searchEl.value.trim()) ||
+    (mobSearchEl && mobSearchEl.value.trim()) ||
+    (minPriceEl && minPriceEl.value !== "") ||
+    (maxPriceEl && maxPriceEl.value !== "")
+  );
+
+  if (searchEl) searchEl.value = "";
+  if (mobSearchEl) mobSearchEl.value = "";
+  if (minPriceEl) minPriceEl.value = "";
+  if (maxPriceEl) maxPriceEl.value = "";
+  if (clearPriceBtn) clearPriceBtn.style.display = "none";
+  if (hadFilters && typeof setCategoriaActiva === "function") {
+    setCategoriaActiva("");
+  }
+
+  // Limpiar hash (#admin, #catalogo, #contacto, etc.) y volver arriba al apartado principal
+  if (window.location.hash) {
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.querySelectorAll("#storeView .logo, #adminView .logo").forEach((logoEl) => {
+  logoEl.addEventListener("click", (e) => {
+    // Evitar que el clic en la píldora de alertas dentro del header admin dispare el retorno
+    if (e.target.closest("#adminStockAlertsPill")) return;
+    goToMainHome();
+  });
+  logoEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      goToMainHome();
+    }
+  });
+});
 if (accountBtn && accountPanel) {
   accountBtn.addEventListener("click", (e) => {
     e.stopPropagation();

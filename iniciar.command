@@ -43,6 +43,11 @@ if [ ! -f "db/kernelsac.db" ]; then
   npm run seed
 fi
 
+if [ ! -f "public/uploads/productos/prod_1.jpg" ]; then
+  echo "Descargando imágenes de productos..."
+  node db/download_all_images.js
+fi
+
 echo ""
 echo "============================================================"
 echo "  Kernel SAC se está iniciando..."

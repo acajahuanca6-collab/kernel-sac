@@ -29,7 +29,7 @@ const imageMap = {
   // Redes
   9: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&auto=format&fit=crop&q=80", // Router N300
   10: "https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=600&auto=format&fit=crop&q=80", // Router AC1200
-  11: "https://images.unsplash.com/photo-1551703599-6b3e8379aa8b?w=600&auto=format&fit=crop&q=80", // Switch 16p
+  11: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop&q=80", // Switch 16p
   12: "https://images.unsplash.com/photo-1516192518150-0d8fee5425e3?w=600&auto=format&fit=crop&q=80", // Antena Ubiquiti
   13: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80", // Crimpadora RJ45
   14: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&auto=format&fit=crop&q=80", // Soplador de aire
@@ -46,7 +46,7 @@ const imageMap = {
   21: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80", // Maxell Audifonos
   22: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600&auto=format&fit=crop&q=80", // Microfono Cybertel
   23: "https://images.unsplash.com/photo-1599669454699-248893623440?w=600&auto=format&fit=crop&q=80", // Auricular Gamer
-  24: "https://images.unsplash.com/photo-1583773121544-77e774026045?w=600&auto=format&fit=crop&q=80", // Microfono Halion
+  24: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600&auto=format&fit=crop&q=80", // Microfono Halion
   25: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=600&auto=format&fit=crop&q=80", // Headset Gaming
   26: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop&q=80", // Pad Mouse RGB
   27: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&auto=format&fit=crop&q=80", // Mouse Hochi Dual
@@ -132,6 +132,16 @@ async function downloadFile(url, destPath) {
 }
 
 async function run() {
+  // Copiar activos locales antes del bucle para evitar descargas innecesarias
+  const honorAsset = path.join(__dirname, "..", "public", "assets", "honor-magic8.jpg");
+  const iphoneAsset = path.join(__dirname, "..", "public", "assets", "iphone18.jpg");
+  if (fs.existsSync(honorAsset)) {
+    fs.copyFileSync(honorAsset, path.join(UPLOAD_DIR, "prod_73.jpg"));
+  }
+  if (fs.existsSync(iphoneAsset)) {
+    fs.copyFileSync(iphoneAsset, path.join(UPLOAD_DIR, "prod_67.jpg"));
+  }
+
   const productos = db.prepare("SELECT id, nombre, imagen_url FROM productos ORDER BY id ASC").all();
   console.log(`Iniciando descarga y asignación de imágenes para ${productos.length} productos...`);
 
@@ -143,7 +153,7 @@ async function run() {
     const destPath = path.join(UPLOAD_DIR, fileName);
     const publicUrl = `/uploads/productos/${fileName}`;
 
-    // Si ya existe y pesa más de 5KB, mantener
+    // Si ya existe y pesa más de 4KB, mantener
     if (fs.existsSync(destPath) && fs.statSync(destPath).size > 4000) {
       updateStmt.run(publicUrl, p.id);
       descargadas++;
@@ -160,14 +170,6 @@ async function run() {
     } else {
       console.warn(`[ID ${p.id}] Falló descarga de ${targetUrl}`);
     }
-  }
-
-  // Comprobar activos especiales si existen
-  if (fs.existsSync(path.join(__dirname, "..", "public", "assets", "honor-magic8.jpg"))) {
-    fs.copyFileSync(path.join(__dirname, "..", "public", "assets", "honor-magic8.jpg"), path.join(UPLOAD_DIR, "prod_73.jpg"));
-  }
-  if (fs.existsSync(path.join(__dirname, "..", "public", "assets", "iphone18.jpg"))) {
-    fs.copyFileSync(path.join(__dirname, "..", "public", "assets", "iphone18.jpg"), path.join(UPLOAD_DIR, "prod_67.jpg"));
   }
 
   console.log(`\nCompletado: ${descargadas}/${productos.length} imágenes descargadas y listas.`);

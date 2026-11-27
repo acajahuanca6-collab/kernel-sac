@@ -61,6 +61,9 @@ if exist "db\kernelsac.db" (
 echo Creando base de datos con productos de ejemplo...
 call npm run seed
 
+echo Descargando imagenes de productos...
+call node db\download_all_images.js
+
 echo.
 echo ============================================================
 echo   Listo. Ahora puedes usar "iniciar.bat" para abrir la tienda.

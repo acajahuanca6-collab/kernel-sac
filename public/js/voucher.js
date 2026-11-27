@@ -94,7 +94,7 @@ function generarYMostrarBaucher(data, payload, items) {
 💵 *MONEDA:* Soles (PEN - S/)
 
 👤 *DATOS DEL CLIENTE:*
-├ 👤 *Nombre / Razón Social:* ${payload.cliente_nombre}
+${payload.cliente_dni ? `├ 🪪 *DNI / RUC:* ${payload.cliente_dni}\n` : ""}├ 👤 *Nombre / Razón Social:* ${payload.cliente_nombre}
 ├ 📞 *WhatsApp / Celular:* ${payload.cliente_telefono}
 └ 📍 *Destino de Entrega:* ${payload.cliente_direccion ? payload.cliente_direccion : "Coordinar entrega en tienda / almacén"}
 
@@ -122,6 +122,8 @@ _Hola equipo de Ventas Kernel SAC 👋 Adjunto mi comprobante generado en la web
   if (orderEl) orderEl.textContent = `PEDIDO #${orderId}`;
   const dateEl = document.getElementById("vOrderDate");
   if (dateEl) dateEl.textContent = fechaHoraFull;
+  const dniEl = document.getElementById("vClientDni");
+  if (dniEl) dniEl.textContent = payload.cliente_dni || "-";
   const nameEl = document.getElementById("vClientName");
   if (nameEl) nameEl.textContent = payload.cliente_nombre;
   const phoneEl = document.getElementById("vClientPhone");
@@ -153,18 +155,14 @@ _Hola equipo de Ventas Kernel SAC 👋 Adjunto mi comprobante generado en la web
   const letrasEl = document.getElementById("vTotalLetras");
   if (letrasEl) letrasEl.textContent = totalLetras;
 
-  const barcodeSvg = document.getElementById("vBarcodeSvg");
-  if (barcodeSvg) barcodeSvg.innerHTML = generarBarcodeSVG(orderId);
-  const barcodeDigits = document.getElementById("vBarcodeDigits");
-  if (barcodeDigits) barcodeDigits.textContent = orderId;
-
   const hashEl = document.getElementById("vDigitalHash");
   if (hashEl) hashEl.textContent = `HASH SHA-256: ${hashDigest} · VALIDACIÓN DIGITAL OK`;
 
   const btnSend = document.getElementById("btnSendWaVoucher");
   if (btnSend) {
     btnSend.href = waUrl;
-    btnSend.querySelector("span").textContent = `Enviar Comprobante a WhatsApp Ventas (967006922)`;
+    const ventasCorto = String(numVentas).replace(/^51(?=9\d{8}$)/, "");
+    btnSend.querySelector("span").textContent = `Enviar Comprobante a WhatsApp Ventas (${ventasCorto})`;
   }
 
   // Abrir modal de baucher
@@ -184,9 +182,102 @@ document.getElementById("btnCloseVoucher")?.addEventListener("click", cerrarBauc
 document.getElementById("voucherOverlay")?.addEventListener("click", cerrarBaucherModal);
 document.getElementById("btnPrintVoucher")?.addEventListener("click", () => window.print());
 
+// ================= CONSULTA AUTOMÁTICA DNI / RUC (LION API) =================
+const dniInputEl = document.getElementById("cDni");
+const btnBuscarDniEl = document.getElementById("btnBuscarDni");
+const dniStatusEl = document.getElementById("dniStatusMsg");
+let dniLookupTimer = null;
+let ultimoDocConsultado = "";
+
+function setDniStatus(texto, tipo = "") {
+  if (!dniStatusEl) return;
+  if (!texto) {
+    dniStatusEl.textContent = "";
+    dniStatusEl.className = "dni-status-msg";
+    return;
+  }
+  dniStatusEl.textContent = texto;
+  dniStatusEl.className = `dni-status-msg show ${tipo}`.trim();
+}
+
+async function consultarDocumentoCliente(forzar = false) {
+  if (!dniInputEl) return;
+  const numero = dniInputEl.value.replace(/\D/g, "");
+  if (numero.length !== 8 && numero.length !== 11) {
+    if (forzar) setDniStatus("Ingresa 8 dígitos (DNI) o 11 dígitos (RUC).", "err");
+    return;
+  }
+  if (!forzar && numero === ultimoDocConsultado) return;
+  ultimoDocConsultado = numero;
+
+  const tipoLabel = numero.length === 8 ? "DNI" : "RUC";
+  setDniStatus(`Consultando ${tipoLabel}...`, "loading");
+  if (btnBuscarDniEl) btnBuscarDniEl.disabled = true;
+
+  try {
+    const data = await fetchJSON(`/api/consulta-documento/${numero}`);
+    if (dniInputEl.value.replace(/\D/g, "") !== numero) return;
+
+    const nameInput = document.getElementById("cName");
+    if (nameInput && data.nombre_completo) {
+      nameInput.value = data.nombre_completo;
+    }
+    setDniStatus(`✓ ${data.tipo} verificado: ${data.nombre_completo}`, "ok");
+  } catch (err) {
+    if (dniInputEl.value.replace(/\D/g, "") !== numero) return;
+    ultimoDocConsultado = "";
+    const msgLower = String(err.message || "").toLowerCase();
+    if (msgLower.includes("api key") || msgLower.includes("pendiente")) {
+      setDniStatus(forzar ? "Ingresa tu nombre completo debajo para continuar." : "", forzar ? "loading" : "");
+    } else {
+      setDniStatus(`${err.message} (puedes escribir el nombre manualmente)`, "err");
+    }
+  } finally {
+    if (btnBuscarDniEl) btnBuscarDniEl.disabled = false;
+  }
+}
+
+if (dniInputEl) {
+  dniInputEl.addEventListener("input", () => {
+    const limpio = dniInputEl.value.replace(/\D/g, "").slice(0, 11);
+    if (dniInputEl.value !== limpio) dniInputEl.value = limpio;
+    clearTimeout(dniLookupTimer);
+
+    if (limpio.length === 8) {
+      dniLookupTimer = setTimeout(() => consultarDocumentoCliente(false), 550);
+    } else if (limpio.length === 11) {
+      dniLookupTimer = setTimeout(() => consultarDocumentoCliente(false), 150);
+    } else {
+      ultimoDocConsultado = "";
+      setDniStatus("");
+    }
+  });
+
+  dniInputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      clearTimeout(dniLookupTimer);
+      consultarDocumentoCliente(true);
+    }
+  });
+}
+
+btnBuscarDniEl?.addEventListener("click", () => {
+  clearTimeout(dniLookupTimer);
+  consultarDocumentoCliente(true);
+});
+
 document.getElementById("checkoutForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const msg = document.getElementById("formMsg");
+  const dniVal = (document.getElementById("cDni")?.value || "").replace(/\D/g, "");
+  if (dniVal.length !== 8 && dniVal.length !== 11) {
+    msg.textContent = "Ingresa un DNI válido (8 dígitos) o RUC (11 dígitos).";
+    msg.className = "form-msg err";
+    document.getElementById("cDni")?.focus();
+    return;
+  }
+
   msg.textContent = "Registrando pedido...";
   msg.className = "form-msg";
 
@@ -201,9 +292,10 @@ document.getElementById("checkoutForm").addEventListener("submit", async (e) => 
   });
 
   const payload = {
+    cliente_dni: dniVal,
     cliente_nombre: document.getElementById("cName").value.trim(),
     cliente_telefono: document.getElementById("cPhone").value.trim(),
-    cliente_direccion: document.getElementById("cAddress").value.trim(),
+    cliente_direccion: "",
     items: state.cart.map((i) => ({ id: i.id, cantidad: i.cantidad })),
   };
 
@@ -227,6 +319,8 @@ document.getElementById("checkoutForm").addEventListener("submit", async (e) => 
     renderCatalogo();
     renderCart();
     document.getElementById("checkoutForm").reset();
+    ultimoDocConsultado = "";
+    setDniStatus("");
     closeCart();
   } catch (err) {
     msg.textContent = `Error: ${err.message}`;

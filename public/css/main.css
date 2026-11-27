@@ -477,7 +477,7 @@ nav.main-nav > a:hover, .nav-item > button:hover{ color: var(--red); }
 /* Fondo: foto del local, desenfocada y oscurecida para que el texto se lea bien. */
 .hero::before{
   content:""; position:absolute; inset:-20px; z-index:-2;
-  background-image: url('assets/hero-bg.png');
+  background-image: url('../assets/hero-bg.png');
   background-size: cover; background-position: center;
   filter: blur(14px) brightness(0.55) saturate(1.15);
   transform: scale(1.1);

@@ -4,6 +4,16 @@ header.admin-head{ border-bottom:1px solid var(--glass-border); position:sticky;
 .admin-head-row{ display:flex; align-items:center; justify-content:space-between; height:68px; }
 .tag-admin{ font-family: var(--font-mono); font-size:0.68rem; color: var(--text-dim); border:1px solid var(--line); padding:3px 8px; border-radius:999px; margin-left:8px; text-transform:uppercase; }
 .admin-body{ padding: 24px 0 60px; }
+#adminView select {
+  background-color: #1c0e15 !important;
+  color: #f8f4f4 !important;
+  color-scheme: dark;
+}
+#adminView select option,
+#adminView select optgroup {
+  background-color: #180c12 !important;
+  color: #f8f4f4 !important;
+}
 .tabs {
   display: inline-flex;
   gap: 6px;
@@ -1166,9 +1176,16 @@ select.estado-select{ background: rgba(255,255,255,0.06); border:1px solid var(-
 [data-theme="light"] #adminView input,
 [data-theme="light"] #adminView select {
   background: #ffffff !important;
+  background-color: #ffffff !important;
   border: 1px solid rgba(0, 0, 0, 0.14) !important;
-  color: #111 !important;
+  color: #111111 !important;
+  color-scheme: light;
   box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+[data-theme="light"] #adminView select option,
+[data-theme="light"] #adminView select optgroup {
+  background-color: #ffffff !important;
+  color: #111111 !important;
 }
 [data-theme="light"] .carrusel-admin-box,
 [data-theme="light"] .panel {

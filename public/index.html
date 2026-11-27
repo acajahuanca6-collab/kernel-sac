@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>KERNEL SAC — Hardware, Redes y Videovigilancia</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e11d48'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='900' font-size='38'%3EK%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
 <script>
@@ -14,12 +15,12 @@
   })();
 </script>
 <!-- Estilos Modularizados Liquid Glass -->
-<link rel="stylesheet" href="css/variables.css" />
-<link rel="stylesheet" href="css/layout.css" />
-<link rel="stylesheet" href="css/components.css" />
-<link rel="stylesheet" href="css/hero-stage.css" />
-<link rel="stylesheet" href="css/voucher.css" />
-<link rel="stylesheet" href="css/admin.css" />
+<link rel="stylesheet" href="css/variables.css?v=3" />
+<link rel="stylesheet" href="css/layout.css?v=4" />
+<link rel="stylesheet" href="css/components.css?v=5" />
+<link rel="stylesheet" href="css/hero-stage.css?v=3" />
+<link rel="stylesheet" href="css/voucher.css?v=2" />
+<link rel="stylesheet" href="css/admin.css?v=3" />
 </head>
 <body>
 
@@ -40,7 +41,7 @@
 
 <header class="site">
   <div class="wrap header-row">
-    <div class="logo">
+    <div class="logo" id="headerLogoHome" role="button" tabindex="0" title="Volver a la página principal" style="cursor:pointer;">
       <div class="mark">K</div>
       <div>
         <span class="logo-kernel">KERNEL</span> <span class="logo-sac">SAC</span>
@@ -318,22 +319,7 @@
   </div>
 </section>
 
-<section class="section" id="soporte">
-  <div class="wrap">
-    <div class="newsletter">
-      <div>
-        <h2>Recibe las mejores ofertas</h2>
-        <p>Descuentos y lanzamientos de tecnología directo a tu correo.</p>
-      </div>
-      <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; alert('¡Gracias por suscribirte!');">
-        <input type="email" placeholder="tu@email.com" required />
-        <button type="submit" class="btn btn-primary">Suscribirse</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="socialCarouselSection" style="padding-top:0;">
+<section class="section" id="socialCarouselSection">
   <div class="wrap">
     <div class="section-head" style="justify-content:center; margin-bottom: 20px;">
       <h2>Síguenos en nuestras redes</h2>
@@ -427,42 +413,92 @@
 
 <footer id="contacto">
   <div class="wrap">
-    <div class="footer-row">
-      <div>
-        <div class="logo" style="margin-bottom:14px;">
-          <div class="mark">K</div>
-          <div><span class="logo-kernel">KERNEL</span> <span class="logo-sac">SAC</span></div>
+    <div class="footer-glass-card">
+      <div class="footer-row">
+        <div class="footer-brand-col">
+          <div class="logo" role="button" tabindex="0" title="Volver a la página principal" style="margin-bottom:12px; cursor:pointer;">
+            <div class="mark">K</div>
+            <div>
+              <span class="logo-kernel">KERNEL</span> <span class="logo-sac">SAC</span>
+              <small>TECNOLOGÍA · REDES · SEGURIDAD</small>
+            </div>
+          </div>
+          <p class="footer-tagline">Especialistas en armado de PCs, redes, videovigilancia y soporte técnico. Envíos seguros a todo el Perú.</p>
+          <div class="footer-pay-label">Métodos de pago aceptados</div>
+          <div class="payments">
+            <span class="pay-pill pay-visa">VISA</span>
+            <span class="pay-pill pay-mc">MASTERCARD</span>
+            <span class="pay-pill pay-yape">YAPE</span>
+            <span class="pay-pill pay-plin">PLIN</span>
+          </div>
         </div>
-        <p>Especialistas en armado de PCs, redes, videovigilancia y soporte técnico. Envíos a todo el Perú.</p>
-        <div class="payments">
-          <span>VISA</span><span>MASTERCARD</span><span>YAPE</span><span>PLIN</span>
+
+        <div>
+          <h4>Categorías</h4>
+          <ul id="footerCats" class="footer-cats-grid"></ul>
+        </div>
+
+        <div id="soporte">
+          <h4>Soporte</h4>
+          <ul class="footer-icon-list">
+            <li>
+              <a href="#soporte">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                <span>Garantía oficial</span>
+              </a>
+            </li>
+            <li>
+              <a href="#soporte">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                <span>Servicio técnico</span>
+              </a>
+            </li>
+            <li>
+              <a href="#soporte">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>Soporte a domicilio</span>
+              </a>
+            </li>
+            <li>
+              <a id="footerWaSoporteLink" href="https://wa.me/51939059976" target="_blank" rel="noopener" class="footer-wa-chip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.1c-.24.68-1.4 1.32-1.93 1.36-.5.05-1.03.24-3.45-.72-2.9-1.15-4.76-4.07-4.9-4.26-.14-.19-1.17-1.56-1.17-2.97 0-1.41.74-2.1 1-2.39.26-.28.57-.35.76-.35h.55c.18 0 .42-.07.65.5.24.6.82 2.07.9 2.22.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.29.29-.13.57.17.28.74 1.22 1.59 1.98 1.1.98 2.02 1.28 2.31 1.43.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.28.38-.24.63-.14.26.1 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+                <span>Chat Soporte Técnico</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Contacto</h4>
+          <ul class="footer-icon-list footer-contact-list">
+            <li>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Av. Daniel Alcides Carrión #108 B - San Juan</span>
+            </li>
+            <li>
+              <a href="mailto:ventas@kernelsac.com">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <span>ventas@kernelsac.com</span>
+              </a>
+            </li>
+            <li>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Lunes - Sábado / 8:00 - 20:00</span>
+            </li>
+            <li>
+              <a id="footerWaVentasLink" href="https://wa.me/51967006922" target="_blank" rel="noopener" class="footer-wa-chip ventas">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.1c-.24.68-1.4 1.32-1.93 1.36-.5.05-1.03.24-3.45-.72-2.9-1.15-4.76-4.07-4.9-4.26-.14-.19-1.17-1.56-1.17-2.97 0-1.41.74-2.1 1-2.39.26-.28.57-.35.76-.35h.55c.18 0 .42-.07.65.5.24.6.82 2.07.9 2.22.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.29.29-.13.57.17.28.74 1.22 1.59 1.98 1.1.98 2.02 1.28 2.31 1.43.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.28.38-.24.63-.14.26.1 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+                <span id="footerWaVentasLabel">Ventas: +51 967 006 922</span>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-      <div>
-        <h4>Categorías</h4>
-        <ul id="footerCats"></ul>
+
+      <div class="footer-bottom">
+        <span>© 2026 Kernel SAC. Todos los derechos reservados.</span>
+        <span class="footer-trust-pill">🛡️ Garantía Oficial · Envíos a todo el Perú</span>
       </div>
-      <div>
-        <h4>Soporte</h4>
-        <ul>
-          <li><a href="#soporte">Garantía</a></li>
-          <li><a href="#soporte">Servicio técnico</a></li>
-          <li><a href="#soporte">Soporte a domicilio</a></li>
-          <li><a href="#soporte">Preguntas frecuentes</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Contacto</h4>
-        <ul>
-          <li>Av. Daniel Alcides Carrión #108 B - San Juan</li>
-          <li>ventas@kernelsac.com</li>
-          <li>Lunes - Sábado / 8:00 - 20:00</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Kernel SAC. Todos los derechos reservados.</span>
-      <span>Hecho con Node.js + Express + SQLite</span>
     </div>
   </div>
 </footer>
@@ -600,7 +636,7 @@
           <div class="voucher-company-sub">SOLUCIONES INTEGRALES EN HARDWARE, REDES & SEGURIDAD</div>
           <div class="voucher-fiscal-row"><strong>R.U.C. 20608541298</strong></div>
           <div class="voucher-fiscal-addr">Av. Garcilaso de la Vega 1348, Int. 204 — Cercado de Lima, Lima</div>
-          <div class="voucher-fiscal-telf">Ventas: +51 967 006 922 · Soporte Técnico: +51 939 059 976</div>
+          <div class="voucher-fiscal-telf" id="vCompanyPhones">Ventas: +51 967 006 922 · Soporte Técnico: +51 939 059 976</div>
         </div>
       </div>
 
@@ -624,6 +660,7 @@
     <!-- Datos del Cliente / Adquiriente -->
     <div class="voucher-section">
       <div class="voucher-sec-header">DATOS DEL ADQUIRIENTE / CLIENTE</div>
+      <div class="voucher-row"><span>DNI / RUC:</span><strong id="vClientDni">-</strong></div>
       <div class="voucher-row"><span>SEÑOR(ES):</span><strong id="vClientName">-</strong></div>
       <div class="voucher-row"><span>TELÉFONO / WHATSAPP:</span><strong id="vClientPhone">-</strong></div>
       <div class="voucher-row"><span>DIRECCIÓN DE ENTREGA:</span><strong id="vClientAddress">-</strong></div>
@@ -652,49 +689,6 @@
     </div>
 
     <div class="voucher-divider-cut"></div>
-
-    <!-- Sellos de Seguridad Digital: Código de Barras y QR -->
-    <div class="voucher-security-section">
-      <div class="voucher-barcode-area">
-        <svg class="barcode-svg" id="vBarcodeSvg" viewBox="0 0 260 36"></svg>
-        <div class="barcode-text" id="vBarcodeDigits">KS-2026-0001</div>
-      </div>
-      <div class="voucher-qr-area">
-        <svg class="qr-svg-preview" width="62" height="62" viewBox="0 0 100 100">
-          <rect x="0" y="0" width="100" height="100" fill="#ffffff" rx="6"/>
-          <rect x="8" y="8" width="26" height="26" fill="#111111"/>
-          <rect x="12" y="12" width="18" height="18" fill="#ffffff"/>
-          <rect x="16" y="16" width="10" height="10" fill="#111111"/>
-          <rect x="66" y="8" width="26" height="26" fill="#111111"/>
-          <rect x="70" y="12" width="18" height="18" fill="#ffffff"/>
-          <rect x="74" y="16" width="10" height="10" fill="#111111"/>
-          <rect x="8" y="66" width="26" height="26" fill="#111111"/>
-          <rect x="12" y="70" width="18" height="18" fill="#ffffff"/>
-          <rect x="16" y="74" width="10" height="10" fill="#111111"/>
-          <rect x="38" y="10" width="6" height="6" fill="#111111"/>
-          <rect x="48" y="10" width="6" height="6" fill="#111111"/>
-          <rect x="40" y="20" width="6" height="6" fill="#111111"/>
-          <rect x="52" y="22" width="6" height="6" fill="#111111"/>
-          <rect x="10" y="42" width="6" height="6" fill="#111111"/>
-          <rect x="22" y="44" width="6" height="6" fill="#111111"/>
-          <rect x="38" y="38" width="8" height="8" fill="#111111"/>
-          <rect x="54" y="40" width="6" height="6" fill="#111111"/>
-          <rect x="70" y="42" width="6" height="6" fill="#111111"/>
-          <rect x="84" y="44" width="6" height="6" fill="#111111"/>
-          <rect x="42" y="56" width="6" height="6" fill="#111111"/>
-          <rect x="58" y="54" width="6" height="6" fill="#111111"/>
-          <rect x="74" y="58" width="6" height="6" fill="#111111"/>
-          <rect x="40" y="72" width="6" height="6" fill="#111111"/>
-          <rect x="52" y="70" width="6" height="6" fill="#111111"/>
-          <rect x="68" y="72" width="6" height="6" fill="#111111"/>
-          <rect x="82" y="74" width="6" height="6" fill="#111111"/>
-          <rect x="44" y="84" width="6" height="6" fill="#111111"/>
-          <rect x="60" y="86" width="6" height="6" fill="#111111"/>
-          <rect x="76" y="84" width="6" height="6" fill="#111111"/>
-        </svg>
-        <span class="qr-verify-label">VALIDACIÓN DIGITAL</span>
-      </div>
-    </div>
 
     <!-- Pie Legal / Cláusula de Validez -->
     <div class="voucher-footer-notes">
@@ -730,9 +724,13 @@
     <div class="cart-total"><span>Total</span><strong id="cartTotal">S/ 0.00</strong></div>
     <button class="btn btn-primary btn-block" id="checkoutBtn" style="display:none;">Continuar con el pedido</button>
     <form class="checkout-form" id="checkoutForm">
-      <input type="text" id="cName" placeholder="Nombre completo" required />
+      <div class="dni-lookup-row">
+        <input type="text" id="cDni" inputmode="numeric" maxlength="11" placeholder="DNI (8 dígitos) o RUC (11)" required />
+        <button type="button" class="btn btn-outline btn-sm" id="btnBuscarDni">Buscar</button>
+      </div>
+      <div class="dni-status-msg" id="dniStatusMsg"></div>
+      <input type="text" id="cName" placeholder="Nombre completo / Razón social" required />
       <input type="tel" id="cPhone" placeholder="Teléfono / WhatsApp" required />
-      <textarea id="cAddress" rows="2" placeholder="Dirección de entrega (opcional)"></textarea>
       <button type="submit" class="btn btn-primary btn-block">Confirmar pedido</button>
       <div class="form-msg" id="formMsg"></div>
     </form>
@@ -805,7 +803,7 @@
 <div id="adminView">
   <header class="admin-head">
     <div class="wrap admin-head-row">
-      <div class="logo">
+      <div class="logo" id="adminLogoHome" role="button" tabindex="0" title="Volver a la página principal" style="cursor:pointer;">
         <div class="mark">K</div> 
         <div><span class="logo-kernel">KERNEL</span> <span class="logo-sac">SAC</span></div> 
         <span class="tag-admin">Admin</span>
@@ -833,6 +831,7 @@
       <button data-tab="chatbot">🤖 Consultas Chatbot</button>
       <button data-tab="redes">🌐 Redes Sociales</button>
       <button data-tab="anuncios">📢 Barras & Anuncios</button>
+      <button data-tab="whatsapp">💬 WhatsApp</button>
     </div>
 
     <!-- TAB DASHBOARD -->
@@ -910,10 +909,10 @@
         </div>
         <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
           <input type="text" id="adminSearchProductos" placeholder="Buscar por nombre..." style="padding:7px 12px; border-radius:6px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.05); color:var(--text); outline:none; font-size:0.84rem; min-width:180px;" />
-          <select id="adminFilterCatProductos" style="padding:7px 12px; border-radius:6px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.06); color:var(--text); outline:none; font-size:0.84rem;">
+          <select id="adminFilterCatProductos" style="padding:7px 12px; border-radius:6px; border:1px solid var(--glass-border); background-color:#1c0e15; color:var(--text); outline:none; font-size:0.84rem;">
             <option value="">Todas las categorías</option>
           </select>
-          <select id="adminFilterStockProductos" style="padding:7px 12px; border-radius:6px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.06); color:var(--text); outline:none; font-size:0.84rem;">
+          <select id="adminFilterStockProductos" style="padding:7px 12px; border-radius:6px; border:1px solid var(--glass-border); background-color:#1c0e15; color:var(--text); outline:none; font-size:0.84rem;">
             <option value="todos">Todo el inventario</option>
             <option value="en_stock">En stock (&gt;5)</option>
             <option value="critico">Stock crítico (1-5)</option>
@@ -950,7 +949,7 @@
         </div>
         <div class="pagination-btns">
           <label style="font-size:0.78rem; margin-right:4px;">Por pág:</label>
-          <select id="adminPageSize" style="padding:4px 8px; border-radius:4px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.06); color:var(--text); font-size:0.78rem; margin-right:10px;">
+          <select id="adminPageSize" style="padding:4px 8px; border-radius:4px; border:1px solid var(--glass-border); background-color:#1c0e15; color:var(--text); font-size:0.78rem; margin-right:10px;">
             <option value="15">15</option>
             <option value="30">30</option>
             <option value="todos">Todos</option>
@@ -1158,7 +1157,7 @@
             <span style="font-size:0.8rem; color:var(--text-dim);">Busca cualquier producto y actívalo en el carrusel con un solo interruptor:</span>
           </div>
           <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-            <select id="adminFilterCarruselCat" style="padding:6px 12px; border-radius:4px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.05); color:var(--text); outline:none;">
+            <select id="adminFilterCarruselCat" style="padding:6px 12px; border-radius:4px; border:1px solid var(--glass-border); background-color:#1c0e15; color:var(--text); outline:none;">
               <option value="">Todas las Categorías</option>
             </select>
             <input type="text" id="adminSearchCarruselProds" placeholder="Buscar producto por nombre..." style="padding:6px 12px; border-radius:4px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.05); color:var(--text); outline:none; min-width:240px;" />
@@ -1182,30 +1181,6 @@
             <tbody id="carruselProductosBody"></tbody>
           </table>
         </div>
-      </div>
-
-      <!-- Configuración de Canales de WhatsApp (Ventas & Soporte Técnico) -->
-      <div class="panel" style="margin-top:20px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-          <div>
-            <h3 style="margin:0; font-size:1.15rem; color:#fff;">Canales Oficiales de WhatsApp</h3>
-            <span style="font-size:0.8rem; color:var(--text-dim);">Configura los números independientes para el Área de Ventas (pedidos y bauchers) y Soporte Técnico:</span>
-          </div>
-          <button class="btn btn-primary" id="btnGuardarConfigWhatsapp" style="padding:8px 18px; font-size:0.85rem;">
-            Guardar Números
-          </button>
-        </div>
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
-          <div class="field">
-            <label>WhatsApp Área de Ventas (Pedidos y Baucher Digital)</label>
-            <input type="text" id="cfgWaVentas" placeholder="ej: 51967006922" />
-          </div>
-          <div class="field">
-            <label>WhatsApp Soporte Técnico Especializado</label>
-            <input type="text" id="cfgWaSoporte" placeholder="ej: 51939059976" />
-          </div>
-        </div>
-        <div id="cfgWaMsg" class="form-msg" style="margin-top:8px;"></div>
       </div>
     </div>
 
@@ -1982,6 +1957,53 @@
         </div>
       </div>
     </div>
+
+    <!-- TAB WHATSAPP (SOPORTE Y VENTAS) -->
+    <div class="tab-panel" id="tabWhatsapp">
+      <div class="toolbar">
+        <div>
+          <h2 style="font-size:1.2rem; margin:0;">💬 Canales Oficiales de WhatsApp (Soporte &amp; Ventas)</h2>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Administra los números de WhatsApp usados en el botón flotante, cabecera, comprobantes de pedido y chatbot.</span>
+        </div>
+        <button type="button" class="btn btn-primary" id="btnGuardarConfigWhatsapp">
+          💾 Guardar Números
+        </button>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:18px;">
+        <div class="admin-card-box">
+          <h3 style="margin:0 0 6px; font-size:1.05rem;">🛒 Área de Ventas</h3>
+          <p style="font-size:0.8rem; color:var(--text-dim); margin:0 0 14px;">
+            Recibe los pedidos confirmados, comprobantes del carrito y consultas comerciales desde el botón flotante y chatbot.
+          </p>
+          <div class="field" style="margin-bottom:10px;">
+            <label>Número de WhatsApp Ventas (código país + número)</label>
+            <input type="text" id="cfgWaVentas" inputmode="numeric" placeholder="ej: 51967006922" />
+            <span class="hint">En Perú: 51 + 9 dígitos (o escribe solo los 9 dígitos y se añade 51).</span>
+          </div>
+          <a href="#" target="_blank" rel="noopener" id="previewWaVentasLink" class="btn btn-outline btn-sm" style="color:#37e07a; border-color:rgba(37,211,102,0.4);">
+            Probar chat de Ventas ↗
+          </a>
+        </div>
+
+        <div class="admin-card-box">
+          <h3 style="margin:0 0 6px; font-size:1.05rem;">🛠️ Área de Soporte Técnico</h3>
+          <p style="font-size:0.8rem; color:var(--text-dim); margin:0 0 14px;">
+            Atiende garantías, diagnóstico y soporte desde el botón "Soporte" de la cabecera, botón flotante y chatbot.
+          </p>
+          <div class="field" style="margin-bottom:10px;">
+            <label>Número de WhatsApp Soporte (código país + número)</label>
+            <input type="text" id="cfgWaSoporte" inputmode="numeric" placeholder="ej: 51939059976" />
+            <span class="hint">En Perú: 51 + 9 dígitos (o escribe solo los 9 dígitos y se añade 51).</span>
+          </div>
+          <a href="#" target="_blank" rel="noopener" id="previewWaSoporteLink" class="btn btn-outline btn-sm" style="color:#00e5ff; border-color:rgba(0,229,255,0.4);">
+            Probar chat de Soporte ↗
+          </a>
+        </div>
+      </div>
+
+      <div id="cfgWaMsg" class="form-msg" style="margin-top:14px;"></div>
+    </div>
     </div>
 </div>
 
@@ -2103,7 +2125,10 @@
         <div><strong>Nombre:</strong> <span id="modalPedCliente">-</span></div>
         <div><strong>Teléfono:</strong> <span id="modalPedTelefono">-</span></div>
       </div>
-      <div style="font-size:0.86rem; margin-top:6px;"><strong>Dirección:</strong> <span id="modalPedDireccion">-</span></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.86rem; margin-top:6px;">
+        <div><strong>DNI / RUC:</strong> <span id="modalPedDni">-</span></div>
+        <div><strong>Dirección:</strong> <span id="modalPedDireccion">-</span></div>
+      </div>
     </div>
 
     <h3 style="font-size:0.92rem; margin:0 0 8px; color:var(--text);">Productos solicitados</h3>
@@ -2299,12 +2324,12 @@
 
 <!-- Scripts Modularizados KERNEL SAC -->
 <script src="js/icons.js"></script>
-<script src="js/utils.js"></script>
+<script src="js/utils.js?v=3"></script>
 <script src="js/cart.js"></script>
-<script src="js/voucher.js"></script>
+<script src="js/voucher.js?v=7"></script>
 <script src="js/store.js"></script>
-<script src="js/chatbot.js"></script>
-<script src="js/admin.js"></script>
-<script src="js/app.js"></script>
+<script src="js/chatbot.js?v=2"></script>
+<script src="js/admin.js?v=5"></script>
+<script src="js/app.js?v=4"></script>
 </body>
 </html>

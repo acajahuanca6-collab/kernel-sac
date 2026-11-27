@@ -114,6 +114,12 @@ const tieneEtiquetaPromo = columnasProductos.some((c) => c.name === "etiqueta_pr
 if (!tieneEtiquetaPromo) {
   db.exec("ALTER TABLE productos ADD COLUMN etiqueta_promo TEXT DEFAULT ''");
 }
+
+// Migración segura: columna cliente_dni para pedidos con consulta DNI/RUC
+const columnasPedidos = db.prepare("PRAGMA table_info(pedidos)").all();
+if (!columnasPedidos.some((c) => c.name === "cliente_dni")) {
+  db.exec("ALTER TABLE pedidos ADD COLUMN cliente_dni TEXT DEFAULT ''");
+}
 const tieneRegaloNombre = columnasProductos.some((c) => c.name === "regalo_nombre");
 if (!tieneRegaloNombre) {
   db.exec("ALTER TABLE productos ADD COLUMN regalo_nombre TEXT DEFAULT ''");

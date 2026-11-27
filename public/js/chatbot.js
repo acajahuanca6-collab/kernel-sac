@@ -574,24 +574,53 @@ document.addEventListener("click", (e) => {
 })();
 
 // Guardar configuración de WhatsApp desde el panel de administración
+function actualizarPreviewsWaAdmin() {
+  const vRaw = document.getElementById("cfgWaVentas")?.value || "";
+  const sRaw = document.getElementById("cfgWaSoporte")?.value || "";
+  const vNum = typeof normalizarNumeroWa === "function" ? normalizarNumeroWa(vRaw) : vRaw.replace(/\D/g, "");
+  const sNum = typeof normalizarNumeroWa === "function" ? normalizarNumeroWa(sRaw) : sRaw.replace(/\D/g, "");
+  const prevV = document.getElementById("previewWaVentasLink");
+  if (prevV && vNum) prevV.href = `https://wa.me/${vNum}`;
+  const prevS = document.getElementById("previewWaSoporteLink");
+  if (prevS && sNum) prevS.href = `https://wa.me/${sNum}`;
+}
+
+document.getElementById("cfgWaVentas")?.addEventListener("input", actualizarPreviewsWaAdmin);
+document.getElementById("cfgWaSoporte")?.addEventListener("input", actualizarPreviewsWaAdmin);
+
 document.getElementById("btnGuardarConfigWhatsapp")?.addEventListener("click", async () => {
   const msg = document.getElementById("cfgWaMsg");
-  const payload = {
-    whatsapp_ventas: document.getElementById("cfgWaVentas")?.value.trim(),
-    whatsapp_soporte: document.getElementById("cfgWaSoporte")?.value.trim(),
-  };
+  const rawVentas = document.getElementById("cfgWaVentas")?.value.trim() || "";
+  const rawSoporte = document.getElementById("cfgWaSoporte")?.value.trim() || "";
+  const waVentas = typeof normalizarNumeroWa === "function" ? normalizarNumeroWa(rawVentas) : rawVentas.replace(/\D/g, "");
+  const waSoporte = typeof normalizarNumeroWa === "function" ? normalizarNumeroWa(rawSoporte) : rawSoporte.replace(/\D/g, "");
+
+  if (waVentas.length < 9 || waSoporte.length < 9) {
+    if (msg) {
+      msg.textContent = "Ingresa números válidos de al menos 9 dígitos para Ventas y Soporte.";
+      msg.className = "form-msg err";
+    }
+    return;
+  }
+
   try {
     const res = await fetchJSON("/api/configuraciones/general", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        whatsapp_ventas: waVentas,
+        whatsapp_soporte: waSoporte,
+      }),
     });
     state.configGeneral = res.config;
     actualizarCanalesWhatsApp();
+    if (typeof mostrarToast === "function") {
+      mostrarToast("Números de WhatsApp actualizados correctamente", "ok");
+    }
     if (msg) {
-      msg.textContent = "Canales de WhatsApp guardados exitosamente.";
+      msg.textContent = "Canales de WhatsApp guardados y aplicados en toda la tienda.";
       msg.className = "form-msg ok";
-      setTimeout(() => { if (msg) msg.textContent = ""; }, 3000);
+      setTimeout(() => { if (msg) msg.textContent = ""; }, 3500);
     }
   } catch (err) {
     if (msg) {
