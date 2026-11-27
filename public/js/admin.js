@@ -70,6 +70,7 @@ async function showAdminView() {
   await renderCategoriasAdmin();
   renderRedesAdmin();
   renderAnunciosAdmin();
+  renderFooterAdmin();
   loadAdminPedidos();
   loadAdminChatLogs();
   cargarAlertasStock();
@@ -121,6 +122,7 @@ document.querySelectorAll(".tabs button").forEach((btn) => {
     else if (tabName === "categorias") renderCategoriasAdmin();
     else if (tabName === "redes") renderRedesAdmin();
     else if (tabName === "anuncios") renderAnunciosAdmin();
+    else if (tabName === "footer") renderFooterAdmin();
   });
 });
 
@@ -3514,5 +3516,88 @@ window.guardarAnunciosAdmin = async function() {
 
 document.getElementById("btnGuardarAnuncios")?.addEventListener("click", () => window.guardarAnunciosAdmin());
 document.getElementById("btnGuardarAnunciosBottom")?.addEventListener("click", () => window.guardarAnunciosAdmin());
+
+// ============================================================
+// ================= TAB: PIE DE PÁGINA (FOOTER) ==============
+// ============================================================
+async function renderFooterAdmin() {
+  try {
+    const cfg = await fetchJSON("/api/configuraciones/footer");
+    state.configFooter = cfg;
+    const setVal = (id, v) => {
+      const el = document.getElementById(id);
+      if (el && document.activeElement !== el) el.value = v || "";
+    };
+    setVal("cfgFooterLogoSub", cfg.subtitulo_logo);
+    setVal("cfgFooterDesc", cfg.descripcion);
+    setVal("cfgFooterPayLabel", cfg.titulo_pagos);
+    setVal("cfgFooterPays", Array.isArray(cfg.metodos_pago) ? cfg.metodos_pago.join(", ") : "VISA, MASTERCARD, YAPE, PLIN");
+    setVal("cfgFooterSop1", cfg.soporte_item1);
+    setVal("cfgFooterSop2", cfg.soporte_item2);
+    setVal("cfgFooterSop3", cfg.soporte_item3);
+    setVal("cfgFooterSopWa", cfg.soporte_wa_texto);
+    setVal("cfgFooterDir", cfg.direccion);
+    setVal("cfgFooterEmail", cfg.correo);
+    setVal("cfgFooterHorario", cfg.horario);
+    setVal("cfgFooterCopy", cfg.copyright);
+    setVal("cfgFooterTrust", cfg.trust_texto);
+  } catch (err) {
+    console.warn("Error cargando config footer:", err);
+  }
+}
+window.renderFooterAdmin = renderFooterAdmin;
+
+async function guardarFooterAdmin() {
+  const msg = document.getElementById("cfgFooterMsg");
+  const getVal = (id) => (document.getElementById(id)?.value || "").trim();
+  const paysRaw = getVal("cfgFooterPays");
+  const metodos = paysRaw
+    .split(",")
+    .map((x) => x.trim().toUpperCase())
+    .filter(Boolean);
+
+  const payload = {
+    subtitulo_logo: getVal("cfgFooterLogoSub"),
+    descripcion: getVal("cfgFooterDesc"),
+    titulo_pagos: getVal("cfgFooterPayLabel"),
+    metodos_pago: metodos,
+    soporte_item1: getVal("cfgFooterSop1"),
+    soporte_item2: getVal("cfgFooterSop2"),
+    soporte_item3: getVal("cfgFooterSop3"),
+    soporte_wa_texto: getVal("cfgFooterSopWa"),
+    direccion: getVal("cfgFooterDir"),
+    correo: getVal("cfgFooterEmail"),
+    horario: getVal("cfgFooterHorario"),
+    copyright: getVal("cfgFooterCopy"),
+    trust_texto: getVal("cfgFooterTrust"),
+  };
+
+  try {
+    const res = await fetchJSON("/api/configuraciones/footer", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    state.configFooter = res.config;
+    if (typeof aplicarConfigFooter === "function") {
+      aplicarConfigFooter(res.config);
+    }
+    if (msg) {
+      msg.textContent = "✅ Pie de página actualizado y aplicado en la tienda.";
+      msg.className = "form-msg ok";
+      setTimeout(() => { if (msg) msg.textContent = ""; }, 3500);
+    }
+    mostrarToast("¡Pie de página actualizado con éxito!", "ok");
+  } catch (err) {
+    if (msg) {
+      msg.textContent = "❌ Error: " + err.message;
+      msg.className = "form-msg err";
+    }
+    mostrarToast("Error: " + err.message, "err");
+  }
+}
+
+document.getElementById("btnGuardarFooter")?.addEventListener("click", guardarFooterAdmin);
+document.getElementById("btnGuardarFooterTop")?.addEventListener("click", guardarFooterAdmin);
 
 

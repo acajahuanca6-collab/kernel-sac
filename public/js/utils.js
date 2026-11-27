@@ -117,13 +117,14 @@ async function fetchJSON(url, opts = {}) {
 // Carga categorías, métricas y ofertas desde la base de datos SQL y
 // refresca la tienda con paginación de alto rendimiento.
 async function loadCatalogo() {
-  const [categorias, stats, carruselData, generalConfig, redesConfig, anunciosConfig, destacados] = await Promise.all([
+  const [categorias, stats, carruselData, generalConfig, redesConfig, anunciosConfig, footerConfig, destacados] = await Promise.all([
     fetchJSON("/api/categorias"),
     fetchJSON("/api/stats").catch(() => null),
     fetchJSON("/api/carrusel").catch(() => null),
     fetchJSON("/api/configuraciones/general").catch(() => null),
     fetchJSON("/api/configuraciones/redes").catch(() => null),
     fetchJSON("/api/configuraciones/anuncios").catch(() => null),
+    fetchJSON("/api/configuraciones/footer").catch(() => null),
     fetchJSON("/api/productos?destacado=1&limit=8").catch(() => []),
   ]);
   state.categorias = categorias || [];
@@ -149,6 +150,9 @@ async function loadCatalogo() {
   if (anunciosConfig) {
     state.configAnuncios = anunciosConfig;
   }
+  if (footerConfig) {
+    state.configFooter = footerConfig;
+  }
 
   renderStats();
   renderCategorias();
@@ -162,6 +166,9 @@ async function loadCatalogo() {
   }
   if (typeof aplicarBarrasAnuncios === "function") {
     aplicarBarrasAnuncios(state.configAnuncios);
+  }
+  if (typeof aplicarConfigFooter === "function") {
+    aplicarConfigFooter(state.configFooter);
   }
 
   await fetchCatalogoPaginado(1);
@@ -252,3 +259,46 @@ function actualizarCanalesWhatsApp() {
   const prevS = document.getElementById("previewWaSoporteLink");
   if (prevS) prevS.href = `https://wa.me/${sNum}`;
 }
+
+function aplicarConfigFooter(cfg) {
+  if (!cfg) return;
+  const setTxt = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined && val !== "") el.textContent = val;
+  };
+  setTxt("footerLogoSub", cfg.subtitulo_logo);
+  setTxt("footerTagline", cfg.descripcion);
+  setTxt("footerPayLabel", cfg.titulo_pagos);
+  setTxt("footerSoporte1", cfg.soporte_item1);
+  setTxt("footerSoporte2", cfg.soporte_item2);
+  setTxt("footerSoporte3", cfg.soporte_item3);
+  setTxt("footerSoporteWaTxt", cfg.soporte_wa_texto);
+  setTxt("footerAddressTxt", cfg.direccion);
+  setTxt("footerEmailTxt", cfg.correo);
+  setTxt("footerHoursTxt", cfg.horario);
+  setTxt("footerCopyrightTxt", cfg.copyright);
+  setTxt("footerTrustPill", cfg.trust_texto);
+
+  const emailLink = document.getElementById("footerEmailLink");
+  if (emailLink && cfg.correo) {
+    emailLink.href = `mailto:${cfg.correo}`;
+  }
+
+  const payWrap = document.getElementById("footerPaymentsList");
+  if (payWrap && Array.isArray(cfg.metodos_pago)) {
+    const classMap = {
+      VISA: "pay-visa",
+      MASTERCARD: "pay-mc",
+      YAPE: "pay-yape",
+      PLIN: "pay-plin",
+    };
+    payWrap.innerHTML = cfg.metodos_pago
+      .map((m) => {
+        const clean = String(m).trim().toUpperCase();
+        const cls = classMap[clean] || "";
+        return `<span class="pay-pill ${cls}">${clean.replace(/[<>&"]/g, "")}</span>`;
+      })
+      .join("");
+  }
+}
+window.aplicarConfigFooter = aplicarConfigFooter;

@@ -394,4 +394,69 @@ router.put("/configuraciones/anuncios", requireAdmin, (req, res) => {
   res.json({ ok: true, config: actualizado });
 });
 
+// Helper para obtener la configuración del pie de página (footer)
+export function obtenerConfigFooter() {
+  const defaults = {
+    subtitulo_logo: "TECNOLOGÍA · REDES · SEGURIDAD",
+    descripcion: "Especialistas en armado de PCs, redes, videovigilancia y soporte técnico. Envíos seguros a todo el Perú.",
+    titulo_pagos: "Métodos de pago aceptados",
+    metodos_pago: ["VISA", "MASTERCARD", "YAPE", "PLIN"],
+    soporte_item1: "Garantía oficial",
+    soporte_item2: "Servicio técnico",
+    soporte_item3: "Soporte a domicilio",
+    soporte_wa_texto: "Chat Soporte Técnico",
+    direccion: "Av. Daniel Alcides Carrión #108 B - San Juan",
+    correo: "ventas@kernelsac.com",
+    horario: "Lunes - Sábado / 8:00 - 20:00",
+    copyright: "© 2026 Kernel SAC. Todos los derechos reservados.",
+    trust_texto: "🛡️ Garantía Oficial · Envíos a todo el Perú",
+  };
+  try {
+    const row = db.prepare("SELECT valor FROM configuraciones WHERE clave = 'footer'").get();
+    if (row && row.valor) {
+      return { ...defaults, ...JSON.parse(row.valor) };
+    }
+  } catch (err) {
+    console.error("Error al obtener configuraciones del footer:", err);
+  }
+  return defaults;
+}
+
+// GET /api/configuraciones/footer
+router.get("/configuraciones/footer", (req, res) => {
+  res.json(obtenerConfigFooter());
+});
+
+// PUT /api/configuraciones/footer
+router.put("/configuraciones/footer", requireAdmin, (req, res) => {
+  const actual = obtenerConfigFooter();
+  const nuevo = req.body || {};
+  const limpiar = (v, fallback) => (v !== undefined ? String(v).trim() : fallback);
+  const metodos = Array.isArray(nuevo.metodos_pago)
+    ? nuevo.metodos_pago.map((m) => String(m).trim().toUpperCase()).filter(Boolean).slice(0, 10)
+    : actual.metodos_pago;
+
+  const actualizado = {
+    subtitulo_logo: limpiar(nuevo.subtitulo_logo, actual.subtitulo_logo),
+    descripcion: limpiar(nuevo.descripcion, actual.descripcion),
+    titulo_pagos: limpiar(nuevo.titulo_pagos, actual.titulo_pagos),
+    metodos_pago: metodos,
+    soporte_item1: limpiar(nuevo.soporte_item1, actual.soporte_item1),
+    soporte_item2: limpiar(nuevo.soporte_item2, actual.soporte_item2),
+    soporte_item3: limpiar(nuevo.soporte_item3, actual.soporte_item3),
+    soporte_wa_texto: limpiar(nuevo.soporte_wa_texto, actual.soporte_wa_texto),
+    direccion: limpiar(nuevo.direccion, actual.direccion),
+    correo: limpiar(nuevo.correo, actual.correo),
+    horario: limpiar(nuevo.horario, actual.horario),
+    copyright: limpiar(nuevo.copyright, actual.copyright),
+    trust_texto: limpiar(nuevo.trust_texto, actual.trust_texto),
+  };
+  db.prepare(`
+    INSERT INTO configuraciones (clave, valor)
+    VALUES ('footer', ?)
+    ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor
+  `).run(JSON.stringify(actualizado));
+  res.json({ ok: true, config: actualizado });
+});
+
 export default router;
